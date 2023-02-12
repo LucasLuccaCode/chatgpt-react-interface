@@ -4,32 +4,37 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./src/css/index.css">
-  <script src="./src/js/index.js" defer></script>
+  <link rel="stylesheet" href="./assets/css/global.css">
+  <link rel="stylesheet" href="./assets/css/index.css">
+  <script src="./assets/js/index.js" defer></script>
   <title>ChatGPT</title>
 </head>
 
 <body>
   <div class="c-container">
-    <header>
+    <header class="c-header">
       <h1>ChatGPT</h1>
     </header>
 
-    <main>
+    <main class="c-main">
       <ul class="c-answers">
         <p class="placeholder">Faça uma pergunta para exibir aqui a resposta...</p>
       </ul>
-
+    </main>
+    
+    <footer class="c-footer">
       <div class="c-status">
         <p class="c-status__progress"></p>
         <button class="c-status__stop hide">Parar</button>
       </div>
 
       <form class="c-form">
-        <textarea name="question"></textarea>
-        <button type="submit">Enviar</button>
+        <textarea name="question" rows="2" autofocus></textarea>
+        <button type="submit">
+          <img src="./assets/img/send.png" alt="Ícone para enviar pergunta">
+        </button>
       </form>
-    </main>
+    </footer>
   </div>
 </body>
 
