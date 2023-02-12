@@ -7,10 +7,10 @@ const questionEntry = document.querySelector('.c-form textarea')
 
 
 const API_KEY = "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"
-const renderingSpeed = 50
-const isPrinting = false
+const renderingSpeed = 40
 const maxTokens = 2048
 const temperature = 0.6
+let isPrinting = false
 let controller = null
 
 const createElement = (element, className, textContent) => {
@@ -27,23 +27,25 @@ const sendQuestion = async (question) => {
   c_responses.scrollTop = c_responses.scrollHeight;
 
   stopBtn.classList.remove('hide')
+  progressElem.textContent = "Aguardando resposta da api..."
+
   const jsonResponse = await fetchAPI(question)
 
   if (!jsonResponse) return
 
   if (jsonResponse.error?.message) {
-    const h2 = createElement('h2', 'error', jsonResponse.error.message)
+    const h2 = createElement('h2', 'response', jsonResponse.error.message)
     c_responses.appendChild(h2)
     return
   }
 
   if (jsonResponse.choices?.[0].text) {
     const text = jsonResponse.choices[0].text
-    console.log(text)
+    writeText(text)
     return
   }
 
-  console.log("Sem resposta")
+  writeText("Sem resposta")
 }
 
 const fetchAPI = async (question) => {
@@ -81,6 +83,39 @@ const fetchAPI = async (question) => {
   }
 }
 
+const sleep = (ms) => new Promise(res => setInterval(res, ms))
+
+const writeText = async (text) => {
+  text = text.replace(/^(\n)+/g, '');
+
+  const responseElem = createElement('pre', 'response', "Chat GPT:\n\n")
+  c_responses.appendChild(responseElem)
+
+  isPrinting = true
+  for (let i = 0; i < text.length; i++) {
+    const hasText = responseElem.textContent
+    responseElem.textContent = hasText ? hasText + text[i] : text[i];
+
+    progressElem.textContent = 
+      `Respondendo [ ${i + 1} / ${text.length}  ] ${Math.floor((i + 1) / text.length * 100)}%`;
+
+    c_responses.scrollTop = c_responses.scrollHeight;
+
+    if (!isPrinting) {
+      progressElem.textContent = "Renderização parada..."
+      return
+    }
+
+    await sleep(renderingSpeed)
+  }
+  
+  isPrinting = false
+
+  progressElem.textContent = `[ ${text.length} / ${text.length}  ] 100%`
+
+  stopBtn.classList.add('hide')
+}
+
 const handleForm = (e) => {
   e.preventDefault()
 
@@ -97,6 +132,7 @@ const handleForm = (e) => {
 form.addEventListener('submit', handleForm)
 
 const handleStopRequest = () => {
+  isPrinting = false
   controller.abort();
   progressElem.textContent = "Requisição parada...";
   stopBtn.classList.add('hide')

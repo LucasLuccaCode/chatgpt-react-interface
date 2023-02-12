@@ -103,7 +103,6 @@
   word-wrap: break-word;
 }
 
-
 /* FOOTER */
 
 .c-footer {
@@ -117,7 +116,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: var(--margin-h);
   margin-bottom: .5rem;
 }
 
@@ -172,7 +170,7 @@
 
 .c-form button {
   cursor: pointer;
-  padding: .2rem;
+  padding: .25rem;
   border-radius: .2rem;
   margin: 0 .3rem 0 .5rem;
   background: transparent;
@@ -184,6 +182,6 @@
 }
 
 .c-form button img {
-  height: 1.2rem;
-  height: 1.2rem;
+  height: 1.1rem;
+  height: 1.1rem;
 }
