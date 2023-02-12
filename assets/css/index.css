@@ -28,11 +28,12 @@
   flex: 1;
   width: 100%;
   margin-top: 1rem;
+  overflow: hidden;
 }
 
-/* ANSWERS */
+/* responses */
 
-.c-answers {
+.c-responses {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -44,15 +45,15 @@
   overflow-y: auto;
 }
 
-.c-answers::-webkit-scrollbar {
+.c-responses::-webkit-scrollbar {
   width: .3rem;
 }
 
-.c-answers::-webkit-scrollbar-track {
+.c-responses::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.c-answers::-webkit-scrollbar-thumb {
+.c-responses::-webkit-scrollbar-thumb {
   background-color: var(--details-color);
   border-radius: 20px;
 }
@@ -89,7 +90,7 @@
   margin-top: 0;
 }
 
-.answer {
+.response {
   padding: .5rem;
   border-radius: .2rem;
   color: #dfdfef;
