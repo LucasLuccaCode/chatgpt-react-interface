@@ -5,6 +5,9 @@ const stopBtn = document.querySelector(".c-status__stop")
 const form = document.querySelector('.c-form')
 const questionEntry = document.querySelector('.c-form textarea')
 
+let currentQuestion = null
+let currentAnswer = null
+let questionsAndAnswers = []
 
 const API_KEY = "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"
 const renderingSpeed = 40
@@ -20,8 +23,44 @@ const createElement = (element, className, textContent) => {
   return el
 }
 
+const renderLoadedData = () => {
+  const tags = questionsAndAnswers.reduce((acc, { question, answer }) => {
+    answer = answer.replace(/^(\n)+/g, '');
+
+    const questionTag = createElement('h2', 'question', question)
+    questionTag.innerHTML = '<img src="./assets/img/send.png" alt="Ícone para enviar pergunta"></img>' + questionTag.textContent
+    const responseTag = createElement('pre', 'response', `Chat GPT:\n\n${answer}`)
+
+    acc = [...acc, questionTag, responseTag]
+    return acc
+  }, [])
+
+  c_responses.append(...tags)
+}
+
+const loadDataStorage = () => {
+  const data = JSON.parse(localStorage.getItem("@mr:chatGPT")) || []
+
+  questionsAndAnswers = data
+  if (data.length) {
+    renderLoadedData()
+  } else {
+    c_responses.innerHTML = '<p class="placeholder">Faça uma pergunta para exibir aqui a resposta...</p>'
+  }
+  c_responses.scrollTop = c_responses.scrollHeight;
+}
+loadDataStorage()
+
+const saveDataStorage = () => {
+  const dataJson = JSON.stringify(questionsAndAnswers)
+
+  localStorage.setItem("@mr:chatGPT", dataJson)
+}
+
 const sendQuestion = async (question) => {
   const h2 = createElement('h2', 'question', question)
+  h2.innerHTML = '<img src="./assets/img/send.png" alt="Ícone para enviar pergunta"></img>' + h2.textContent
+
   c_responses.appendChild(h2)
 
   c_responses.scrollTop = c_responses.scrollHeight;
@@ -41,7 +80,15 @@ const sendQuestion = async (question) => {
 
   if (jsonResponse.choices?.[0].text) {
     const text = jsonResponse.choices[0].text
+
     writeText(text)
+
+    questionsAndAnswers.push({
+      question,
+      answer: text
+    })
+    saveDataStorage()
+
     return
   }
 
@@ -96,7 +143,7 @@ const writeText = async (text) => {
     const hasText = responseElem.textContent
     responseElem.textContent = hasText ? hasText + text[i] : text[i];
 
-    progressElem.textContent = 
+    progressElem.textContent =
       `Respondendo [ ${i + 1} / ${text.length}  ] ${Math.floor((i + 1) / text.length * 100)}%`;
 
     c_responses.scrollTop = c_responses.scrollHeight;
@@ -108,7 +155,7 @@ const writeText = async (text) => {
 
     await sleep(renderingSpeed)
   }
-  
+
   isPrinting = false
 
   progressElem.textContent = `[ ${text.length} / ${text.length}  ] 100%`
@@ -123,7 +170,7 @@ const handleForm = (e) => {
 
   if (!question) return
 
-  placeholder.remove()
+  placeholder && placeholder.remove()
 
   sendQuestion(question)
   questionEntry.value = ""

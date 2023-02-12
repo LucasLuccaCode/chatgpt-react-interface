@@ -12,13 +12,16 @@
 /* Header  */
 
 .c-header {
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-right: var(--margin-h);
 }
 
 .c-header h1 {
-  /* margin-top: .5rem; */
   color: #efefff;
   font-size: 1rem;
+  width: 100%;
   text-align: center;
 }
 
@@ -70,20 +73,18 @@
   display: flex;
   align-items: center;
   margin-top: .5rem;
-  color: #efefff;
+  color: #dadaf0;
   font-size: .9rem;
   padding: .3rem 0;
 }
 
-.question::before {
-  content: "";
-  display: inline-block;
-  width: .15rem;
-  min-width: .15rem;
-  height: 100%;
-  border-radius: 50px;
-  background: var(--details-color);
+.question img {
+  height: 1.1rem;
+  height: 1.1rem;
+  padding: .2rem;
+  border-radius: .2rem;
   margin-right: .5rem;
+  background: rgba(0, 0, 0, .3);
 }
 
 .question:nth-child(1) {
