@@ -3,9 +3,10 @@
   --secondary-color: #3a3a40;
   --details-color: #00b1ff;
   --margin-h: .8rem;
+  --font-size: 18px;
 }
 
-* {
+*, *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -16,7 +17,7 @@ body,
 html {
   width: 100%;
   height: 100%;
-  font-size: 18px;
+  font-size: var(--font-size);
   background-color: var(--primary-color);
 }
 
