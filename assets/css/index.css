@@ -129,6 +129,10 @@
   word-wrap: break-word;
 }
 
+.response.error {
+  border: 2px solid rgb(211, 13, 128);
+}
+
 /* FOOTER */
 
 .c-footer {

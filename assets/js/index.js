@@ -6,7 +6,7 @@ const progressElem = document.querySelector(".c-status__progress")
 const stopBtn = document.querySelector(".c-status__stop")
 const form = document.querySelector('.c-form')
 const questionEntry = document.querySelector('.c-form textarea')
-let placeholderElem = null
+const placeholderElem = document.querySelector('placeholder')
 
 const settingsForm = document.querySelector('[data-settings]')
 const inputsSettings = settingsForm.querySelectorAll('input')
@@ -23,49 +23,13 @@ const API_KEY = "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"
 let isPrinting = false
 let controller = null
 
-const createElement = (element, className, textContent) => {
-  const el = document.createElement(element)
-  el.classList.add(className)
-  el.textContent = textContent
-  return el
-}
-
-const renderLoadedData = () => {
-  const tags = questionsAndAnswers.reduce((acc, { question, answer }) => {
-    answer = answer.replace(/^(\n)+/g, '');
-
-    const questionTag = createElement('h2', 'question', question)
-    questionTag.innerHTML = '<img src="./assets/img/send.png" alt="Ícone para enviar pergunta"></img>' + questionTag.textContent
-    const responseTag = createElement('pre', 'response', `Chat GPT:\n\n${answer}`)
-
-    acc = [...acc, questionTag, responseTag]
-    return acc
-  }, [])
-
-  responses.append(...tags)
-}
-
-const loadDataStorage = () => {
-  const data = JSON.parse(localStorage.getItem("@mr:chatGPT")) || []
-
-  questionsAndAnswers = data
-  if (data.length) {
-    renderLoadedData()
-  } else {
-    placeholderElem = createElement('p', 'placeholder', 'Faça uma pergunta para exibir aqui a resposta...')
-    responses.appendChild(placeholderElem)
-  }
-  responses.scrollTop = responses.scrollHeight;
-}
-loadDataStorage()
-
 const initialSettings = {
   font_size: 18,
   max_tokens: 2050,
   rendering_speed: 40,
   temperature: 0.6,
-  save_context,
-  save_queries
+  save_context: false,
+  save_queries: true
 }
 
 const loadSettingsStorage = () => {
@@ -95,6 +59,47 @@ const loadSettingsStorage = () => {
   })
 }
 loadSettingsStorage()
+
+const createElement = (element, className, textContent) => {
+  const el = document.createElement(element)
+
+  if (className.includes(' ')) {
+    className.split(' ').forEach(c => el.classList.add(c))
+  } else {
+    el.classList.add(className)
+  }
+
+  el.textContent = textContent
+  return el
+}
+
+const renderLoadedData = () => {
+  placeholderElem && placeholderElem.remove()
+
+  const tags = questionsAndAnswers.reduce((acc, { question, answer }) => {
+    answer = answer.replace(/^(\n)+/g, '');
+
+    const questionTag = createElement('h2', 'question', question)
+    questionTag.innerHTML = '<img src="./assets/img/send.png" alt="Ícone para enviar pergunta"></img>' + questionTag.textContent
+    const responseTag = createElement('pre', 'response', `Chat GPT:\n\n${answer}`)
+
+    acc = [...acc, questionTag, responseTag]
+    return acc
+  }, [])
+
+  responses.append(...tags)
+}
+
+const loadDataStorage = () => {
+  const data = JSON.parse(localStorage.getItem("@mr:chatGPT")) || []
+
+  questionsAndAnswers = data
+
+  renderLoadedData()
+
+  responses.scrollTop = responses.scrollHeight;
+}
+settings.save_queries && loadDataStorage()
 
 const saveDataStorage = () => {
   const dataJson = JSON.stringify(questionsAndAnswers)
@@ -132,11 +137,15 @@ const sendQuestion = async (question) => {
 
     writeText(text)
 
-    questionsAndAnswers.push({
-      question,
-      answer: text
-    })
-    saveDataStorage()
+    if (settings.save_queries) {
+      questionsAndAnswers.push({
+        question,
+        answer: text
+      })
+      saveDataStorage()
+      console.log('Salvar queries')
+    }
+
 
     return
   }
@@ -146,6 +155,10 @@ const sendQuestion = async (question) => {
 
 const fetchAPI = async (question) => {
   try {
+    const context = settings.save_context
+      ? questionsAndAnswers.map(({ answer }) => answer)?.join('')
+      : ''
+
     controller = new AbortController();
     const signal = controller.signal;
 
@@ -158,7 +171,7 @@ const fetchAPI = async (question) => {
       },
       body: JSON.stringify({
         model: "text-davinci-003",
-        prompt: question,
+        prompt: question + context,
         max_tokens: settings.max_tokens, // tamanho da resposta
         temperature: settings.temperature, // criatividade na resposta
       }),
@@ -186,7 +199,9 @@ const sleep = (ms) => new Promise(res => setInterval(res, ms))
 const writeText = async (text) => {
   text = text.replace(/^(\n)+/g, '');
 
-  const responseElem = createElement('pre', 'response', "Chat GPT:\n\n")
+  const classResponse = text === 'Sem resposta' ? 'response error' : 'response'
+
+  const responseElem = createElement('pre', classResponse, "Chat GPT:\n\n")
   responses.appendChild(responseElem)
 
   isPrinting = true
