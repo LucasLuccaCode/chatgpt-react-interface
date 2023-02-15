@@ -6,12 +6,12 @@ const progressElem = document.querySelector(".c-status__progress")
 const stopBtn = document.querySelector(".c-status__stop")
 const form = document.querySelector('.c-form')
 const questionEntry = document.querySelector('.c-form textarea')
+let placeholderElem = null
 
 const settingsForm = document.querySelector('[data-settings]')
 const inputsSettings = settingsForm.querySelectorAll('input')
 const temperatureValue = document.querySelector('[data-temperature-value]')
 const closeBtn = document.querySelector('[data-settings-close]')
-let placeholder = null
 
 let currentQuestion = null
 let currentAnswer = null
@@ -51,8 +51,8 @@ const loadDataStorage = () => {
   if (data.length) {
     renderLoadedData()
   } else {
-    placeholder = createElement('p', 'placeholder', 'Faça uma pergunta para exibir aqui a resposta...')
-    responses.appendChild(placeholder)
+    placeholderElem = createElement('p', 'placeholder', 'Faça uma pergunta para exibir aqui a resposta...')
+    responses.appendChild(placeholderElem)
   }
   responses.scrollTop = responses.scrollHeight;
 }
@@ -225,7 +225,7 @@ const handleForm = (e) => {
 
   if (!question) return
 
-  placeholder && placeholder.remove()
+  placeholderElem && placeholderElem.remove()
 
   sendQuestion(question)
   questionEntry.value = ""
