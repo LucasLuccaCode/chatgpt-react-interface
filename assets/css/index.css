@@ -267,6 +267,11 @@
   margin-top: 1rem;
 }
 
+.c-settings__control > div {
+  display: flex;
+  align-items: center;
+}
+
 .c-settings__control label {
   color: #b2b1b5;
   white-space: nowrap;
@@ -307,7 +312,7 @@
   transform: rotate(-45deg);
 }
 
-.c-settings__control [data-temperature-value] {
+.c-settings__control span {
   font-size: .8rem;
   color: #dadafa;
   margin-left: .5rem;

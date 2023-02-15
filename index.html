@@ -46,7 +46,17 @@
 
       <div class="c-settings__control">
         <label class="nowrap" for="font_size">Tamanho dos textos</label>
-        <input type="number" name="font_size" value="18" min="14" max="30" id="font_size">
+        <div>
+          <input type="range" min="14" max="30" step="1" value="18" name="font_size" id="font_size">
+          <span data-font_size-value>18</span>
+        </div>
+      </div>
+      <div class="c-settings__control">
+        <label class="nowrap" for="temperature">Temperatura</label>
+        <div>
+          <input type="range" min="0" max="1" step="0.1" value="0.6" name="temperature" id="temperature">
+          <span data-temperature-value>0.6</span>
+        </div>
       </div>
       <div class="c-settings__control">
         <label class="nowrap" for="max_tokens">Máximo de tokens</label>
@@ -55,11 +65,6 @@
       <div class="c-settings__control">
         <label class="nowrap" for="rendering_speed">Velocidade de renderização(ms)</label>
         <input type="number" value="40" min="0" max="1000" step="10" name="rendering_speed" id="rendering_speed">
-      </div>
-      <div class="c-settings__control">
-        <label class="nowrap" for="temperature">Temperatura</label>
-        <input type="range" min="0" max="1" step="0.1" value="0.6" name="temperature" id="temperature">
-        <span data-temperature-value>0.6</span>
       </div>
       <div class="c-settings__control">
         <label class="nowrap" for="save_context">Ativar contexto</label>

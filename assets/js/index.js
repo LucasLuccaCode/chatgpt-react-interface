@@ -12,6 +12,7 @@ const settingsForm = document.querySelector('[data-settings]')
 const inputsSettings = settingsForm.querySelectorAll('input')
 const temperatureValue = document.querySelector('[data-temperature-value]')
 const closeBtn = document.querySelector('[data-settings-close]')
+const fontSizeValue = document.querySelector('[data-font_size-value]')
 
 let currentQuestion = null
 let currentAnswer = null
@@ -89,6 +90,7 @@ const loadSettingsStorage = () => {
 
     if (key === 'font_size') {
       root.style.setProperty('--font-size', `${value}px`)
+      fontSizeValue.textContent = value
     }
   })
 }
@@ -283,6 +285,7 @@ const handleInputsSettings = ({ target: el }) => {
     font_size: () => {
       const size = el.value
       root.style.setProperty('--font-size', `${size}px`)
+      fontSizeValue.textContent = size
     },
     temperature: () => {
       const newValue = Number(el.value)
