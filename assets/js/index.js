@@ -2,7 +2,6 @@ const root = document.documentElement
 const menu = document.querySelector('[data-menu]')
 const blur = document.querySelector('[data-settings-blur]')
 const responses = document.querySelector('.c-responses')
-const placeholder = document.querySelector('.placeholder')
 const progressElem = document.querySelector(".c-status__progress")
 const stopBtn = document.querySelector(".c-status__stop")
 const form = document.querySelector('.c-form')
@@ -12,6 +11,7 @@ const settingsForm = document.querySelector('[data-settings]')
 const inputsSettings = settingsForm.querySelectorAll('input')
 const temperatureValue = document.querySelector('[data-temperature-value]')
 const closeBtn = document.querySelector('[data-settings-close]')
+let placeholder = null
 
 let currentQuestion = null
 let currentAnswer = null
@@ -51,7 +51,8 @@ const loadDataStorage = () => {
   if (data.length) {
     renderLoadedData()
   } else {
-    responses.innerHTML = '<p class="placeholder">Faça uma pergunta para exibir aqui a resposta...</p>'
+    placeholder = createElement('p', 'placeholder', 'Faça uma pergunta para exibir aqui a resposta...')
+    responses.appendChild(placeholder)
   }
   responses.scrollTop = responses.scrollHeight;
 }
@@ -115,8 +116,12 @@ const sendQuestion = async (question) => {
   if (!jsonResponse) return
 
   if (jsonResponse.error?.message) {
+    progressElem.textContent = 'Erro ao fazer consulta, tente mais tarde.'
+    stopBtn.classList.add('hide')
+
     const h2 = createElement('h2', 'response', jsonResponse.error.message)
     responses.appendChild(h2)
+    responses.scrollTop = responses.scrollHeight;
     return
   }
 
@@ -163,8 +168,10 @@ const fetchAPI = async (question) => {
     if (error.name === 'AbortError') {
       console.log('A requisição foi interrompida.');
     } else {
+      progressElem.textContent = 'Erro ao fazer a requisição, tente mais tarde.'
       console.error('Erro ao fazer a requisição:', error);
     }
+    stopBtn.classList.add('hide')
   } finally {
     questionEntry.value = "";
     questionEntry.disabled = false;
