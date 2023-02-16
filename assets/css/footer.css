@@ -5,6 +5,9 @@
   margin-top: 1rem;
 }
 
+.c-footer.hide {
+  display: none;
+}
 /* STATUS */
 
 .c-status {
@@ -48,10 +51,6 @@
   border-radius: .3rem;
   border: 2px solid transparent;
   transition: border .3s;
-}
-
-.c-ask_form.hide {
-  display: none;
 }
 
 .c-ask_form:focus-within {

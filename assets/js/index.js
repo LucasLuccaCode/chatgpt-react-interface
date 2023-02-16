@@ -1,5 +1,6 @@
 const root = document.documentElement
 const menu = document.querySelector('[data-menu]')
+const addChatBtn = document.querySelector('[data-add-chat]')
 
 const main = document.querySelector('[data-main]')
 
@@ -14,6 +15,8 @@ const inputsSettings = document.querySelectorAll('[data-settings] input')
 const closeSettingsBtn = document.querySelector('[data-settings-close]')
 const fontSizeValue = document.querySelector('[data-font_size-value]')
 const temperatureValue = document.querySelector('[data-temperature-value]')
+
+const footer = document.querySelector('[data-footer]')
 
 let chats = []
 let currentChat = []
@@ -137,7 +140,7 @@ const handleOpenChat = ({ target: el }) => {
   const chatNumber = el.getAttribute('data-chat')
   if (!chatNumber) return
 
-  askForm.classList.remove('hide')
+  footer.classList.remove('hide')
   questionEntry.focus()
 
   currentChatNumber = chatNumber
@@ -172,11 +175,6 @@ settings.save_queries && loadDataStorage()
 const saveDataStorage = () => {
   const dataJson = JSON.stringify(chats)
   localStorage.setItem("@mr:chatGPT:chats", dataJson)
-}
-
-const removePlaceholder = () => {
-  const placeholder = document.querySelector('.placeholder')
-  placeholder && placeholder.remove()
 }
 
 const sendQuestion = async (question) => {
@@ -321,7 +319,8 @@ const handleForm = (e) => {
 
   if (!question) return
 
-  removePlaceholder()
+  const placeholder = document.querySelector('.placeholder')
+  placeholder && placeholder.remove()
 
   sendQuestion(question)
   questionEntry.value = ""
@@ -408,3 +407,21 @@ const handleCloseClick = (e) => {
 }
 
 closeSettingsBtn.addEventListener('click', handleCloseClick);
+
+const handleAddChat = () => {
+  chats.unshift([])
+  currentChatNumber = 0
+  currentChat = chats[currentChatNumber]
+
+  main.innerHTML = `<p class="placeholder">Faça uma pergunta para exibir aqui a resposta...</p>`
+
+  const responsesContainer = createElement('ul', 'c-responses')
+  responsesContainer.setAttribute('data-responses', '')
+  main.appendChild(responsesContainer)
+
+  footer.classList.remove('hide')
+  questionEntry.value = ''
+  questionEntry.focus()
+}
+
+addChatBtn.addEventListener('click', handleAddChat)
