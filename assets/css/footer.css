@@ -1,0 +1,96 @@
+/* FOOTER */
+
+.c-footer {
+  margin: 0 var(--margin-h);
+  margin-top: 1rem;
+}
+
+/* STATUS */
+
+.c-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+
+.c-status__progress {
+  font-size: .8rem;
+  color: rgba(255, 255, 255, .5);
+}
+
+.c-status__stop {
+  cursor: pointer;
+  font-size: .7rem;
+  padding: .3rem .5rem;
+  color: #fff;
+  font-weight: bold;
+  border-radius: .2rem;
+  background: var(--details-color);
+  opacity: 1;
+  transition: opacity .4s ease;
+}
+
+.c-status__stop.hide {
+  opacity: 0;
+}
+
+.c-status__stop:hover {
+  background: #059ddf;
+}
+
+/* QUESTION */
+
+.c-ask_form {
+  display: flex;
+  align-items: center;
+  background: var(--secondary-color);
+  border-radius: .3rem;
+  border: 2px solid transparent;
+  transition: border .3s;
+}
+
+.c-ask_form.hide {
+  display: none;
+}
+
+.c-ask_form:focus-within {
+  border: 2px solid var(--details-color);
+}
+
+.c-ask_form textarea {
+  flex: 1;
+  padding: .5rem;
+  height: 100%;
+  font-size: .8rem;
+  color: #babac0;
+  border-radius: .3rem;
+  border: 2px solid transparent;
+  background: transparent;
+}
+
+.c-ask_form textarea:disabled {
+  opacity: .5;
+}
+
+.c-ask_form button {
+  cursor: pointer;
+  padding: .25rem;
+  border-radius: .2rem;
+  margin: 0 .3rem 0 .5rem;
+  background: transparent;
+  transition: background-color .3s ease;
+}
+
+.c-ask_form button:hover {
+  background: rgba(0, 0, 0, .2);
+}
+
+.c-ask_form button:focus {
+  border: 2px solid rgba(255, 255, 255, .1);
+}
+
+.c-ask_form button i {
+  font-size: 1rem;
+  color: var(--details-color);
+}

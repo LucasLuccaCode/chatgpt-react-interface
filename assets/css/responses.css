@@ -1,0 +1,45 @@
+.c-responses {
+  width: 100%;
+}
+
+.c-responses__question {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.c-responses__question:nth-child(1) {
+  margin-top: 0;
+}
+
+.c-responses__question i {
+  font-size: .7rem;
+  color: var(--details-color);
+  margin-right: .5rem;
+}
+
+.c-responses__question h3 {
+  color: #dadaf0;
+  font-size: .8rem;
+}
+
+.c-responses__question h3::first-letter {
+  text-transform: capitalize;
+}
+
+.c-responses__response {
+  padding: .5rem;
+  border-radius: .2rem;
+  color: #dfdfef;
+  width: 100%;
+  font-size: .8rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.2rem;
+  background: var(--secondary-color);
+  margin-top: .5rem;
+}
+
+.c-responses__response--error {
+  border: 2px solid rgb(211, 13, 128);
+}

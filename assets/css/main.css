@@ -1,0 +1,29 @@
+.c-main {
+  flex: 1;
+  margin-top: 1rem;
+  margin-right: .3rem;
+  margin-left: var(--margin-h);
+  padding-right: calc(var(--margin-h) - .3rem);
+  overflow-y: auto;
+}
+
+.c-main::-webkit-scrollbar {
+  width: .3rem;
+}
+
+.c-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.c-main::-webkit-scrollbar-thumb {
+  background-color: var(--details-color);
+  border-radius: 20px;
+}
+
+.placeholder {
+  text-align: center;
+  font-size: .8rem;
+  width: 100%;
+  color: #afafbf;
+  margin-top: 1rem;
+}

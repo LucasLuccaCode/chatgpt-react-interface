@@ -38,3 +38,14 @@ li {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.c-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  margin: 0 auto;
+  padding-bottom: var(--margin-h);
+  background: var(--primary-color);
+}

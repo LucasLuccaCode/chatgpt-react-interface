@@ -1,0 +1,125 @@
+.c-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+
+.c-blur.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-settings {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: .5rem;
+  background: var(--secondary-color);
+  box-shadow: 0 2px 1px 1px rgba(0, 0, 0, .2);
+}
+
+
+.c-settings h2 {
+  font-size: .8rem;
+  text-align: center;
+  color: #efefff;
+}
+
+.c-settings__control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.c-settings__control > div {
+  display: flex;
+  align-items: center;
+}
+
+.c-settings__control label {
+  color: #b2b1b5;
+  white-space: nowrap;
+  margin-right: 1rem;
+  font-size: .8rem;
+}
+
+.c-settings__control input[type=number] {
+  padding: .3rem .2rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+  color: #efefff;
+  font-size: .6rem;
+  background: rgba(0, 0, 0, .15);
+  margin-left: .5rem;
+}
+
+.c-settings__control input[type='checkbox'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: .2rem;
+  background: var(--primary-color);
+}
+
+.c-settings__control input[type='checkbox']:checked::before {
+  content: "";
+  position: absolute;
+  border-left: .18rem solid var(--details-color);
+  border-bottom: .18rem solid var(--details-color);
+  display: inline-block;
+  width: .5rem;
+  height: .4rem;
+  margin-top: -.2rem;
+  transform: rotate(-45deg);
+}
+
+.c-settings__control span {
+  font-size: .8rem;
+  color: #dadafa;
+  margin-left: .5rem;
+}
+
+.c-settings .buttons {
+  display: flex;
+  align-items: center;
+}
+
+.c-settings button {
+  padding: .4rem .5rem;
+  flex: 1;
+  margin-top: 1rem;
+  font-size: .6rem;
+  font-weight: bold;
+  color: #efefff;
+  cursor: pointer;
+  border-radius: .2rem;
+  background: rgba(255, 255, 255, .1);
+  opacity: .9;
+}
+
+.c-settings button:last-child {
+  margin-left: .5rem;
+  color: rgba(255, 255, 255, .9);
+  background: var(--details-color);
+}
+
+.c-settings button:hover {
+  opacity: 1;
+}
+
+.c-settings button:active {
+  transform: scale(.95)
+}
