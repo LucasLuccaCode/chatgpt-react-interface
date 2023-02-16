@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/css/global.css">
   <link rel="stylesheet" href="./assets/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <script src="./assets/js/index.js" defer></script>
   <title>ChatGPT</title>
 </head>
@@ -18,25 +19,21 @@
         <img src="assets/img/menu.png" alt="Imagem de menu">
       </a>
       <h1>ChatGPT</h1>
-      <button class="c-header__new_chat">+</button>
+      <button class="c-header__add__chat" data-add-chat>+</button>
     </header>
 
-    <main class="c-main">
-      <div class="c-responses">
-        <p class="placeholder">Faça uma pergunta para exibir aqui a resposta...</p>
-      </div>
-    </main>
+    <main class="c-main" data-main></main>
 
     <footer class="c-footer">
       <div class="c-status">
-        <p class="c-status__progress"></p>
-        <button class="c-status__stop hide">Parar</button>
+        <p class="c-status__progress" data-status-progress></p>
+        <button class="c-status__stop hide" data-status-stop>Parar</button>
       </div>
 
-      <form class="c-form">
-        <textarea name="question" rows="2" autofocus></textarea>
+      <form class="c-ask_form hide" data-ask-form>
+        <textarea name="question" rows="2" data-question-entry></textarea>
         <button type="submit">
-          <img src="./assets/img/send.png" alt="Ícone para enviar pergunta">
+          <i class="bi bi-send-fill"></i>
         </button>
       </form>
     </footer>

@@ -1,22 +1,23 @@
 const root = document.documentElement
 const menu = document.querySelector('[data-menu]')
-const blur = document.querySelector('[data-settings-blur]')
-const responses = document.querySelector('.c-responses')
-const progressElem = document.querySelector(".c-status__progress")
-const stopBtn = document.querySelector(".c-status__stop")
-const form = document.querySelector('.c-form')
-const questionEntry = document.querySelector('.c-form textarea')
-const placeholderElem = document.querySelector('placeholder')
 
+const main = document.querySelector('[data-main]')
+
+const statusProgress = document.querySelector('[data-status-progress]')
+const statusStopBtn = document.querySelector('[data-status-stop]')
+const askForm = document.querySelector('[data-ask-form]')
+const questionEntry = document.querySelector('[data-question-entry]')
+
+const settingsBlur = document.querySelector('[data-settings-blur]')
 const settingsForm = document.querySelector('[data-settings]')
-const inputsSettings = settingsForm.querySelectorAll('input')
-const temperatureValue = document.querySelector('[data-temperature-value]')
-const closeBtn = document.querySelector('[data-settings-close]')
+const inputsSettings = document.querySelectorAll('[data-settings] input')
+const closeSettingsBtn = document.querySelector('[data-settings-close]')
 const fontSizeValue = document.querySelector('[data-font_size-value]')
+const temperatureValue = document.querySelector('[data-temperature-value]')
 
-let currentQuestion = null
-let currentAnswer = null
-let questionsAndAnswers = []
+let chats = []
+let currentChat = []
+let currentChatNumber = 0
 let settings = {}
 
 const API_KEY = "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"
@@ -63,87 +64,163 @@ loadSettingsStorage()
 const createElement = (element, className, textContent) => {
   const el = document.createElement(element)
 
-  if (className.includes(' ')) {
+  if (className && className.includes(' ')) {
     className.split(' ').forEach(c => el.classList.add(c))
   } else {
-    el.classList.add(className)
+    className && el.classList.add(className)
   }
 
-  el.textContent = textContent
+  if (textContent) el.textContent = textContent
+
   return el
 }
 
-const renderLoadedData = () => {
-  placeholderElem && placeholderElem.remove()
+const generateCurrentChatHtml = () => {
+  const questionsAndAnswersTags = currentChat.reduce((acc, { question, answer }) => {
+    answer = answer.replace(/^\n+/, "ChatGPT:\n\n")
 
-  const tags = questionsAndAnswers.reduce((acc, { question, answer }) => {
-    answer = answer.replace(/^(\n)+/g, '');
+    const questionContainer = createElement('div', 'c-responses__question')
+    const questionMessage = createElement('h3', null, question)
+    questionContainer.innerHTML = '<i class="bi bi-send-fill"></i>'
+    questionContainer.appendChild(questionMessage)
 
-    const questionTag = createElement('h2', 'question', question)
-    questionTag.innerHTML = '<img src="./assets/img/send.png" alt="Ícone para enviar pergunta"></img>' + questionTag.textContent
-    const responseTag = createElement('pre', 'response', `Chat GPT:\n\n${answer}`)
+    const answerTag = createElement('pre', 'c-responses__response', answer)
 
-    acc = [...acc, questionTag, responseTag]
+    acc = [...acc, questionContainer, answerTag]
     return acc
   }, [])
 
-  responses.append(...tags)
+  return questionsAndAnswersTags
+}
+
+const renderCurrentChat = () => {
+  main.innerHTML = ""
+
+  const responsesContainer = createElement('ul', 'c-responses')
+  responsesContainer.setAttribute('data-responses', '')
+
+  const responsesTags = generateCurrentChatHtml()
+
+  responsesContainer.append(...responsesTags)
+  main.appendChild(responsesContainer)
+
+  main.scrollTop = main.scrollHeight;
+}
+
+const generateChatsHtml = chats => {
+  const cardsTag = chats.map((chat, index) => {
+    const firstQuestion = chat[0].question
+
+    const card = createElement('li', 'c-chats__card')
+    card.setAttribute('data-chat', index)
+
+    const title = createElement('h3', 'c-chats__card__title nowrap', firstQuestion)
+
+    const actions = createElement('div', 'c-chats__card__actions')
+
+    const editBtn = createElement('button')
+    editBtn.innerHTML = "<i class='bi bi-pencil-fill' />"
+
+    const deleteBtn = createElement('button')
+    deleteBtn.innerHTML = "<i class='bi bi-trash-fill' />"
+
+    actions.append(editBtn, deleteBtn)
+    card.append(title, actions)
+
+    return card
+  })
+
+  return cardsTag
+}
+
+const handleOpenChat = ({ target: el }) => {
+  const chatNumber = el.getAttribute('data-chat')
+  if (!chatNumber) return
+
+  askForm.classList.remove('hide')
+  questionEntry.focus()
+
+  currentChatNumber = chatNumber
+  currentChat = chats[currentChatNumber]
+
+  renderCurrentChat()
+}
+
+const renderLoadedChats = () => {
+  const chatsContainer = createElement('ul', 'c-chats')
+  chatsContainer.addEventListener('click', handleOpenChat)
+
+  const cardsTag = generateChatsHtml(chats)
+
+  chatsContainer.append(...cardsTag)
+  main.appendChild(chatsContainer)
 }
 
 const loadDataStorage = () => {
-  const data = JSON.parse(localStorage.getItem("@mr:chatGPT")) || []
+  chats = JSON.parse(localStorage.getItem("@mr:chatGPT:chats")) || []
 
-  questionsAndAnswers = data
+  if (chats.length) {
+    renderLoadedChats()
+    return
+  }
 
-  renderLoadedData()
-
-  responses.scrollTop = responses.scrollHeight;
+  chats.unshift([])
+  currentChat = chats[currentChatNumber]
 }
 settings.save_queries && loadDataStorage()
 
 const saveDataStorage = () => {
-  const dataJson = JSON.stringify(questionsAndAnswers)
+  const dataJson = JSON.stringify(chats)
+  localStorage.setItem("@mr:chatGPT:chats", dataJson)
+}
 
-  localStorage.setItem("@mr:chatGPT", dataJson)
+const removePlaceholder = () => {
+  const placeholder = document.querySelector('.placeholder')
+  placeholder && placeholder.remove()
 }
 
 const sendQuestion = async (question) => {
-  const h2 = createElement('h2', 'question', question)
-  h2.innerHTML = '<img src="./assets/img/send.png" alt="Ícone para enviar pergunta"></img>' + h2.textContent
+  const responses = document.querySelector('[data-responses]')
 
-  responses.appendChild(h2)
+  const questionContainer = createElement('div', 'c-responses__question')
+  const questionMessage = createElement('h3', null, question)
+  questionContainer.innerHTML = '<i class="bi bi-send-fill"></i>'
+  questionContainer.appendChild(questionMessage)
 
-  responses.scrollTop = responses.scrollHeight;
+  responses.appendChild(questionContainer)
+  main.scrollTop = main.scrollHeight
 
-  stopBtn.classList.remove('hide')
-  progressElem.textContent = "Aguardando resposta da api..."
+  statusStopBtn.classList.remove('hide')
+  statusProgress.textContent = "Aguardando resposta da api..."
 
   const jsonResponse = await fetchAPI(question)
 
   if (!jsonResponse) return
 
-  if (jsonResponse.error?.message) {
-    progressElem.textContent = 'Erro ao fazer consulta, tente mais tarde.'
-    stopBtn.classList.add('hide')
+  const hasError = jsonResponse.error?.message
+  if (!!hasError) {
+    statusProgress.textContent = 'Erro ao fazer consulta, tente mais tarde.'
+    statusStopBtn.classList.add('hide')
 
-    const h2 = createElement('h2', 'response', jsonResponse.error.message)
+    const h2 = createElement('h2', 'c-responses__response--error', jsonResponse.error.message)
     responses.appendChild(h2)
     responses.scrollTop = responses.scrollHeight;
     return
   }
 
-  if (jsonResponse.choices?.[0].text) {
-    const text = jsonResponse.choices[0].text
+  const hasText = jsonResponse.choices?.[0].text
+  if (!!hasText) {
+    const text = hasText
 
     writeText(text)
 
     if (settings.save_queries) {
-      questionsAndAnswers.push({
+      currentChat.push({
         question,
         answer: text
       })
       saveDataStorage()
-      console.log('Salvar queries')
+      console.log('Salvando queries')
     }
 
 
@@ -156,7 +233,7 @@ const sendQuestion = async (question) => {
 const fetchAPI = async (question) => {
   try {
     const context = settings.save_context
-      ? questionsAndAnswers.map(({ answer }) => answer)?.join('')
+      ? currentChat.map(({ answer }) => answer)?.join('')
       : ''
 
     controller = new AbortController();
@@ -183,10 +260,10 @@ const fetchAPI = async (question) => {
     if (error.name === 'AbortError') {
       console.log('A requisição foi interrompida.');
     } else {
-      progressElem.textContent = 'Erro ao fazer a requisição, tente mais tarde.'
+      statusProgress.textContent = 'Erro ao fazer a requisição, tente mais tarde.'
       console.error('Erro ao fazer a requisição:', error);
     }
-    stopBtn.classList.add('hide')
+    statusStopBtn.classList.add('hide')
   } finally {
     questionEntry.value = "";
     questionEntry.disabled = false;
@@ -196,12 +273,14 @@ const fetchAPI = async (question) => {
 
 const sleep = (ms) => new Promise(res => setInterval(res, ms))
 
+
 const writeText = async (text) => {
-  text = text.replace(/^(\n)+/g, '');
+  text = text.replace(/^(\n)+/g, 'Chat GPT:\n\n');
 
-  const classResponse = text === 'Sem resposta' ? 'response error' : 'response'
+  const responses = document.querySelector('[data-responses]')
 
-  const responseElem = createElement('pre', classResponse, "Chat GPT:\n\n")
+  const classResponse = text === 'Sem resposta' ? 'c-responses__response--error' : 'c-responses__response'
+  const responseElem = createElement('pre', classResponse)
   responses.appendChild(responseElem)
 
   isPrinting = true
@@ -209,13 +288,13 @@ const writeText = async (text) => {
     const hasText = responseElem.textContent
     responseElem.textContent = hasText ? hasText + text[i] : text[i];
 
-    progressElem.textContent =
+    statusProgress.textContent =
       `Respondendo [ ${i + 1} / ${text.length}  ] ${Math.floor((i + 1) / text.length * 100)}%`;
 
-    responses.scrollTop = responses.scrollHeight;
+    main.scrollTop = main.scrollHeight
 
     if (!isPrinting) {
-      progressElem.textContent = "Renderização parada..."
+      statusProgress.textContent = "Renderização parada..."
       return
     }
 
@@ -224,13 +303,13 @@ const writeText = async (text) => {
 
   isPrinting = false
 
-  progressElem.textContent = `[ ${text.length} / ${text.length}  ] 100%`
+  statusProgress.textContent = `[ ${text.length} / ${text.length}  ] 100%`
 
-  stopBtn.classList.add('hide')
+  statusStopBtn.classList.add('hide')
 }
 
 const showHideBlurSettings = () => {
-  blur.classList.toggle('active')
+  settingsBlur.classList.toggle('active')
 }
 
 menu.addEventListener('click', showHideBlurSettings)
@@ -242,22 +321,22 @@ const handleForm = (e) => {
 
   if (!question) return
 
-  placeholderElem && placeholderElem.remove()
+  removePlaceholder()
 
   sendQuestion(question)
   questionEntry.value = ""
 }
 
-form.addEventListener('submit', handleForm)
+askForm.addEventListener('submit', handleForm)
 
 const handleStopRequest = () => {
   isPrinting = false
   controller.abort();
-  progressElem.textContent = "Requisição parada...";
-  stopBtn.classList.add('hide')
+  statusProgress.textContent = "Requisição parada...";
+  statusStopBtn.classList.add('hide')
 }
 
-stopBtn.addEventListener('click', handleStopRequest)
+statusStopBtn.addEventListener('click', handleStopRequest)
 
 const handleSettingsForm = (e) => {
   e.preventDefault()
@@ -328,4 +407,4 @@ const handleCloseClick = (e) => {
   showHideBlurSettings()
 }
 
-closeBtn.addEventListener('click', handleCloseClick);
+closeSettingsBtn.addEventListener('click', handleCloseClick);
