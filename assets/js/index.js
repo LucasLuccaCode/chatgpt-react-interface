@@ -80,7 +80,7 @@ const createElement = (element, className, textContent) => {
 
 const generateCurrentChatHtml = () => {
   const questionsAndAnswersTags = currentChat.data.reduce((acc, { question, answer }) => {
-    answer = answer.replace(/^\n+/, "ChatGPT:\n\n")
+    answer = answer.replace(/^.?\n\n/, 'Chat GPT:\n\n');
 
     const questionContainer = createElement('div', 'c-responses__question')
     const questionMessage = createElement('h3', null, question)
@@ -112,7 +112,6 @@ const renderCurrentChat = () => {
 
 const generateChatsHtml = chats => {
   const cardsTag = chats.map((chat, index) => {
-    console.log(chat)
     const title = chat.title || chat.data[0].question
 
     const card = createElement('li', 'c-chats__card')
@@ -139,6 +138,20 @@ const generateChatsHtml = chats => {
 
   return cardsTag
 }
+
+function debounce(func, delay) {
+  let timerId;
+  return function (...args) {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+    timerId = setTimeout(() => {
+      func.apply(this, args);
+      timerId = null;
+    }, delay);
+  };
+}
+
 
 const handleChatClick = ({ target: el }) => {
   const key = Object.keys(el.dataset)[0]
@@ -178,18 +191,17 @@ const handleChatClick = ({ target: el }) => {
       editBtn.setAttribute('data-save', id)
       editBtn.innerHTML = '<i class="bi bi-check-lg"></i>'
 
-      title.onblur = () => {
+      title.addEventListener("blur", debounce(() => {
         title.contentEditable = false
         title.classList.remove('editing')
-      }
+
+        editBtn.removeAttribute('data-save')
+        editBtn.setAttribute('data-edit', id)
+        editBtn.innerHTML = "<i class='bi bi-pencil-fill' />"
+      }, 100))
     },
     save() {
       const title = chatEl.querySelector('[data-chat-title]')
-      const editBtn = chatEl.querySelector('[data-save]')
-
-      editBtn.removeAttribute('data-save')
-      editBtn.setAttribute('data-edit', id)
-      editBtn.innerHTML = "<i class='bi bi-pencil-fill' />"
 
       const oldTitle = chats[id].title
       const newTitle = title.textContent
@@ -330,7 +342,7 @@ const sleep = (ms) => new Promise(res => setInterval(res, ms))
 
 
 const writeText = async (text) => {
-  text = text.replace(/^(\n)+/g, 'Chat GPT:\n\n');
+  text = text.replace(/^.?\n\n/, 'Chat GPT:\n\n');
 
   const responses = document.querySelector('[data-responses]')
 

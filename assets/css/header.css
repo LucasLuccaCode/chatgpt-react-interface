@@ -1,18 +1,9 @@
 .c-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   padding: .5rem var(--margin-h);
   background: var(--secondary-color);
-}
-
-.c-header__menu {
-  display: flex;
-}
-
-.c-header__menu img {
-  width: 1rem;
-  height: 1rem;
 }
 
 .c-header h1 {
@@ -20,20 +11,20 @@
   font-size: 1rem;
 }
 
-.c-header__add__chat {
+.c-header button {
   cursor: pointer;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  width: 1.3rem;
-  height: 1.3rem;
-  border-radius: .15rem;
-  font-size: 1rem;
-  color: #dfdfef;
-  font-weight: bold;
+  background: transparent;
+  border-radius: .2rem;
+}
+
+.c-header button:hover {
   background: rgba(255, 255, 255, .1);
 }
 
-.c-header__new_chat:hover {
-  background: rgba(255, 255, 255, .2);
+.c-header button i {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #efefff;
 }
