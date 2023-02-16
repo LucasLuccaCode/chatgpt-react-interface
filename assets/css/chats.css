@@ -21,8 +21,19 @@
 .c-chats__card__title {
   pointer-events: none;
   flex: 1;
-  color: #efefff;
   font-size: .8rem;
+  color: #efefff;
+  padding: .3rem .5rem;
+  border-radius: .2rem;
+}
+
+.c-chats__card__title:focus {
+  outline: 1.8px solid rgba(255, 255, 255, .1);
+  text-overflow: initial;
+}
+
+.c-chats__card__title.editing {
+  pointer-events: auto;
 }
 
 .c-chats__card__title::first-letter {
@@ -32,6 +43,7 @@
 .c-chats__card__actions {
   display: flex;
   gap: .5rem;
+  margin-left: .5rem;
 }
 
 .c-chats__card__actions button {
@@ -48,6 +60,7 @@
 }
 
 .c-chats__card__actions button i {
+  pointer-events: none;
   font-size: .7rem;
   color: #dadae0;
 }

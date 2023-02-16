@@ -19,7 +19,7 @@ const temperatureValue = document.querySelector('[data-temperature-value]')
 const footer = document.querySelector('[data-footer]')
 
 let chats = []
-let currentChat = []
+let currentChat = {}
 let currentChatNumber = 0
 let settings = {}
 
@@ -79,7 +79,7 @@ const createElement = (element, className, textContent) => {
 }
 
 const generateCurrentChatHtml = () => {
-  const questionsAndAnswersTags = currentChat.reduce((acc, { question, answer }) => {
+  const questionsAndAnswersTags = currentChat.data.reduce((acc, { question, answer }) => {
     answer = answer.replace(/^\n+/, "ChatGPT:\n\n")
 
     const questionContainer = createElement('div', 'c-responses__question')
@@ -112,23 +112,27 @@ const renderCurrentChat = () => {
 
 const generateChatsHtml = chats => {
   const cardsTag = chats.map((chat, index) => {
-    const firstQuestion = chat[0].question
+    console.log(chat)
+    const title = chat.title || chat.data[0].question
 
     const card = createElement('li', 'c-chats__card')
     card.setAttribute('data-chat', index)
 
-    const title = createElement('h3', 'c-chats__card__title nowrap', firstQuestion)
+    const titleEl = createElement('h3', 'c-chats__card__title nowrap', title)
+    titleEl.setAttribute('data-chat-title', '')
 
     const actions = createElement('div', 'c-chats__card__actions')
 
     const editBtn = createElement('button')
+    editBtn.setAttribute('data-edit', index)
     editBtn.innerHTML = "<i class='bi bi-pencil-fill' />"
 
     const deleteBtn = createElement('button')
+    deleteBtn.setAttribute('data-delete', index)
     deleteBtn.innerHTML = "<i class='bi bi-trash-fill' />"
 
     actions.append(editBtn, deleteBtn)
-    card.append(title, actions)
+    card.append(titleEl, actions)
 
     return card
   })
@@ -136,22 +140,77 @@ const generateChatsHtml = chats => {
   return cardsTag
 }
 
-const handleOpenChat = ({ target: el }) => {
-  const chatNumber = el.getAttribute('data-chat')
-  if (!chatNumber) return
+const handleChatClick = ({ target: el }) => {
+  const key = Object.keys(el.dataset)[0]
+  const id = el.dataset[key]
 
-  footer.classList.remove('hide')
-  questionEntry.focus()
+  if (!key) return
 
-  currentChatNumber = chatNumber
-  currentChat = chats[currentChatNumber]
+  const chatEl = document.querySelector(`[data-chat='${id}']`)
 
-  renderCurrentChat()
+  const allowedActions = {
+    chat() {
+      footer.classList.remove('hide')
+      questionEntry.focus()
+
+      currentChatNumber = id
+      currentChat = chats[currentChatNumber]
+
+      renderCurrentChat()
+    },
+    delete() {
+      chats.splice(id, 1)
+
+      const chatEl = document.querySelector(`[data-chat='${id}']`)
+      chatEl.remove()
+
+      saveDataStorage()
+    },
+    edit() {
+      const title = chatEl.querySelector('[data-chat-title]')
+      const editBtn = chatEl.querySelector('[data-edit]')
+
+      title.classList.add('editing')
+      title.contentEditable = true
+      title.focus()
+
+      editBtn.removeAttribute('data-edit')
+      editBtn.setAttribute('data-save', id)
+      editBtn.innerHTML = '<i class="bi bi-check-lg"></i>'
+
+      title.onblur = () => {
+        title.contentEditable = false
+        title.classList.remove('editing')
+      }
+    },
+    save() {
+      const title = chatEl.querySelector('[data-chat-title]')
+      const editBtn = chatEl.querySelector('[data-save]')
+
+      editBtn.removeAttribute('data-save')
+      editBtn.setAttribute('data-edit', id)
+      editBtn.innerHTML = "<i class='bi bi-pencil-fill' />"
+
+      const oldTitle = chats[id].title
+      const newTitle = title.textContent
+
+      if (newTitle !== oldTitle) {
+        chats[currentChatNumber].title = newTitle
+        currentChat.title = newTitle
+
+        saveDataStorage()
+      }
+    }
+  }
+
+  const fn = allowedActions[key]
+  fn && fn()
 }
+
 
 const renderLoadedChats = () => {
   const chatsContainer = createElement('ul', 'c-chats')
-  chatsContainer.addEventListener('click', handleOpenChat)
+  chatsContainer.addEventListener('click', handleChatClick)
 
   const cardsTag = generateChatsHtml(chats)
 
@@ -162,13 +221,7 @@ const renderLoadedChats = () => {
 const loadDataStorage = () => {
   chats = JSON.parse(localStorage.getItem("@mr:chatGPT:chats")) || []
 
-  if (chats.length) {
-    renderLoadedChats()
-    return
-  }
-
-  chats.unshift([])
-  currentChat = chats[currentChatNumber]
+  !!chats.length && renderLoadedChats()
 }
 settings.save_queries && loadDataStorage()
 
@@ -213,14 +266,18 @@ const sendQuestion = async (question) => {
     writeText(text)
 
     if (settings.save_queries) {
-      currentChat.push({
+      currentChat.data.push({
         question,
         answer: text
       })
+
+      if (!currentChat.title) {
+        currentChat.title = question
+      }
+
       saveDataStorage()
       console.log('Salvando queries')
     }
-
 
     return
   }
@@ -231,7 +288,7 @@ const sendQuestion = async (question) => {
 const fetchAPI = async (question) => {
   try {
     const context = settings.save_context
-      ? currentChat.map(({ answer }) => answer)?.join('')
+      ? currentChat.data.map(({ answer }) => answer)?.join('')
       : ''
 
     controller = new AbortController();
@@ -278,13 +335,13 @@ const writeText = async (text) => {
   const responses = document.querySelector('[data-responses]')
 
   const classResponse = text === 'Sem resposta' ? 'c-responses__response--error' : 'c-responses__response'
-  const responseElem = createElement('pre', classResponse)
-  responses.appendChild(responseElem)
+  const responseEl = createElement('pre', classResponse)
+  responses.appendChild(responseEl)
 
   isPrinting = true
   for (let i = 0; i < text.length; i++) {
-    const hasText = responseElem.textContent
-    responseElem.textContent = hasText ? hasText + text[i] : text[i];
+    const hasText = responseEl.textContent
+    responseEl.textContent = hasText ? hasText + text[i] : text[i];
 
     statusProgress.textContent =
       `Respondendo [ ${i + 1} / ${text.length}  ] ${Math.floor((i + 1) / text.length * 100)}%`;
@@ -409,7 +466,11 @@ const handleCloseClick = (e) => {
 closeSettingsBtn.addEventListener('click', handleCloseClick);
 
 const handleAddChat = () => {
-  chats.unshift([])
+  chats.unshift({
+    title: null,
+    data: []
+  })
+
   currentChatNumber = 0
   currentChat = chats[currentChatNumber]
 
