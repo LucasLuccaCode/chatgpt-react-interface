@@ -275,37 +275,32 @@ const sendQuestion = async (question) => {
     return
   }
 
-  const hasText = jsonResponse.choices?.[0].text
-  if (!!hasText) {
-    const text = hasText
+  const answer = jsonResponse.choices?.[0].text || 'Sem resposta'
 
-    writeText(text)
+  writeText(answer)
 
-    if (settings.save_queries) {
-      if (!currentChat.id) {
-        chats.unshift({
-          id: Date.now(),
-          title: question,
-          data: [
-            {
-              question,
-              answer: text
-            }
-          ]
-        })
-      } else {
-        currentChat.data.push({
+  if (!settings.save_queries) return
+
+  const emptyChat = !currentChat.id
+  if (emptyChat) {
+    chats.unshift({
+      id: Date.now(),
+      title: question,
+      data: [
+        {
           question,
-          answer: text
-        })
-      }
-
-      saveDataStorage()
-    }
-    return
+          answer
+        }
+      ]
+    })
+  } else {
+    currentChat.data.push({
+      question,
+      answer
+    })
   }
 
-  writeText("Sem resposta")
+  saveDataStorage()
 }
 
 const fetchAPI = async (question) => {
@@ -448,7 +443,6 @@ const handleSettingsForm = (e) => {
   showHideBlurSettings()
 }
 
-
 settingsForm.addEventListener('submit', handleSettingsForm)
 
 const handleInputsSettings = ({ target: el }) => {
@@ -489,7 +483,7 @@ closeSettingsBtn.addEventListener('click', handleCloseClick);
 
 const handleAddChat = () => {
   currentChat = {}
-  
+
   const back = createElement('button', 'c-responses__back')
   back.setAttribute('data-back', '')
   back.innerHTML = '<i class="bi bi-arrow-left-short"></i>'
