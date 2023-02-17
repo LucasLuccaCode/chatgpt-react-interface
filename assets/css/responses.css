@@ -2,6 +2,24 @@
   width: 100%;
 }
 
+.c-responses__back {
+  position: sticky;
+  top: 0;
+  border-radius: 50px;
+  background: #4a4a50;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 1px 1px 2px rgba(0, 0, 0, .1);
+}
+
+.c-responses__back:hover {
+  background: #5a5a60;
+}
+
+.c-responses__back i {
+  font-size: 1.3rem;
+  color: #fff;
+}
+
 .c-responses__question {
   display: flex;
   align-items: center;

@@ -23,7 +23,6 @@
 }
 
 .c-status__stop {
-  cursor: pointer;
   font-size: .7rem;
   padding: .3rem .5rem;
   color: #fff;
@@ -73,7 +72,6 @@
 }
 
 .c-ask_form button {
-  cursor: pointer;
   padding: .25rem;
   border-radius: .2rem;
   margin: 0 .3rem 0 .5rem;

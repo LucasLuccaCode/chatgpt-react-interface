@@ -20,7 +20,7 @@ const footer = document.querySelector('[data-footer]')
 
 let chats = []
 let currentChat = {}
-let currentChatNumber = 0
+let currentChatId = 0
 let settings = {}
 
 const API_KEY = "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"
@@ -99,23 +99,26 @@ const generateCurrentChatHtml = () => {
 const renderCurrentChat = () => {
   main.innerHTML = ""
 
+  const back = createElement('button', 'c-responses__back')
+  back.setAttribute('data-back', '')
+  back.innerHTML = '<i class="bi bi-arrow-left-short"></i>'
+  back.addEventListener('click', renderLoadedChats)
+
   const responsesContainer = createElement('ul', 'c-responses')
   responsesContainer.setAttribute('data-responses', '')
 
   const responsesTags = generateCurrentChatHtml()
 
-  responsesContainer.append(...responsesTags)
+  responsesContainer.append(back, ...responsesTags)
   main.appendChild(responsesContainer)
 
   main.scrollTop = main.scrollHeight;
 }
 
 const generateChatsHtml = chats => {
-  const cardsTag = chats.map((chat, index) => {
-    const title = chat.title || chat.data[0].question
-
+  const cardsTag = chats.map(({ id, title }) => {
     const card = createElement('li', 'c-chats__card')
-    card.setAttribute('data-chat', index)
+    card.setAttribute('data-chat', id)
 
     const titleEl = createElement('h3', 'c-chats__card__title nowrap', title)
     titleEl.setAttribute('data-chat-title', '')
@@ -123,11 +126,11 @@ const generateChatsHtml = chats => {
     const actions = createElement('div', 'c-chats__card__actions')
 
     const editBtn = createElement('button')
-    editBtn.setAttribute('data-edit', index)
+    editBtn.setAttribute('data-edit', id)
     editBtn.innerHTML = "<i class='bi bi-pencil-fill' />"
 
     const deleteBtn = createElement('button')
-    deleteBtn.setAttribute('data-delete', index)
+    deleteBtn.setAttribute('data-delete', id)
     deleteBtn.innerHTML = "<i class='bi bi-trash-fill' />"
 
     actions.append(editBtn, deleteBtn)
@@ -152,12 +155,13 @@ function debounce(func, delay) {
   };
 }
 
-
 const handleChatClick = ({ target: el }) => {
   const key = Object.keys(el.dataset)[0]
-  const id = el.dataset[key]
+  const id = Number(el.dataset[key])
 
-  if (!key) return
+  if (!id) return
+
+  currentChat = chats.find(chat => chat.id === id)
 
   const chatEl = document.querySelector(`[data-chat='${id}']`)
 
@@ -166,15 +170,11 @@ const handleChatClick = ({ target: el }) => {
       footer.classList.remove('hide')
       questionEntry.focus()
 
-      currentChatNumber = id
-      currentChat = chats[currentChatNumber]
-
       renderCurrentChat()
     },
     delete() {
-      chats.splice(id, 1)
+      chats = chats.filter(chat => chat.id !== id)
 
-      const chatEl = document.querySelector(`[data-chat='${id}']`)
       chatEl.remove()
 
       saveDataStorage()
@@ -203,13 +203,11 @@ const handleChatClick = ({ target: el }) => {
     save() {
       const title = chatEl.querySelector('[data-chat-title]')
 
-      const oldTitle = chats[id].title
+      const oldTitle = currentChat.title
       const newTitle = title.textContent
 
       if (newTitle !== oldTitle) {
-        chats[currentChatNumber].title = newTitle
         currentChat.title = newTitle
-
         saveDataStorage()
       }
     }
@@ -221,6 +219,8 @@ const handleChatClick = ({ target: el }) => {
 
 
 const renderLoadedChats = () => {
+  main.innerHTML = ''
+
   const chatsContainer = createElement('ul', 'c-chats')
   chatsContainer.addEventListener('click', handleChatClick)
 
@@ -232,8 +232,12 @@ const renderLoadedChats = () => {
 
 const loadDataStorage = () => {
   chats = JSON.parse(localStorage.getItem("@mr:chatGPT:chats")) || []
-
-  !!chats.length && renderLoadedChats()
+  console.log(chats)
+  if (chats.length) {
+    renderLoadedChats()
+    return
+  }
+  main.innerHTML = '<p class="placeholder">Nenhuma conversa salva ainda.<br />Clique no + acima para iniciar uma.</p>'
 }
 settings.save_queries && loadDataStorage()
 
@@ -278,19 +282,26 @@ const sendQuestion = async (question) => {
     writeText(text)
 
     if (settings.save_queries) {
-      currentChat.data.push({
-        question,
-        answer: text
-      })
-
-      if (!currentChat.title) {
-        currentChat.title = question
+      if (!currentChat.id) {
+        chats.unshift({
+          id: Date.now(),
+          title: question,
+          data: [
+            {
+              question,
+              answer: text
+            }
+          ]
+        })
+      } else {
+        currentChat.data.push({
+          question,
+          answer: text
+        })
       }
 
       saveDataStorage()
-      console.log('Salvando queries')
     }
-
     return
   }
 
@@ -381,7 +392,7 @@ const showHideBlurSettings = () => {
 
 menu.addEventListener('click', showHideBlurSettings)
 
-const handleForm = (e) => {
+const handleAskForm = (e) => {
   e.preventDefault()
 
   const question = questionEntry.value.trim()
@@ -395,7 +406,7 @@ const handleForm = (e) => {
   questionEntry.value = ""
 }
 
-askForm.addEventListener('submit', handleForm)
+askForm.addEventListener('submit', handleAskForm)
 
 const handleStopRequest = () => {
   isPrinting = false
@@ -465,8 +476,7 @@ const handleInputsSettings = ({ target: el }) => {
   fn && fn()
 }
 
-inputsSettings.forEach(input =>
-  input.addEventListener('change', handleInputsSettings))
+inputsSettings.forEach(input => input.addEventListener('change', handleInputsSettings))
 
 const handleCloseClick = (e) => {
   e.preventDefault()
@@ -478,15 +488,17 @@ const handleCloseClick = (e) => {
 closeSettingsBtn.addEventListener('click', handleCloseClick);
 
 const handleAddChat = () => {
-  chats.unshift({
-    title: null,
-    data: []
-  })
+  currentChat = {}
+  
+  const back = createElement('button', 'c-responses__back')
+  back.setAttribute('data-back', '')
+  back.innerHTML = '<i class="bi bi-arrow-left-short"></i>'
+  back.addEventListener('click', renderLoadedChats)
 
-  currentChatNumber = 0
-  currentChat = chats[currentChatNumber]
+  main.innerHTML = ''
 
-  main.innerHTML = `<p class="placeholder">Faça uma pergunta para exibir aqui a resposta...</p>`
+  const placeholder = createElement('p', 'placeholder', 'Faça uma pergunta para exibir aqui a resposta...')
+  main.append(back, placeholder)
 
   const responsesContainer = createElement('ul', 'c-responses')
   responsesContainer.setAttribute('data-responses', '')

@@ -23,8 +23,9 @@
   flex: 1;
   font-size: .8rem;
   color: #efefff;
-  padding: .3rem .5rem;
+  padding: .3rem 0rem;
   border-radius: .2rem;
+  transition: all .3s;
 }
 
 .c-chats__card__title:focus {
@@ -34,6 +35,7 @@
 
 .c-chats__card__title.editing {
   pointer-events: auto;
+  padding: .3rem .5rem;
 }
 
 .c-chats__card__title::first-letter {
@@ -47,7 +49,6 @@
 }
 
 .c-chats__card__actions button {
-  cursor: pointer;
   border-radius: .3rem;
   padding: .3rem;
   background: rgba(255, 255, 255, .1);
