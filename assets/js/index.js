@@ -221,6 +221,8 @@ const handleChatClick = ({ target: el }) => {
 const renderLoadedChats = () => {
   main.innerHTML = ''
 
+  footer.classList.add('hide')
+
   const chatsContainer = createElement('ul', 'c-chats')
   chatsContainer.addEventListener('click', handleChatClick)
 
@@ -232,11 +234,12 @@ const renderLoadedChats = () => {
 
 const loadDataStorage = () => {
   chats = JSON.parse(localStorage.getItem("@mr:chatGPT:chats")) || []
-  console.log(chats)
+  
   if (chats.length) {
     renderLoadedChats()
     return
   }
+
   main.innerHTML = '<p class="placeholder">Nenhuma conversa salva ainda.<br />Clique no + acima para iniciar uma.</p>'
 }
 settings.save_queries && loadDataStorage()
@@ -472,14 +475,14 @@ const handleInputsSettings = ({ target: el }) => {
 
 inputsSettings.forEach(input => input.addEventListener('change', handleInputsSettings))
 
-const handleCloseClick = (e) => {
+const handleCloseSettings = (e) => {
   e.preventDefault()
 
   loadSettingsStorage()
   showHideBlurSettings()
 }
 
-closeSettingsBtn.addEventListener('click', handleCloseClick);
+closeSettingsBtn.addEventListener('click', handleCloseSettings);
 
 const handleAddChat = () => {
   currentChat = {}

@@ -26,10 +26,6 @@
   margin-top: 1rem;
 }
 
-.c-responses__question:nth-child(1) {
-  margin-top: 0;
-}
-
 .c-responses__question i {
   font-size: .7rem;
   color: var(--details-color);
