@@ -10,7 +10,7 @@ padding: .8rem .4rem;
 border-bottom: 2px solid rgba(0, 0, 0, .3);
 
   &:hover {
-    background: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .05);
     border-radius: ${props => props.theme.b_radius};
 
     h3 {

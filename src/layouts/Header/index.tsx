@@ -1,10 +1,20 @@
 import React from "react"
-import { Container } from "./styles"
+
+import { HeaderContainer, Title, ChatTitleContainer, ChatTitle } from "./styles"
+
+import { ChatTitleActions } from "../../components/ChatTitleActions"
 
 export const Header: React.FC = () => {
   return (
-    <Container>
-      <h1>ChatGPT</h1>
-    </Container>
+    <HeaderContainer>
+      <Title>Chat GPT</Title>
+      <ChatTitleContainer>
+        <ChatTitle className="nowrap">
+          Defina inteligência artificial
+        </ChatTitle>
+
+        <ChatTitleActions />
+      </ChatTitleContainer>
+    </HeaderContainer>
   )
 }
