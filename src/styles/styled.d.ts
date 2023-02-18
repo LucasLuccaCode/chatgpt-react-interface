@@ -7,7 +7,9 @@ declare module 'styled-components' {
     colors: {
       primary: string,
       secondary: string,
+      details: string,
       background: string,
+      second_bg: string,
       text: string
     }
     margins: {
