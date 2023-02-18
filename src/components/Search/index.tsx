@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from "react"
 
-import { Button, SearchForm, InputSearch } from "./styles"
+import { SearchForm, InputSearch, Button } from "./styles"
 
 export const Search: React.FC = () => {
   const [chatSearch, setChatSearch] = useState("")
@@ -13,7 +13,11 @@ export const Search: React.FC = () => {
 
   return (
     <SearchForm onSubmit={handleSearchChat}>
-      <InputSearch name="search" onChange={e => setChatSearch(e.target.value)} />
+      <InputSearch 
+        type="search" 
+        name="search" 
+        onChange={e => setChatSearch(e.target.value)} 
+      />
       <Button type="submit">
         <i className="bi bi-search" />
       </Button>

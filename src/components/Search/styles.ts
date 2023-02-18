@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const SearchForm = styled.form`
 display: flex;
+gap: .3rem;
+width: 100%;
 padding: .3rem;
 border-radius: ${props => props.theme.b_radius};
 background: ${props => props.theme.colors.second_bg};
@@ -9,10 +11,12 @@ background: ${props => props.theme.colors.second_bg};
 
 export const InputSearch = styled.input`
   flex: 1;
-  background: transparent;
+  flex-direction: column;
   border: 0;
   outline: 0;
   color: ${props => props.theme.colors.text};
+  background: transparent;
+  overflow: hidden;
 `
 
 export const Button = styled.button`
@@ -26,7 +30,7 @@ border-radius: .3rem;
 
   i {
     font-size: .8rem;
-    color: white;
+    color: ${props => props.theme.colors.text};
   }
 
 `

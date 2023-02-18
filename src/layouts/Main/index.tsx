@@ -1,10 +1,13 @@
 import React from "react"
-import { Container } from "./styles"
+
+import { MainContainer } from "./styles"
+
+import { ChatContent } from "../../components/ChatContent"
 
 export const Main: React.FC = () => {
   return (
-    <Container>
-      <h2>Content</h2>
-    </Container>
+    <MainContainer>
+      <ChatContent />
+    </MainContainer>
   )
 }
