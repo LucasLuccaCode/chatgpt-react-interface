@@ -23,7 +23,7 @@ let currentChat = {}
 let currentChatId = 0
 let settings = {}
 
-const API_KEY = "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"
+const API_KEY = "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"
 let isPrinting = false
 let controller = null
 
