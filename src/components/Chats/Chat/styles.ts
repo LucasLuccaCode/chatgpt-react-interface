@@ -29,7 +29,7 @@ border-bottom: 2px solid rgba(0, 0, 0, .3);
 
   h3 {
     font-size: .8rem;
-    color: #aaaab0;
+    color: #8a8a90;
     font-weight: normal;
     padding-right: .3rem;
   }

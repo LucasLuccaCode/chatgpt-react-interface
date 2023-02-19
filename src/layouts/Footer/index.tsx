@@ -1,10 +1,15 @@
 import React from "react"
-import { Container } from "./styles"
+
+import { FooterContainer } from "./styles"
+
+import { AskForm } from "../../components/AskForm"
+import { Status } from "../../components/FooterStatus"
 
 export const Footer: React.FC = () => {
   return (
-    <Container>
-      <h2>Input</h2>
-    </Container>
+    <FooterContainer>
+      <Status />
+      <AskForm />
+    </FooterContainer>
   )
 }

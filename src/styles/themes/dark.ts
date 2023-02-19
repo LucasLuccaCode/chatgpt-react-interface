@@ -10,6 +10,6 @@ export default {
     text: '#efefff'
   },
   margins: {
-    space: '.4rem',
+    space: '.5rem',
   }
 }

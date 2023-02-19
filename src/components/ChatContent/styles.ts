@@ -1,13 +1,21 @@
 import styled from "styled-components";
 
-export const ChatContainer = styled.ul`
+export const Main = styled.main`
 grid-area: main;
+padding: .6rem;
+padding-right: .2rem;
+width: 100%;
+height: 100%;
+overflow: hidden;
+`
+
+export const ChatContainer = styled.ul`
 display: flex;
 flex-direction: column;
 gap: 1rem;
 width: 100%;
 height: 100%;
-padding: 1rem;
+padding-right: .3rem;
 background: #151515;
 overflow-y: auto;
 
@@ -50,12 +58,14 @@ export const Answer = styled.pre`
 padding: .5rem;
 border-radius: .2rem;
 width: 100%;
-color: #cacad0;
+/* color: #cacad0; */
+color: #9a9aa0;
 font-size: .8rem;
 white-space: pre-wrap;
 word-wrap: break-word;
 line-height: 1.2rem;
-background: rgba(255, 255, 255, .04);
+/* background: rgba(255, 255, 255, .04); */
+background:  ${props => props.theme.colors.background};
 margin-top: .6rem;
 border: 1px solid rgba(255, 255, 255, .03);
 border-radius: ${props => props.theme.b_radius};

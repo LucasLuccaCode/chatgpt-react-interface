@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, RefObject, useCallback } from "react"
 
-import { ChatContainer, Placeholder } from "./styles"
+import { Main, ChatContainer, Placeholder } from "./styles"
 
 import { ChatCard } from "./ChatCard"
 
@@ -55,8 +55,10 @@ export const ChatContent: React.FC = () => {
   }, [chat])
 
   return (
-    <ChatContainer ref={chatContainer}>
-      {renderContent()}
-    </ChatContainer>
+    <Main>
+      <ChatContainer ref={chatContainer}>
+        {renderContent()}
+      </ChatContainer>
+    </Main>
   )
 }

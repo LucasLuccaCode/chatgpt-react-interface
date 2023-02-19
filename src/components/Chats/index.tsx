@@ -9,7 +9,31 @@ export const Chats: React.FC = () => {
     <ChatsContainer>
       {
         chats.length ? (
-          <Chat />
+          <>
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+            <Chat />
+          </>
         ) : (
           <Placeholder>Nenhum chat</Placeholder>
         )
