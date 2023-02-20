@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { API_KEY } from "../../config"
 
 interface ApiContextProps {
   controller: AbortController | undefined;
@@ -17,8 +18,6 @@ const ApiContext = createContext<ApiContextProps>({
 export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [controller, setController] = useState<AbortController>()
   const [apiMessage, setApiMessage] = useState<string>('')
-
-  const API_KEY = "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"
 
   const sendQuestionApi = useCallback(async (question: string) => {
     try {
