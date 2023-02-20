@@ -20,20 +20,22 @@ export const ChatContent: React.FC = () => {
   const chatContent = lastContentWasStored ? initial : initial.slice(0, -1)
   const [lastChat] = !lastContentWasStored ? initial.slice(-1) : [];
 
+  console.log({ currentChat, chatContent })
+
   return (
     <Main>
       <ChatContainer ref={chatContainerRef}>
-        {!!chatContent.length ? (
+        {!!currentChat?.data.length ? (
           chatContent.map(({ id, question, answer }) => (
-            <ChatCard 
-              key={id} 
-              question={question} 
-              answer={answer} 
+            <ChatCard
+              key={id}
+              question={question}
+              answer={answer}
             />
           ))
         ) : (
           <Placeholder>
-            O conteúdo do chat clicado aparecerá aqui...
+            O conteúdo do chat selecionado aparecerá aqui...
           </Placeholder>
         )}
 

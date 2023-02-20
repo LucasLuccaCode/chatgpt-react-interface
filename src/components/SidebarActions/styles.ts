@@ -30,6 +30,7 @@ background: #1a1a1a;
   }
 
   i, span {
+    pointer-events: none;
     color: #9a9aa0;
   }
   
@@ -39,6 +40,7 @@ background: #1a1a1a;
   }
 
   span {
+    pointer-events: none;
     font-size: .6rem;
     font-weight: bold;
   }

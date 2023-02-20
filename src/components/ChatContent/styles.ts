@@ -71,7 +71,7 @@ border: 1px solid rgba(255, 255, 255, .03);
 border-radius: ${props => props.theme.b_radius};
 `
 
-export const Placeholder = styled.div`
+export const Placeholder = styled.li`
 display: grid;
 place-content: center;
 width: 100%;
