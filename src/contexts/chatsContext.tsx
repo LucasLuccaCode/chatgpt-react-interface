@@ -35,7 +35,7 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [])
 
   useEffect(() => {
-    !!isLoading && localStorage.setItem(chatsStorageKey, JSON.stringify(chats))
+    !isLoading && localStorage.setItem(chatsStorageKey, JSON.stringify(chats))
   }, [chats])
 
   const loadDataStorage = () => {
@@ -54,6 +54,7 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [chats, currentChatId])
 
   const updateChats = useCallback(({ question, answer }: QuestionAnswerType) => {
+    console.log({ question, answer })
 
     if (!currentChat) {
       const currentId = Date.now()

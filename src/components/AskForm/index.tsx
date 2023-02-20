@@ -33,9 +33,6 @@ export const AskForm: React.FC<AskFormProps> = ({ question, setQuestion }) => {
 
     const answer = jsonResponse.choices?.[0].text || 'Sem resposta'
 
-    console.log(answer)
-    // writeText(answer)
-
     updateChats({ question, answer })
   }
 
