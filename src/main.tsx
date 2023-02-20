@@ -6,12 +6,15 @@ import GlobalStyle from './styles/global'
 import dark from './styles/themes/dark'
 
 import { App } from './App'
+import { ChatsProvider } from './contexts/chatsContext'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ThemeProvider theme={dark}>
-      <App />
-      <GlobalStyle />
-    </ThemeProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+    <ChatsProvider>
+      <ThemeProvider theme={dark}>
+        <App />
+        <GlobalStyle />
+      </ThemeProvider>
+    </ChatsProvider>
+  // </React.StrictMode>,
 )
