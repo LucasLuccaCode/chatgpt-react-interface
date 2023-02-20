@@ -42,7 +42,13 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const storedData = localStorage.getItem(chatsStorageKey)
 
     if (storedData) {
-      const storedChats = JSON.parse(storedData)
+      const storedChats: ChatsInfo[] = JSON.parse(storedData)
+
+      storedChats.forEach( chatInfo => {
+        const lastIndex = chatInfo.data.length - 1
+        chatInfo.data[lastIndex].storage = true
+      })
+      
       setChats(storedChats)
     }
 
@@ -54,8 +60,6 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [chats, currentChatId])
 
   const updateChats = useCallback(({ question, answer }: QuestionAnswerType) => {
-    console.log({ question, answer })
-
     if (!currentChat) {
       const currentId = Date.now()
 

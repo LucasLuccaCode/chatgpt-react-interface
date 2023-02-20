@@ -18,7 +18,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [controller, setController] = useState<AbortController>()
   const [apiMessage, setApiMessage] = useState<string>('')
 
-  const API_KEY = "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"
+  const API_KEY = "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"
 
   const sendQuestionApi = useCallback(async (question: string) => {
     try {

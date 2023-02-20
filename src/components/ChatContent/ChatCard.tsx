@@ -1,12 +1,11 @@
-import { ChatsItem } from "../../types/Chats";
-
 import { Answer, Question } from "./styles"
 
-interface ChatCardProps {
-  chatItem: ChatsItem
+export interface ChatCardProps {
+  question: string,
+  answer: string
 }
 
-export const ChatCard: React.FC<ChatCardProps> = ({ chatItem: { question, answer } }) => {
+export const ChatCard: React.FC<ChatCardProps> = ({ question, answer }) => {
   answer = answer.replace(/^.?\n\n/, 'Chat GPT:\n\n');
 
   return (

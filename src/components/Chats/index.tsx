@@ -6,7 +6,7 @@ import { Chat } from "./Chat"
 
 export const Chats: React.FC = () => {
   const { chats, setCurrentChatId } = useChats()
-
+  
   const renderChats = () => {
     if (!chats.length) {
       return (

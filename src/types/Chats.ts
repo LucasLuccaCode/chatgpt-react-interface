@@ -2,6 +2,7 @@ export interface ChatsItem {
   id: number;
   question: string;
   answer: string;
+  storage?: boolean 
 }
 
 export interface ChatsInfo {
