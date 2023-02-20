@@ -10,7 +10,7 @@ interface StatusProps {
 export const Status: React.FC<StatusProps> = ({ question }) => {
   const { apiMessage } = useApi()
 
-  const renderProgressMessage = () => {
+  const renderProgressMessage = (): string | null => {
     if (apiMessage) {
       return apiMessage
     }

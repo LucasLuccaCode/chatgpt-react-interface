@@ -14,3 +14,33 @@ font-size: .8rem;
 color: #5a5a60;
 margin-top: 1rem;
 `
+
+export const RemoveChatsButton = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+gap: .3rem;
+padding: .4rem .5rem;
+margin-top: 1rem;
+font-size: .6rem;
+font-weight: bold;
+color: ${props => props.theme.colors.details};
+border-radius: .2rem;
+border: 2px solid ${props => props.theme.colors.details};
+/* background: rgba(255, 255, 255, .1); */
+white-space: nowrap;
+background: transparent;
+
+  &:hover {
+    color: ${props => props.theme.colors.secondary};
+    background: ${props => props.theme.colors.details};
+  }
+
+  &:active {
+    transform: scale(.95)
+  }
+
+  span {
+    /* color: ${props => props.theme.colors.text}; */
+  }
+`

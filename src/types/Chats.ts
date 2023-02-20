@@ -21,6 +21,7 @@ export interface QuestionAnswerType {
 
 export interface ChatsContextTypes {
   chats: ChatsInfo[],
+  setChats: React.Dispatch<React.SetStateAction<ChatsInfo[]>>,
   currentChat: CurrentChatsType,
   currentChatId: number,
   setCurrentChatId: setCurrentChatIdType,

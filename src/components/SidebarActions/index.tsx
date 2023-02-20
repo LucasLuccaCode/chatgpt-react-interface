@@ -1,22 +1,24 @@
-import { useApi } from "../../contexts/apiContext"
 import { useChats } from "../../contexts/chatsContext"
+import { useApi } from "../../contexts/apiContext"
+import { useChatActions } from "../../contexts/chatActionsContext"
 
 import { Actions, Button } from "./styles"
 
 export const SidebarActions: React.FC = () => {
   const { setCurrentChatId } = useChats()
   const { setApiMessage } = useApi()
+  const { setSelectingChats } = useChatActions()
 
   const handleNewChat = () => {
     setCurrentChatId(0)
     setApiMessage('')
-    
-    const entryQuestion: HTMLTextAreaElement | null =  document.querySelector('textarea')
+
+    const entryQuestion: HTMLTextAreaElement | null = document.querySelector('textarea')
     entryQuestion && entryQuestion.focus()
   }
 
   const handleRemoveChat = () => {
-
+    setSelectingChats(prevState => !prevState)
   }
 
   return (

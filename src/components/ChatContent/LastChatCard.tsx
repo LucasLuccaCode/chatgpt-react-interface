@@ -21,8 +21,11 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({ question, answer, ch
 
     for (let index = 0; index < answer.length; index++) {
       const letter = answer[index]
+
       setCurrentAnswer(prevState => prevState + letter)
+
       chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight
+
       await sleep(40)
     }
   }

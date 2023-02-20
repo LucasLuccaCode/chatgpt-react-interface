@@ -17,10 +17,11 @@ import {
 
 const ChatsContext = createContext<ChatsContextTypes>({
   chats: [],
+  setChats() { },
   currentChat: null,
   currentChatId: 0,
-  setCurrentChatId: () => { },
-  updateChats: () => { }
+  setCurrentChatId() { },
+  updateChats() { }
 })
 
 const chatsStorageKey = "@mr:chatgpt:chats"
@@ -44,11 +45,11 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     if (storedData) {
       const storedChats: ChatsInfo[] = JSON.parse(storedData)
 
-      storedChats.forEach( chatInfo => {
+      storedChats.forEach(chatInfo => {
         const lastIndex = chatInfo.data.length - 1
         chatInfo.data[lastIndex].storage = true
       })
-      
+
       setChats(storedChats)
     }
 
@@ -93,6 +94,7 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const value: ChatsContextTypes = {
     chats,
+    setChats,
     currentChat,
     currentChatId,
     setCurrentChatId,

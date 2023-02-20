@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useChats } from "../../contexts/chatsContext";
 
 import { Main, ChatContainer, Placeholder } from "./styles";
 
 import { ChatCard } from "./ChatCard";
 import { LastChatCard } from "./LastChatCard";
-import { ChatsInfo } from "../../types/Chats";
 
 export const ChatContent: React.FC = () => {
   const chatContainerRef = useRef<HTMLUListElement>(null);
@@ -19,8 +18,6 @@ export const ChatContent: React.FC = () => {
   const lastContentWasStored = initial[initial.length - 1]?.storage
   const chatContent = lastContentWasStored ? initial : initial.slice(0, -1)
   const [lastChat] = !lastContentWasStored ? initial.slice(-1) : [];
-
-  console.log({ currentChat, chatContent })
 
   return (
     <Main>
