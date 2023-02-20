@@ -8,7 +8,7 @@ width: 100%;
 margin-bottom: .6rem;
 `
 
-export const Progress = styled.div`
+export const ProgressMessage = styled.div`
 font-size: .8rem;
 color: #aaaab0;
 `

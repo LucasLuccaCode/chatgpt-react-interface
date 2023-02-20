@@ -1,13 +1,30 @@
 import React from "react"
+import { useApi } from "../../contexts/apiContext"
 
-import { StatusContainer, Progress } from "./styles"
+import { StatusContainer, ProgressMessage } from "./styles"
 
-export const Status: React.FC = () => {
+interface StatusProps {
+  question: string
+}
+
+export const Status: React.FC<StatusProps> = ({ question }) => {
+  const { apiMessage } = useApi()
+
+  const renderProgressMessage = () => {
+    if (apiMessage) {
+      return apiMessage
+    }
+    if (question.length) {
+      return `Sua pergunta contém ${question.length} caracteres...`
+    }
+    return null
+  }
+
   return (
     <StatusContainer>
-      <Progress>
-        Aguardando resposta da api...
-      </Progress>
+      <ProgressMessage className="nowrap">
+        {renderProgressMessage()}
+      </ProgressMessage>
     </StatusContainer>
   )
 }
