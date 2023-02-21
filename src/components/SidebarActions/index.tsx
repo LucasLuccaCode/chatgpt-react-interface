@@ -7,7 +7,7 @@ import { Actions, Button } from "./styles"
 export const SidebarActions: React.FC = () => {
   const { setCurrentChatId } = useChats()
   const { setApiMessage } = useApi()
-  const { setSelectingChats } = useChatActions()
+  const { selectingChats, setSelectingChats } = useChatActions()
 
   const handleNewChat = () => {
     setCurrentChatId(0)
@@ -28,8 +28,8 @@ export const SidebarActions: React.FC = () => {
         <span>Novo</span>
       </Button>
       <Button onClick={handleRemoveChat}>
-        <i className="bi bi-dash" />
-        <span>Remover</span>
+        {selectingChats ? <i className="bi bi-x" /> : <i className="bi bi-dash" />}
+        <span>{selectingChats ? 'Cancelar' : 'Remover'}</span>
       </Button>
     </Actions>
   )
