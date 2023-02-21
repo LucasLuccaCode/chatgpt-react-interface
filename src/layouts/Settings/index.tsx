@@ -1,4 +1,7 @@
-import React, { ChangeEvent, useCallback, useState } from "react"
+import React from "react"
+
+import { useSettings } from "../../contexts/settingsContext"
+
 import {
   SettingsContainer,
   Form,
@@ -12,48 +15,8 @@ import {
   InputToggle,
 } from "./styles"
 
-interface ISettings {
-  size: number,
-  temperature: number,
-  tokens: number,
-  speed: number,
-  darkTheme: boolean,
-  queries: boolean,
-  contexts: boolean
-}
-
-interface MyObject {
-  [key: string]: number | boolean;
-}
-
-const initialSettings: ISettings = {
-  size: 18,
-  temperature: 0.6,
-  tokens: 2050,
-  speed: 40,
-  darkTheme: true,
-  queries: true,
-  contexts: false
-}
-
 export const Settings: React.FC = () => {
-  const [settings, setSettings] = useState<ISettings>(initialSettings)
-
-  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const input = event.target
-    const name: unknown = input.getAttribute('name')
-
-    if(typeof name !== 'string') return
-
-    const inputsCheckbox = ['darkTheme', 'contexts', 'queries']
-
-    let obj: MyObject;
-
-    const isCheckbox = inputsCheckbox.includes(name)
-    obj = isCheckbox ? { [name]: input.checked } : { [name]: Number(input.value) }
-
-    setSettings(prevState => ({ ...prevState, ...obj }))
-  }, [])
+  const { settings, updateSettings } = useSettings()
 
   return (
     <SettingsContainer>
@@ -69,7 +32,7 @@ export const Settings: React.FC = () => {
                 step="1"
                 value={settings.size}
                 name="size"
-                onChange={handleInputChange}
+                onChange={updateSettings}
               />
               <span>{settings.size}</span>
             </Control>
@@ -84,7 +47,7 @@ export const Settings: React.FC = () => {
                 step="0.1"
                 value={settings.temperature}
                 name="temperature"
-                onChange={handleInputChange}
+                onChange={updateSettings}
               />
               <span>{settings.temperature}</span>
             </Control>
@@ -99,7 +62,7 @@ export const Settings: React.FC = () => {
                 step="100"
                 value={settings.tokens}
                 name="tokens"
-                onChange={handleInputChange}
+                onChange={updateSettings}
               />
               <span>{settings.tokens}</span>
             </Control>
@@ -114,7 +77,7 @@ export const Settings: React.FC = () => {
                 step="1"
                 value={settings.speed}
                 name="speed"
-                onChange={handleInputChange}
+                onChange={updateSettings}
               />
               <span>{settings.speed}</span>
             </Control>
@@ -128,7 +91,8 @@ export const Settings: React.FC = () => {
               type="checkbox"
               name="darkTheme"
               id="darkTheme"
-              onChange={handleInputChange}
+              checked={settings.darkTheme}
+              onChange={updateSettings}
             />
           </Control>
           <Control>
@@ -137,7 +101,8 @@ export const Settings: React.FC = () => {
               type="checkbox"
               name="contexts"
               id="contexts"
-              onChange={handleInputChange}
+              checked={settings.contexts}
+              onChange={updateSettings}
             />
           </Control>
           <Control>
@@ -146,7 +111,8 @@ export const Settings: React.FC = () => {
               type="checkbox"
               name="queries"
               id="queries"
-              onChange={handleInputChange}
+              checked={settings.queries}
+              onChange={updateSettings}
             />
           </Control>
         </Division>

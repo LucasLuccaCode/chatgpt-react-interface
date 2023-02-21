@@ -114,6 +114,7 @@ appearance: none;
 position: relative;
 display: inline-block;
 width: var(--width);
+min-width: var(--width);
 max-width: var(--width);
 height: .8rem;
 background: rgba(255, 255, 255, .1);
