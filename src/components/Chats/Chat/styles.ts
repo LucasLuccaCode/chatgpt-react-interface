@@ -2,38 +2,34 @@ import styled from "styled-components";
 
 export const ChatContainer = styled.li`
 cursor: pointer;
+  
+  &:hover,
+  &.active {
+    background: rgba(255, 255, 255, .06);
+    border-radius: .3rem;
+
+    h3, i {
+      color: ${props => props.theme.colors.text};
+    }
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, .05);
+  }
+`
+
+export const Label = styled.label`
 display: flex;
 align-items: center;
 width: 100%;
 gap: .5rem;
-padding: .8rem .4rem;
-border-bottom: 2px solid rgba(0, 0, 0, .3);
-
-  &:hover {
-    background: rgba(255, 255, 255, .05);
-    border-radius: ${props => props.theme.b_radius};
-
-    h3 {
-      color: ${props => props.theme.colors.text};
-    }
-
-    i {
-      color: #6a6a70;
-    }
-  }
+padding: .6rem .4rem;
+border-bottom: 1.5px solid rgba(0, 0, 0, .3);
 
   i {
     pointer-events: none;
     font-size: .8rem;
-    color: #4a4a50;
-  }
-
-  h3 {
-    pointer-events: none;
-    font-size: .8rem;
-    color: #8a8a90;
-    font-weight: normal;
-    padding-right: .3rem;
+    color: #9a9aa0;
   }
 `
 
@@ -60,5 +56,17 @@ background: rgba(0, 0, 0, 1);
     height: .2rem;
     margin-top: -.15rem;
     transform: rotate(-45deg);
+  }
+`
+
+export const Title = styled.h3`
+pointer-events: none;
+font-size: .75rem;
+color: #9a9aa0;
+font-weight: normal;
+padding-right: .2rem;
+
+  &::first-letter {
+    text-transform: capitalize;
   }
 `

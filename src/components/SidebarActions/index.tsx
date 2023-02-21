@@ -27,7 +27,7 @@ export const SidebarActions: React.FC = () => {
         <i className="bi bi-plus" />
         <span>Novo</span>
       </Button>
-      <Button onClick={handleRemoveChat}>
+      <Button className={selectingChats ? 'active' : ''} onClick={handleRemoveChat}>
         {selectingChats ? <i className="bi bi-x" /> : <i className="bi bi-dash" />}
         <span>{selectingChats ? 'Cancelar' : 'Remover'}</span>
       </Button>

@@ -3,12 +3,14 @@ import styled from "styled-components";
 export const Actions = styled.div`
 display: flex;
 justify-content: space-between;
+flex-wrap: wrap;
 align-items: center;
 gap: .5rem;
 padding: .3rem;
 margin-top: 1rem;
 border-radius: ${props => props.theme.b_radius};
 background: ${props => props.theme.colors.second_bg};
+overflow: hidden;
 `
 
 export const Button = styled.button`
@@ -21,7 +23,8 @@ padding: .35rem .3rem;
 border-radius: .3rem;
 background: #1a1a1a;
 
-  &:hover {
+  &:hover,
+  &.active {
     background: #2a2a2a;
 
     i,span {
@@ -41,7 +44,7 @@ background: #1a1a1a;
 
   span {
     pointer-events: none;
-    font-size: .6rem;
+    font-size: .58rem;
     font-weight: bold;
   }
 `

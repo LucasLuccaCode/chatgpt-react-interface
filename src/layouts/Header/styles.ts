@@ -29,7 +29,7 @@ color: ${props => props.theme.colors.text};
 padding: .3rem 0;
 font-weight: normal;
 transition: all .3s;
-border-radius: ${props => props.theme.b_radius};
+border-radius: .3rem;
 
   &::first-letter {
     text-transform: capitalize;

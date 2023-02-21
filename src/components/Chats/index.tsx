@@ -6,7 +6,7 @@ import { ChatsContainer, Placeholder } from "./styles"
 import { Chat } from "./Chat"
 
 export const Chats: React.FC = () => {
-  const { chats, setCurrentChatId } = useChats()
+  const { chats, currentChatId, setCurrentChatId } = useChats()
 
   return (
     <ChatsContainer>
@@ -16,6 +16,7 @@ export const Chats: React.FC = () => {
             key={chat.id}
             id={chat.id}
             title={chat.title}
+            isActive={chat.id === currentChatId}
             setCurrentChatId={() => setCurrentChatId(chat.id)}
           />
         ))

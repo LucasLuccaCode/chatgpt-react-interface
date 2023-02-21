@@ -1,4 +1,12 @@
-import React, { useRef, useState, useEffect, FocusEvent, KeyboardEvent, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  FocusEvent,
+  KeyboardEvent
+} from "react";
+
 import { useChats } from "../../contexts/chatsContext";
 
 import {

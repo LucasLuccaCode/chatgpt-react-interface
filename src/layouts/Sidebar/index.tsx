@@ -22,16 +22,18 @@ export const Sidebar: React.FC = () => {
   return (
     <SidebarContainer>
       <Search />
-      <Title>Chats</Title>
-      <Chats />
+      <SidebarActions />
 
-      {selectingChats && (
+      {selectingChats ? (
         <RemoveChatsButton onClick={handleChatsRemove}>
           <p>Remover selecionados:</p>
           <span>{removeChats.length}</span>
         </RemoveChatsButton>
+      ) : (
+        <Title>CHATS</Title>
       )}
-      <SidebarActions />
+
+      <Chats />
     </SidebarContainer>
   )
 }
