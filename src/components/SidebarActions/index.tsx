@@ -4,6 +4,8 @@ import { useChatActions } from "../../contexts/chatActionsContext"
 
 import { Actions, Button } from "./styles"
 
+type QuestionEntryType = HTMLTextAreaElement | null
+
 export const SidebarActions: React.FC = () => {
   const { setCurrentChatId } = useChats()
   const { setApiMessage, setPrompt } = useApi()
@@ -13,6 +15,9 @@ export const SidebarActions: React.FC = () => {
     setApiMessage('')
     setPrompt('')
     setCurrentChatId(0)
+
+    const questionEntry: QuestionEntryType = document.querySelector('[data-question-entry]')
+    questionEntry && questionEntry.focus()
   }
 
   const handleRemoveChat = () => {

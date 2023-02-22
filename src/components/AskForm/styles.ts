@@ -16,7 +16,7 @@ transition: border .3s;
   }
 `
 
-export const EntryQuestion = styled.textarea`
+export const QuestionEntry = styled.textarea`
 flex: 1;
 font-size: .8rem;
 color: ${props => props.theme.colors.text};

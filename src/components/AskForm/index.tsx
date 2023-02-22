@@ -2,15 +2,15 @@ import React, { FormEvent, useEffect, useRef } from "react"
 import { useApi } from "../../contexts/apiContext"
 import { useChats } from "../../contexts/chatsContext"
 
-import { AskFormContainer, EntryQuestion, ButtonSearch } from './styles'
+import { AskFormContainer, QuestionEntry, ButtonSearch } from './styles'
 
 export const AskForm: React.FC = () => {
-  const entryQuestionRef = useRef<HTMLTextAreaElement>(null)
+  const questionEntryRef = useRef<HTMLTextAreaElement>(null)
   const { sendQuestionApi, setApiMessage, prompt, setPrompt } = useApi()
   const { updateChats } = useChats()
 
   useEffect(() => {
-    entryQuestionRef.current && entryQuestionRef.current.focus()
+    questionEntryRef.current && questionEntryRef.current.focus()
   }, [prompt])
 
   const handleAskForm = async (e: FormEvent) => {
@@ -38,11 +38,12 @@ export const AskForm: React.FC = () => {
 
   return (
     <AskFormContainer onSubmit={handleAskForm}>
-      <EntryQuestion
-        ref={entryQuestionRef}
+      <QuestionEntry
+        ref={questionEntryRef}
         rows={3}
         value={prompt}
         onChange={e => setPrompt(e.target.value)}
+        data-question-entry
       />
       <ButtonSearch type="submit">
         <i className="bi bi-send-fill"></i>
