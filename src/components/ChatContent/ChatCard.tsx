@@ -6,8 +6,6 @@ export interface ChatCardProps {
 }
 
 export const ChatCard: React.FC<ChatCardProps> = ({ question, answer }) => {
-  answer = answer.replace(/^.?\n\n/, 'Chat GPT:\n\n');
-
   return (
     <li>
       <Question>

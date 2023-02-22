@@ -1,44 +1,60 @@
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { useSettings } from "../../contexts/settingsContext";
+
+import { ChatContentItem, Answer, Question } from "./styles";
+
 import { ChatCardProps } from "./ChatCard";
 
-import { Answer, Question } from "./styles"
-
 interface LastChatCardProps extends ChatCardProps {
-  chatContainerRef: RefObject<HTMLUListElement>
+  chatContainerRef: RefObject<HTMLUListElement>;
 }
 
-export const LastChatCard: React.FC<LastChatCardProps> = ({ question, answer, chatContainerRef }) => {
-  const [currentAnswer, setCurrentAnswer] = useState('')
-  answer = answer.replace(/^.?\n\n/, 'Chat GPT:\n\n');
+export const LastChatCard: React.FC<LastChatCardProps> = ({
+  question,
+  answer,
+  chatContainerRef,
+}) => {
+  const [currentAnswer, setCurrentAnswer] = useState("");
+  const { settings } = useSettings();
+
+  const settingsRef = useRef(settings);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    setCurrentAnswer('')
-    writeResponse()
-  }, [answer])
+    settingsRef.current = settings;
+  }, [settings]);
 
-  const writeResponse = async () => {
-    const sleep = (ms: number) => new Promise(res => setTimeout(res, ms))
+  const writeResponse = useCallback(async () => {
+    const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
     for (let index = 0; index < answer.length; index++) {
-      const letter = answer[index]
+      if (!isMountedRef.current) break;
 
-      setCurrentAnswer(prevState => prevState + letter)
+      const letter = answer[index];
+      setCurrentAnswer((prevState) => prevState + letter);
 
-      chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight
+      chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight;
 
-      await sleep(40)
+      console.log(settingsRef.current.speed);
+      await sleep(settingsRef.current.speed);
     }
-  }
+  }, [answer, chatContainerRef, setCurrentAnswer]);
+
+  useEffect(() => {
+    setCurrentAnswer("");
+    writeResponse();
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, [answer, writeResponse]);
 
   return (
-    <li>
+    <ChatContentItem>
       <Question>
         <i className="bi bi-send-fill" />
         <h3>{question}</h3>
       </Question>
-      <Answer>
-        {currentAnswer}
-      </Answer>
-    </li>
-  )
-}  
+      <Answer>{currentAnswer}</Answer>
+    </ChatContentItem>
+  );
+};

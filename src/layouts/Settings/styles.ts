@@ -2,18 +2,29 @@ import styled from "styled-components";
 
 export const SettingsContainer = styled.section`
 grid-area: settings;
-border-radius: ${props => props.theme.b_radius};
-padding: .5rem;
-/* background: rgba(255, 255, 255, .05); */
-overflow: hidden;
-`
-
-export const Form = styled.form`
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-gap: 1rem;
 height: 100%;
+gap: 1rem;
+border-radius: ${props => props.theme.b_radius};
+padding: .5rem;
+border: 2px solid rgba(255, 255, 255, .05);
+overflow-x: hidden;
+overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: .1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colors.secondary};
+    border-radius: 20px;
+  }
 `
 
 export const Division = styled.div`
@@ -40,7 +51,7 @@ gap: .5rem;
   }
 
   span {
-    font-size: .8rem;
+    font-size: .6rem;
     color: #8a8a90;
     margin-left: .5rem;
   }
@@ -145,23 +156,18 @@ align-items: center;
 `
 
 export const Button = styled.button`
-padding: .4rem .5rem;
 flex: 1;
-margin-top: 1rem;
 font-size: .6rem;
 font-weight: bold;
 color: #efefff;
-border-radius: .2rem;
+padding: .5rem;
+margin-top: 1rem;
+text-transform: capitalize;
+border-radius: .25rem;
 background: rgba(255, 255, 255, .1);
-opacity: .9;
-
-  &:last-child {
-    color: ${props => props.theme.colors.secondary};
-    background: ${props => props.theme.colors.details};
-  }
 
   &:hover {
-    opacity: 1;
+    background: rgba(255, 255, 255, .2);
   }
 
   &:active {

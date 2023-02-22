@@ -1,11 +1,15 @@
 import styled from "styled-components"
 
 export const StatusContainer = styled.div`
+grid-area: status;
 display: flex;
 align-items: center;
-justify-content: space-between;
 width: 100%;
-margin-bottom: .6rem;
+height: 100%;
+border-radius: ${props => props.theme.b_radius};
+padding: 0 .4rem;
+border: 1.5px solid rgba(255, 255, 255, .05);
+overflow: hidden;
 `
 
 export const ProgressMessage = styled.div`

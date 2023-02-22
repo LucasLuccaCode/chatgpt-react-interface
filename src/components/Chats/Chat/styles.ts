@@ -46,7 +46,7 @@ width: 1rem;
 min-width: 1rem;
 height: 1rem;
 border-radius: .2rem;
-background: rgba(0, 0, 0, 1);
+background: rgba(255, 255, 255, .05);
 
   &:checked::before {
     content: "";

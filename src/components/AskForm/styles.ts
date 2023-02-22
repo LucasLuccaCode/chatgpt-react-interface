@@ -6,14 +6,8 @@ display: flex;
 align-items: center;
 gap: .5rem;
 border-radius: .2rem;
-border: 2px solid transparent;
 padding: .4rem;
-background: ${props => props.theme.colors.background};
 transition: border .3s;
-
-  &:focus-within {
-    border: 2px solid ${props => props.theme.colors.details};
-  }
 `
 
 export const QuestionEntry = styled.textarea`
@@ -26,9 +20,13 @@ background: transparent;
   &:disabled {
     opacity: .5;
   }
+
+  &::placeholder {
+    color: #4a4a50;
+  }
 `
 
-export const ButtonSearch = styled.button`
+export const SearchButton = styled.button`
 padding: .25rem;
 border-radius: .2rem;
 border: 1.5px solid transparent;

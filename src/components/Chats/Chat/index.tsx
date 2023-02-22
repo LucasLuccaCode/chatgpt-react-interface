@@ -32,7 +32,7 @@ export const Chat: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isActiv
             onChange={() => handleCheckboxChange(id)}
           />
         ) : (
-          <i className="bi bi-chat-square" />
+          <i className="bi bi-chat-left" />
         )}
 
         <Title className="nowrap">{title}</Title>

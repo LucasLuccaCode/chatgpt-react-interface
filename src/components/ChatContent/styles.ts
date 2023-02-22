@@ -1,14 +1,5 @@
 import styled from "styled-components";
 
-export const Main = styled.main`
-grid-area: main;
-padding: .6rem;
-padding-right: .2rem;
-width: 100%;
-height: 100%;
-overflow: hidden;
-`
-
 export const ChatContainer = styled.ul`
 display: flex;
 flex-direction: column;
@@ -16,7 +7,7 @@ gap: 1rem;
 width: 100%;
 height: 100%;
 padding-right: .3rem;
-background: #151515;
+overflow-x: hidden;
 overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -33,10 +24,16 @@ overflow-y: auto;
   }
 `
 
-export const Question = styled.div`
+export const ChatContentItem = styled.li`
+width: 100%;
+`
+
+export const Question = styled.pre`
 display: flex;
 width: 100%;
-align-items: center;
+white-space: pre-wrap;
+word-wrap: break-word;
+overflow: hidden;
 
   i {
     font-size: .7rem;
@@ -58,24 +55,15 @@ export const Answer = styled.pre`
 padding: .5rem;
 border-radius: .2rem;
 width: 100%;
-/* color: #cacad0; */
-color: #9a9aa0;
 font-size: .8rem;
 white-space: pre-wrap;
 word-wrap: break-word;
 line-height: 1.2rem;
-/* background: rgba(255, 255, 255, .04); */
-background:  ${props => props.theme.colors.background};
+color: #cacad0;
+background-image: linear-gradient(to right, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .01));
+/* color: #9a9aa0;
+background:  ${props => props.theme.colors.background}; */
 margin-top: .6rem;
 border: 1px solid rgba(255, 255, 255, .03);
 border-radius: ${props => props.theme.b_radius};
-`
-
-export const Placeholder = styled.li`
-display: grid;
-place-content: center;
-width: 100%;
-height: 100%;
-font-size: .8rem;
-color: #6a6a70;
 `

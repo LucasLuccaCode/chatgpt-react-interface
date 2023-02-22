@@ -1,25 +1,26 @@
 import React from "react"
-import { Container } from "./styles"
+import { AppContainer } from "./styles"
+
+import { ChatActionsProvider } from "./contexts/chatActionsContext"
 
 import { Header } from "./layouts/Header"
 import { Sidebar } from "./layouts/Sidebar"
 import { Main } from "./layouts/Main"
 import { Settings } from "./layouts/Settings"
+import { Status } from "./layouts/Status"
 import { Footer } from "./layouts/Footer"
-import { ChatActionsProvider } from "./contexts/chatActionsContext"
 
 export const App: React.FC = () => {
   return (
-    <Container>
+    <AppContainer>
       <Header />
-
       <ChatActionsProvider>
         <Sidebar />
       </ChatActionsProvider>
-      
       <Main />
       <Settings />
+      <Status />
       <Footer />
-    </Container>
+    </AppContainer>
   )
 }

@@ -4,9 +4,10 @@ export const HeaderContainer = styled.header`
 grid-area: header;
 display: flex;
 flex-direction: column;
-gap: .5rem;
+gap: .8rem;
+padding-bottom: .3rem;
 margin-top: ${props => props.theme.margins.space};
-padding: 0 1rem;
+/* overflow: hidden; */
 `
 
 export const Title = styled.h1`
@@ -21,23 +22,24 @@ justify-content: space-between;
 gap: .5rem;
 `
 
-
 export const ChatTitle = styled.h2`
 flex: 1;
 font-size: .9rem;
 color: ${props => props.theme.colors.text};
-padding: .3rem 0;
-font-weight: normal;
+padding: .2rem 0;
+padding-left: .4rem;
+/* font-weight: normal; */
+border-left: 2px solid  ${props => props.theme.colors.details};
 transition: all .3s;
-border-radius: .3rem;
+font-family: serif;
 
   &::first-letter {
-    text-transform: capitalize;
+    text-transform: uppercase;
   }
 
   &:focus {
-    outline: 1.8px solid rgba(255, 255, 255, .1);
     text-overflow: initial;
+    outline: 1px solid rgba(255, 255, 255, .1);
   }
 
   &.editing {
