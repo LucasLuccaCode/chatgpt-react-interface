@@ -1,4 +1,14 @@
-import React, { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState
+} from "react";
+
+import { useSettings } from "./settingsContext";
+import { useChats } from "./chatsContext";
+
 import { API_KEY } from "../../config"
 
 interface ApiContextProps {
@@ -18,9 +28,16 @@ const ApiContext = createContext<ApiContextProps>({
 export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [controller, setController] = useState<AbortController>()
   const [apiMessage, setApiMessage] = useState<string>('')
+  const { settings } = useSettings()
+  const { currentChat } = useChats()
+
 
   const sendQuestionApi = useCallback(async (question: string) => {
     try {
+      const contextPreviousAnswers = currentChat && settings.contexts
+        ? currentChat.data.map(({ answer }) => answer)?.join('')
+        : ''
+
       const newController = new AbortController()
       const signal = newController?.signal;
       setController(newController)
@@ -34,9 +51,9 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         },
         body: JSON.stringify({
           model: "text-davinci-003",
-          prompt: question,
-          max_tokens: 2050, // tamanho da resposta
-          temperature: 0.6, // criatividade na resposta
+          prompt: question + contextPreviousAnswers,
+          max_tokens: settings.tokens, // tamanho da resposta
+          temperature: settings.temperature, // criatividade na resposta
         }),
         signal
       })
@@ -52,7 +69,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     } finally {
       setApiMessage('')
     }
-  }, [])
+  }, [settings, currentChat])
 
   const value: ApiContextProps = {
     controller,

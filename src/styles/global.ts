@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
+:root {
+  --font-size: 18px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +17,7 @@ html,
 #root {
   width: 100%;
   height: 100%;
-  font-size: 18px;
+  font-size: var(--font-size);
   background: ${props => props.theme.colors.background};
   color: ${props => props.theme.colors.text};
 }

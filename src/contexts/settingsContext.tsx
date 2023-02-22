@@ -1,5 +1,9 @@
 import React, { ChangeEvent, createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react"
 
+interface TypeSettings {
+  size(): void;
+  darkTheme(): void;
+}
 
 interface ObjectFielType {
   [key: string]: number | boolean;
@@ -52,8 +56,24 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     const storedSettings = localStorage.getItem(settingsStorageKey)
 
     if (storedSettings) {
-      setSettings(JSON.parse(storedSettings))
+      const data = JSON.parse(storedSettings)
+      setSettings(data)
+      applySettings('size', data.size)
     }
+  }
+
+  const applySettings = <K extends keyof TypeSettings>(key: K, value?: number) => {
+    const typeSettings: TypeSettings = {
+      size() {
+        console.log(settings.size)
+        document.documentElement.style.setProperty('--font-size', `${value}px`);
+      },
+      darkTheme() {
+        // implementação do darkTheme
+      }
+    }
+    const fn = typeSettings[key]
+    fn && fn()
   }
 
   const updateSettings = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +91,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       : { [nameAttribute]: Number(input.value) }
 
     setSettings(prevState => ({ ...prevState, ...objectField }))
+    applySettings('size', Number(input.value))
   }, [])
 
   const value: SettingsContextTypes = {
