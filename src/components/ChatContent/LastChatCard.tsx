@@ -6,13 +6,15 @@ import { ChatContentItem, Answer, Question } from "./styles";
 import { ChatCardProps } from "./ChatCard";
 
 interface LastChatCardProps extends ChatCardProps {
-  chatContainerRef: RefObject<HTMLUListElement>;
+  chatContainerRef: RefObject<HTMLUListElement>,
+  stored: boolean
 }
 
 export const LastChatCard: React.FC<LastChatCardProps> = ({
   question,
   answer,
   chatContainerRef,
+  stored
 }) => {
   const [currentAnswer, setCurrentAnswer] = useState("");
   const { settings } = useSettings();
@@ -23,6 +25,20 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
   useEffect(() => {
     settingsRef.current = settings;
   }, [settings]);
+
+  useEffect(() => {
+    setCurrentAnswer("");
+
+    if(!stored){
+      writeResponse();
+    } else {
+      setCurrentAnswer(answer)
+    }
+
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, [answer]);
 
   const writeResponse = useCallback(async () => {
     const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -38,15 +54,7 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
       console.log(settingsRef.current.speed);
       await sleep(settingsRef.current.speed);
     }
-  }, [answer, chatContainerRef, setCurrentAnswer]);
-
-  useEffect(() => {
-    setCurrentAnswer("");
-    writeResponse();
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, [answer, writeResponse]);
+  }, [answer, chatContainerRef]);
 
   return (
     <ChatContentItem>

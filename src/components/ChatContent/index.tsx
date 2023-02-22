@@ -33,6 +33,7 @@ export const ChatContent: React.FC = () => {
           question={lastChat.question}
           answer={formatAnswer(lastChat.answer)}
           chatContainerRef={chatContainerRef}
+          stored={!!lastChat.stored}
         />
       )}
     </ChatContainer>

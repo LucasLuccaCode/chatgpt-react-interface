@@ -2,7 +2,7 @@ export interface ChatsItem {
   id: number;
   question: string;
   answer: string;
-  storage?: boolean 
+  stored?: boolean 
 }
 
 export interface ChatsInfo {
