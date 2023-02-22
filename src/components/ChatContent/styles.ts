@@ -76,6 +76,6 @@ display: grid;
 place-content: center;
 width: 100%;
 height: 100%;
-font-size: .9rem;
+font-size: .8rem;
 color: #6a6a70;
 `

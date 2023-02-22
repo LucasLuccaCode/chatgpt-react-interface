@@ -32,7 +32,7 @@ export const ChatContent: React.FC = () => {
           ))
         ) : (
           <Placeholder>
-            O conteúdo do chat selecionado aparecerá aqui...
+            O conteúdo do chat aparecerá aqui...
           </Placeholder>
         )}
 

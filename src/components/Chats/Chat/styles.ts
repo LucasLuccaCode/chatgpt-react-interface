@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const ChatContainer = styled.li`
-cursor: pointer;
+  &:not(:last-child){
+    border-bottom: 1.5px solid rgba(0, 0, 0, .3);
+  }
   
   &:hover,
   &.active {
@@ -19,12 +21,12 @@ cursor: pointer;
 `
 
 export const Label = styled.label`
+cursor: pointer;
 display: flex;
 align-items: center;
 width: 100%;
 gap: .5rem;
-padding: .6rem .4rem;
-border-bottom: 1.5px solid rgba(0, 0, 0, .3);
+padding: .7rem .4rem;
 
   i {
     pointer-events: none;

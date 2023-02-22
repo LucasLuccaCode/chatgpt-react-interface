@@ -11,7 +11,7 @@ export const AskForm: React.FC = () => {
 
   useEffect(() => {
     questionEntryRef.current && questionEntryRef.current.focus()
-  }, [prompt])
+  }, [])
 
   const handleAskForm = async (e: FormEvent) => {
     e.preventDefault()
