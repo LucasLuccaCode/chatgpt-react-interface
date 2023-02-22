@@ -65,7 +65,6 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   const applySettings = <K extends keyof TypeSettings>(key: K, value?: number) => {
     const typeSettings: TypeSettings = {
       size() {
-        console.log(settings.size)
         document.documentElement.style.setProperty('--font-size', `${value}px`);
       },
       darkTheme() {
@@ -91,7 +90,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       : { [nameAttribute]: Number(input.value) }
 
     setSettings(prevState => ({ ...prevState, ...objectField }))
-    applySettings('size', Number(input.value))
+    nameAttribute === 'size' && applySettings('size', Number(input.value))
   }, [])
 
   const value: SettingsContextTypes = {

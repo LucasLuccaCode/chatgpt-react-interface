@@ -1,29 +1,29 @@
-import React, { FormEvent } from "react"
+import React, { FormEvent, useEffect, useRef } from "react"
 import { useApi } from "../../contexts/apiContext"
 import { useChats } from "../../contexts/chatsContext"
 
 import { AskFormContainer, EntryQuestion, ButtonSearch } from './styles'
 
-interface AskFormProps {
-  question: string,
-  setQuestion: React.Dispatch<React.SetStateAction<string>>
-}
-
-export const AskForm: React.FC<AskFormProps> = ({ question, setQuestion }) => {
-  const { sendQuestionApi, setApiMessage } = useApi()
+export const AskForm: React.FC = () => {
+  const entryQuestionRef = useRef<HTMLTextAreaElement>(null)
+  const { sendQuestionApi, setApiMessage, prompt, setPrompt } = useApi()
   const { updateChats } = useChats()
+
+  useEffect(() => {
+    entryQuestionRef.current && entryQuestionRef.current.focus()
+  }, [prompt])
 
   const handleAskForm = async (e: FormEvent) => {
     e.preventDefault()
-    
-    if (!question.trim()){
+
+    if (!prompt.trim()) {
       setApiMessage('')
       return
     }
-    
+
     setApiMessage('Aguardando resposta da api...')
 
-    const jsonResponse = await sendQuestionApi(question.trim())
+    const jsonResponse = await sendQuestionApi()
 
     const hasError = jsonResponse.error?.message
     if (hasError) {
@@ -33,12 +33,17 @@ export const AskForm: React.FC<AskFormProps> = ({ question, setQuestion }) => {
 
     const answer = jsonResponse.choices?.[0].text || 'Sem resposta'
 
-    updateChats({ question, answer })
+    updateChats({ question: prompt, answer })
   }
 
   return (
     <AskFormContainer onSubmit={handleAskForm}>
-      <EntryQuestion rows={3} value={question} autoFocus onChange={e => setQuestion(e.target.value)} />
+      <EntryQuestion
+        ref={entryQuestionRef}
+        rows={3}
+        value={prompt}
+        onChange={e => setPrompt(e.target.value)}
+      />
       <ButtonSearch type="submit">
         <i className="bi bi-send-fill"></i>
       </ButtonSearch>

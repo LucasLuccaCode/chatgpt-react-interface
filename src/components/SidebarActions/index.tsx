@@ -6,15 +6,13 @@ import { Actions, Button } from "./styles"
 
 export const SidebarActions: React.FC = () => {
   const { setCurrentChatId } = useChats()
-  const { setApiMessage } = useApi()
+  const { setApiMessage, setPrompt } = useApi()
   const { selectingChats, setSelectingChats } = useChatActions()
 
   const handleNewChat = () => {
-    setCurrentChatId(0)
     setApiMessage('')
-
-    const entryQuestion: HTMLTextAreaElement | null = document.querySelector('textarea')
-    entryQuestion && entryQuestion.focus()
+    setPrompt('')
+    setCurrentChatId(0)
   }
 
   const handleRemoveChat = () => {

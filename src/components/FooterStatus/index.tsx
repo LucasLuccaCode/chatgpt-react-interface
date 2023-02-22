@@ -3,19 +3,15 @@ import { useApi } from "../../contexts/apiContext"
 
 import { StatusContainer, ProgressMessage } from "./styles"
 
-interface StatusProps {
-  question: string
-}
-
-export const Status: React.FC<StatusProps> = ({ question }) => {
-  const { apiMessage } = useApi()
+export const Status: React.FC = () => {
+  const { apiMessage, prompt } = useApi()
 
   const renderProgressMessage = (): string | null => {
     if (apiMessage) {
       return apiMessage
     }
-    if (question.length) {
-      return `Sua pergunta contém ${question.length} caracteres...`
+    if (prompt.length) {
+      return `Sua pergunta contém ${prompt.length} caracteres...`
     }
     return null
   }

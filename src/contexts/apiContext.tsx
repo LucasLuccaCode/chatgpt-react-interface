@@ -14,25 +14,30 @@ import { API_KEY } from "../../config"
 interface ApiContextProps {
   controller: AbortController | undefined;
   apiMessage: string;
-  sendQuestionApi(question: string): Promise<any>,
-  setApiMessage: React.Dispatch<React.SetStateAction<string>>
+  sendQuestionApi(): Promise<any>,
+  setApiMessage: React.Dispatch<React.SetStateAction<string>>,
+  prompt: string,
+  setPrompt: React.Dispatch<React.SetStateAction<string>>
 }
 
 const ApiContext = createContext<ApiContextProps>({
   controller: undefined,
   apiMessage: '',
   sendQuestionApi: () => Promise.resolve(null),
-  setApiMessage: () => { }
+  setApiMessage: () => { },
+  prompt: '',
+  setPrompt() { }
 });
 
 export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [controller, setController] = useState<AbortController>()
+  const [prompt, setPrompt] = useState<string>('')
   const [apiMessage, setApiMessage] = useState<string>('')
   const { settings } = useSettings()
   const { currentChat } = useChats()
 
 
-  const sendQuestionApi = useCallback(async (question: string) => {
+  const sendQuestionApi = useCallback(async () => {
     try {
       const contextPreviousAnswers = currentChat && settings.contexts
         ? currentChat.data.map(({ answer }) => answer)?.join('')
@@ -51,7 +56,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         },
         body: JSON.stringify({
           model: "text-davinci-003",
-          prompt: question + contextPreviousAnswers,
+          prompt: prompt + contextPreviousAnswers,
           max_tokens: settings.tokens, // tamanho da resposta
           temperature: settings.temperature, // criatividade na resposta
         }),
@@ -68,14 +73,17 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       }
     } finally {
       setApiMessage('')
+      setPrompt('')
     }
-  }, [settings, currentChat])
+  }, [settings, currentChat, prompt])
 
   const value: ApiContextProps = {
     controller,
     apiMessage,
     sendQuestionApi,
-    setApiMessage
+    setApiMessage,
+    prompt,
+    setPrompt
   }
 
   return (
