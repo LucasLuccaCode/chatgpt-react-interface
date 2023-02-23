@@ -1,5 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { useSettings } from "../../contexts/settingsContext";
+import { useApi } from "../../contexts/apiContext";
 
 import { ChatContentItem, Answer, Question } from "./styles";
 
@@ -18,6 +19,7 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
 }) => {
   const [currentAnswer, setCurrentAnswer] = useState("");
   const { settings } = useSettings();
+  const { setApiMessage } = useApi()
 
   const settingsRef = useRef(settings);
   const isMountedRef = useRef(true);
@@ -48,12 +50,21 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
 
       const letter = answer[index];
       setCurrentAnswer((prevState) => prevState + letter);
+      setApiMessage({
+        message: `Respondendo [ ${index + 1} / ${answer.length}  ] ${Math.floor((index + 1) / answer.length * 100)}%`,
+        isError: false
+      })
 
       chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight;
 
       console.log(settingsRef.current.speed);
       await sleep(settingsRef.current.speed);
     }
+
+    setApiMessage({
+      message: `Concluído [ ${answer.length} / ${answer.length}  ] 100%`,
+      isError: false
+    })
   }, [answer, chatContainerRef]);
 
   return (

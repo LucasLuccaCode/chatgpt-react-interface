@@ -17,7 +17,9 @@ color: ${props => props.theme.colors.text};
 border-radius: .3rem;
 background: transparent;
 
-  &:disabled {
+  &.disabled {
+    cursor: none;
+    pointer-events: none;
     opacity: .5;
   }
 

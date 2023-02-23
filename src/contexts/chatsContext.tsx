@@ -36,14 +36,19 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [])
 
   useEffect(() => {
-    if (!isLoading) {
-      const lastAnswer = currentChat?.data[currentChat?.data.length - 1]
+    if (!isLoading && currentChatId) {
+      const currentChat = chats.find(chat => chat.id === currentChatId)
+      
+      if(!currentChat) return 
 
-      if(lastAnswer?.answer !== 'Sem resposta'){
+      const data = currentChat.data
+      const lastItem = data[data.length - 1]
+
+      if (lastItem.answer !== 'Sem resposta') {
         localStorage.setItem(chatsStorageKey, JSON.stringify(chats))
       }
     }
-  }, [chats])
+  }, [chats, currentChatId])
 
   const loadDataStorage = () => {
     const storedData = localStorage.getItem(chatsStorageKey)

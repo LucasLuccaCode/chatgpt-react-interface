@@ -12,9 +12,21 @@ border: 1.5px solid rgba(255, 255, 255, .05);
 overflow: hidden;
 `
 
-export const ProgressMessage = styled.div`
-font-size: .8rem;
-color: #aaaab0;
+export const Message = styled.div`
+width: 100%;
+
+  p {
+    font-size: .8rem;
+    color: #efefff;
+  }
+
+  p.error {
+    color: #eb6d6d;
+  }
+
+  p.success {
+    color: #36d5e7;
+  }
 `
 
 export const Stop = styled.button`

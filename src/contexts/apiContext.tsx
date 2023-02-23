@@ -12,11 +12,16 @@ import { useChats } from "./chatsContext";
 
 import { API_KEY } from "../../config"
 
+type ApiMessageTypes = {
+  message: string,
+  isError: boolean
+}
+
 interface ApiContextProps {
   controller: AbortController | undefined;
-  apiMessage: string;
+  apiMessage: ApiMessageTypes | null;
   sendQuestionApi(): Promise<any>,
-  setApiMessage: React.Dispatch<React.SetStateAction<string>>,
+  setApiMessage: React.Dispatch<React.SetStateAction<ApiMessageTypes | null>>,
   prompt: string,
   setPrompt: React.Dispatch<React.SetStateAction<string>>,
   isFetching: boolean,
@@ -25,7 +30,7 @@ interface ApiContextProps {
 
 const ApiContext = createContext<ApiContextProps>({
   controller: undefined,
-  apiMessage: '',
+  apiMessage: null,
   sendQuestionApi: () => Promise.resolve(null),
   setApiMessage: () => { },
   prompt: '',
@@ -37,7 +42,7 @@ const ApiContext = createContext<ApiContextProps>({
 export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [controller, setController] = useState<AbortController>()
   const [prompt, setPrompt] = useState<string>('')
-  const [apiMessage, setApiMessage] = useState<string>('')
+  const [apiMessage, setApiMessage] = useState<ApiMessageTypes | null>(null)
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const { settings } = useSettings()
   const { currentChat } = useChats()
@@ -71,14 +76,14 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         signal
       })
 
-      setApiMessage('')
+      setApiMessage(null)
 
       return response.json()
     } catch (error: any) {
       if (error.name === 'AbortError') {
-        setApiMessage('A busca foi interrompida com sucesso.');
+        setApiMessage({ message: 'A busca foi interrompida com sucesso.', isError: false });
       } else {
-        setApiMessage('Erro ao fazer a requisição, tente mais tarde.')
+        setApiMessage({ message: 'Erro ao fazer a requisição, tente mais tarde.', isError: true });
         console.error('Erro ao fazer a requisição:', error);
       }
     } finally {

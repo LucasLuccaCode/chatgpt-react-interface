@@ -1,26 +1,26 @@
 import React from "react"
 import { useApi } from "../../contexts/apiContext"
 
-import { StatusContainer, ProgressMessage } from "./styles"
+import { StatusContainer, Message } from "./styles"
 
 export const Status: React.FC = () => {
   const { apiMessage, prompt } = useApi()
 
-  const renderProgressMessage = (): string | null => {
+  const renderMessage = () => {
     if (apiMessage) {
-      return apiMessage
+      return <p className={apiMessage.isError ? 'error' : 'success'}>{apiMessage.message}</p>
     }
     if (prompt.length) {
-      return `Sua pergunta contém ${prompt.length} caracteres...`
+      return <p>Sua pergunta contém {prompt.length} caracteres...</p>
     }
     return null
   }
 
   return (
     <StatusContainer>
-      <ProgressMessage className="nowrap">
-        {renderProgressMessage()}
-      </ProgressMessage>
+      <Message className="nowrap">
+        {renderMessage()}
+      </Message>
     </StatusContainer>
   )
 }

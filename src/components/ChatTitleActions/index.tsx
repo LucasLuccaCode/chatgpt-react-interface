@@ -27,7 +27,7 @@ export const ChatTitleActions: React.FC<Props> = ({
 
   const handleDeleteClick = () => {
     setChats(prevChats => prevChats.filter(chat => chat.id !== currentChatId))
-    setApiMessage('Chat excluído com sucesso.')
+    setApiMessage({ message: 'Chat excluído com sucesso.', isError: false });
   }
 
   const editButtonClass = editingTitle ? 'check' : 'pencil-fill'

@@ -12,7 +12,7 @@ export const SidebarActions: React.FC = () => {
   const { selectingChats, setSelectingChats } = useChatActions()
 
   const handleNewChat = () => {
-    setApiMessage('')
+    setApiMessage(null)
     setPrompt('')
     setCurrentChatId(0)
 

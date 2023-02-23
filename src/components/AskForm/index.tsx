@@ -20,14 +20,14 @@ export const AskForm: React.FC = () => {
       controller?.abort()
       return
     }
-    
+
     if (!prompt.trim()) {
-      setApiMessage('')
+      setApiMessage(null)
       return
     }
 
 
-    setApiMessage('Aguardando resposta da api...')
+    setApiMessage({ message: 'Aguardando resposta da api.', isError: false });
 
     const jsonResponse = await sendQuestionApi()
 
@@ -35,7 +35,7 @@ export const AskForm: React.FC = () => {
 
     const hasError = jsonResponse.error?.message
     if (hasError) {
-      setApiMessage(jsonResponse.error.message)
+      setApiMessage({ message: jsonResponse.error.message, isError: true });
       return
     }
 
@@ -52,6 +52,7 @@ export const AskForm: React.FC = () => {
         value={prompt}
         onChange={e => setPrompt(e.target.value)}
         placeholder="Faça sua pergunta aqui..."
+        className={isFetching ? 'disabled' : ''}
         data-question-entry
       />
       <SearchButton type="submit">
