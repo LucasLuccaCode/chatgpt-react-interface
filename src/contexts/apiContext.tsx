@@ -6,6 +6,7 @@ import React, {
   useState
 } from "react";
 
+import { QuestionEntryType } from "../components/SidebarActions";
 import { useSettings } from "./settingsContext";
 import { useChats } from "./chatsContext";
 
@@ -17,7 +18,9 @@ interface ApiContextProps {
   sendQuestionApi(): Promise<any>,
   setApiMessage: React.Dispatch<React.SetStateAction<string>>,
   prompt: string,
-  setPrompt: React.Dispatch<React.SetStateAction<string>>
+  setPrompt: React.Dispatch<React.SetStateAction<string>>,
+  isFetching: boolean,
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ApiContext = createContext<ApiContextProps>({
@@ -26,13 +29,16 @@ const ApiContext = createContext<ApiContextProps>({
   sendQuestionApi: () => Promise.resolve(null),
   setApiMessage: () => { },
   prompt: '',
-  setPrompt() { }
+  setPrompt() { },
+  isFetching: false,
+  setIsFetching() { }
 });
 
 export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [controller, setController] = useState<AbortController>()
   const [prompt, setPrompt] = useState<string>('')
   const [apiMessage, setApiMessage] = useState<string>('')
+  const [isFetching, setIsFetching] = useState<boolean>(false)
   const { settings } = useSettings()
   const { currentChat } = useChats()
 
@@ -45,7 +51,9 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
       const newController = new AbortController()
       const signal = newController?.signal;
+
       setController(newController)
+      setIsFetching(true)
 
       const response = await fetch("https://api.openai.com/v1/completions", {
         method: "POST",
@@ -63,17 +71,22 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         signal
       })
 
+      setApiMessage('')
+
       return response.json()
     } catch (error: any) {
       if (error.name === 'AbortError') {
-        setApiMessage('A requisição foi interrompida.');
+        setApiMessage('A busca foi interrompida com sucesso.');
       } else {
         setApiMessage('Erro ao fazer a requisição, tente mais tarde.')
         console.error('Erro ao fazer a requisição:', error);
       }
     } finally {
-      setApiMessage('')
       setPrompt('')
+      setIsFetching(false)
+
+      const questionEntry: QuestionEntryType = document.querySelector('[data-question-entry]')
+      questionEntry && questionEntry.focus()
     }
   }, [settings, currentChat, prompt])
 
@@ -83,7 +96,9 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     sendQuestionApi,
     setApiMessage,
     prompt,
-    setPrompt
+    setPrompt,
+    isFetching,
+    setIsFetching
   }
 
   return (

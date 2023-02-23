@@ -6,7 +6,7 @@ import { AskFormContainer, QuestionEntry, SearchButton } from './styles'
 
 export const AskForm: React.FC = () => {
   const questionEntryRef = useRef<HTMLTextAreaElement>(null)
-  const { sendQuestionApi, setApiMessage, prompt, setPrompt } = useApi()
+  const { sendQuestionApi, setApiMessage, prompt, setPrompt, isFetching, controller } = useApi()
   const { updateChats } = useChats()
 
   useEffect(() => {
@@ -16,14 +16,22 @@ export const AskForm: React.FC = () => {
   const handleAskForm = async (e: FormEvent) => {
     e.preventDefault()
 
+    if (isFetching) {
+      controller?.abort()
+      return
+    }
+    
     if (!prompt.trim()) {
       setApiMessage('')
       return
     }
 
+
     setApiMessage('Aguardando resposta da api...')
 
     const jsonResponse = await sendQuestionApi()
+
+    if (!jsonResponse) return
 
     const hasError = jsonResponse.error?.message
     if (hasError) {
@@ -47,7 +55,11 @@ export const AskForm: React.FC = () => {
         data-question-entry
       />
       <SearchButton type="submit">
-        <i className="bi bi-send-fill"></i>
+        {isFetching ? (
+          <i className="bi bi-stop" />
+        ) : (
+          <i className="bi bi-send-fill"></i>
+        )}
       </SearchButton>
     </AskFormContainer>
   )

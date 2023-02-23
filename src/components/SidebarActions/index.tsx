@@ -4,7 +4,7 @@ import { useChatActions } from "../../contexts/chatActionsContext"
 
 import { Actions, Button } from "./styles"
 
-type QuestionEntryType = HTMLTextAreaElement | null
+export type QuestionEntryType = HTMLTextAreaElement | null
 
 export const SidebarActions: React.FC = () => {
   const { setCurrentChatId } = useChats()
