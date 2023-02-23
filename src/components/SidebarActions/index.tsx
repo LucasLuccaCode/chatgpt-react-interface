@@ -3,10 +3,15 @@ import { useApi } from "../../contexts/apiContext"
 import { useChatActions } from "../../contexts/chatActionsContext"
 
 import { Actions, Button } from "./styles"
+import React from "react"
 
 export type QuestionEntryType = HTMLTextAreaElement | null
 
-export const SidebarActions: React.FC = () => {
+interface Props {
+  setFilter: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const SidebarActions: React.FC<Props> = ({ setFilter }) => {
   const { setCurrentChatId } = useChats()
   const { setApiMessage, setPrompt } = useApi()
   const { selectingChats, setSelectingChats } = useChatActions()
@@ -14,6 +19,7 @@ export const SidebarActions: React.FC = () => {
   const handleNewChat = () => {
     setApiMessage(null)
     setPrompt('')
+    setFilter('')
     setCurrentChatId(0)
 
     const questionEntry: QuestionEntryType = document.querySelector('[data-question-entry]')

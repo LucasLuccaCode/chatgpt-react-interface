@@ -1,22 +1,29 @@
-import React, { useState, FormEvent } from "react"
+import React, { FormEvent } from "react"
 
 import { SearchForm, InputSearch, Button } from "./styles"
 
-export const Search: React.FC = () => {
-  const [chatSearch, setChatSearch] = useState("")
+interface SearchProps {
+  filter: string,
+  setFilter: React.Dispatch<React.SetStateAction<string>>
+}
 
-  const handleSearchChat = (event: FormEvent<HTMLFormElement>): void => {
+export const Search: React.FC<SearchProps> = ({ filter, setFilter }) => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
 
-    console.log(chatSearch)
+    const formData = new FormData(event.target as HTMLFormElement)
+    const { search } = Object.fromEntries(formData)
+
+    setFilter(String(search))
   }
 
   return (
-    <SearchForm onSubmit={handleSearchChat}>
-      <InputSearch 
-        type="search" 
-        name="search" 
-        onChange={e => setChatSearch(e.target.value)} 
+    <SearchForm onSubmit={handleFormSubmit}>
+      <InputSearch
+        type="search"
+        name="search"
+        value={filter}
+        onChange={e => setFilter(e.target.value)}
       />
       <Button type="submit">
         <i className="bi bi-search" />

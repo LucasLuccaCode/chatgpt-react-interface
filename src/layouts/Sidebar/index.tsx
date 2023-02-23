@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useChats } from "../../contexts/chatsContext"
 import { useChatActions } from "../../contexts/chatActionsContext"
 import { useApi } from "../../contexts/apiContext"
@@ -10,6 +10,8 @@ import { Chats } from "../../components/Chats"
 import { SidebarActions } from "../../components/SidebarActions"
 
 export const Sidebar: React.FC = () => {
+  const [filter, setFilter] = useState('')
+
   const { setChats } = useChats()
   const { selectingChats, setSelectingChats, removeChats } = useChatActions()
   const { setApiMessage } = useApi()
@@ -28,8 +30,8 @@ export const Sidebar: React.FC = () => {
 
   return (
     <SidebarContainer>
-      <Search />
-      <SidebarActions />
+      <Search filter={filter} setFilter={setFilter} />
+      <SidebarActions setFilter={setFilter} />
 
       {selectingChats ? (
         <RemoveChatsButton onClick={handleChatsRemove}>
@@ -40,7 +42,7 @@ export const Sidebar: React.FC = () => {
         <Title>CHATS</Title>
       )}
 
-      <Chats />
+      <Chats filter={filter} />
     </SidebarContainer>
   )
 }

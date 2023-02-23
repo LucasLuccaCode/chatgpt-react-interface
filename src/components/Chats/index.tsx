@@ -1,17 +1,25 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { useChats } from "../../contexts/chatsContext"
 
 import { ChatsContainer, Placeholder } from "./styles"
 
 import { Chat } from "./Chat"
 
-export const Chats: React.FC = () => {
+interface ChatsProps {
+  filter: string
+}
+
+export const Chats: React.FC<ChatsProps> = ({ filter }) => {
   const { chats, currentChatId, setCurrentChatId } = useChats()
+
+  const filteredChats = useMemo(() => {
+    return chats.filter(({ title }) => title.toLowerCase().includes(filter.toLowerCase()))
+  }, [chats, filter])
 
   return (
     <ChatsContainer>
       {!!chats.length ? (
-        chats.map(chat => (
+        filteredChats.map(chat => (
           <Chat
             key={chat.id}
             id={chat.id}

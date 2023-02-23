@@ -6,7 +6,12 @@ gap: .3rem;
 width: 100%;
 padding: .3rem;
 border-radius: ${props => props.theme.b_radius};
+border: 2px solid transparent;
 background: ${props => props.theme.colors.second_bg};
+
+  &:focus-within {
+    border: 2px solid ${props => props.theme.colors.details};
+  }
 `
 
 export const InputSearch = styled.input`
