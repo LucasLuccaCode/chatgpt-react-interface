@@ -29,7 +29,7 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
   useEffect(() => {
     setCurrentAnswer("");
 
-    if(!stored){
+    if (!stored) {
       writeResponse();
     } else {
       setCurrentAnswer(answer)

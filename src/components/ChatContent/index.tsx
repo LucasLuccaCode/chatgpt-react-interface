@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useChats } from "../../contexts/chatsContext";
-import { ChatContainer } from "./styles";
+import { Answer, ChatContainer } from "./styles";
 import { ChatCard } from "./ChatCard";
 import { LastChatCard } from "./LastChatCard";
 
@@ -9,7 +9,11 @@ export const ChatContent: React.FC = () => {
   const { currentChat } = useChats();
 
   useEffect(() => {
-    chatContainerRef.current?.scrollTo(0, chatContainerRef.current.scrollHeight);
+    if (chatContainerRef.current) {
+      setTimeout(() => 
+        chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight
+      , 0)
+    }
   }, [currentChat]);
 
   const formatAnswer = (answer: string) => {
