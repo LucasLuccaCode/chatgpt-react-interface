@@ -15,8 +15,8 @@ import {
 } from "./styles"
 
 export const Settings: React.FC = () => {
-  const { settings, updateSettings } = useSettings()
-
+  const { settings, updateSettings, restoreSettings } = useSettings()
+  
   return (
     <SettingsContainer>
       <Division>
@@ -116,7 +116,7 @@ export const Settings: React.FC = () => {
       </Division>
 
       <Buttons>
-        <Button>
+        <Button onClick={restoreSettings}>
           Restaurar configurações
         </Button>
       </Buttons>
