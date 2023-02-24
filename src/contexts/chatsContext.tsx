@@ -7,6 +7,7 @@ import {
   useMemo,
   useState
 } from "react";
+import { Loading } from "../components/Loading";
 
 import {
   ChatsContextTypes,
@@ -113,7 +114,7 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
 
   if (isLoading) {
-    return <p>Carregando...</p>
+    return <Loading size=".8rem" />
   }
 
   return (

@@ -20,8 +20,11 @@ export const Sidebar: React.FC = () => {
     if (removeChats.length) {
       setChats(prevChats => prevChats.filter(chat => !removeChats.includes(chat.id)))
 
+      const totalRemoved = removeChats.length
+      const isPlural = totalRemoved > 1 ? 's' : ''
+
       setApiMessage({
-        message: `${removeChats.length} Chats removidos com sucesso.`,
+        message: `${totalRemoved} chat${isPlural} removido${isPlural} com sucesso.`,
         isError: false
       })
     }
