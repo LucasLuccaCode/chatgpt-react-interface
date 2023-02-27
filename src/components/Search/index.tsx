@@ -23,6 +23,7 @@ export const Search: React.FC<SearchProps> = ({ filter, setFilter }) => {
         type="search"
         name="search"
         value={filter}
+        placeholder="Filtre por algum chat"
         onChange={e => setFilter(e.target.value)}
       />
       <Button type="submit">

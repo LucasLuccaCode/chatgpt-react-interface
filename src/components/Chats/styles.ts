@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ChatsContainer = styled.ul`
 flex: 1;
-margin-top: .5rem;
+margin-top: ${props => props.theme.spacing.large};
 overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -14,7 +14,7 @@ overflow-y: auto;
   }
   
   &::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.colors.secondary};
+    background: ${props => props.theme.colors.bg.details};
     border-radius: 20px;
   }
 `
@@ -22,6 +22,6 @@ overflow-y: auto;
 export const Placeholder = styled.p`
 font-size: .7rem;
 text-align: center;
-color: #4a4a50;
-margin-top: .5rem;
+color: ${props => props.theme.colors.text.placeholder};
+margin-top: ${props => props.theme.spacing.medium};
 `

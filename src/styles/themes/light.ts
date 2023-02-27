@@ -1,5 +1,5 @@
 export default {
-  title: 'dark',
+  title: 'light',
 
   fontSize: {
     title: '1.2rem',

@@ -25,7 +25,7 @@ export const Sidebar: React.FC = () => {
 
       setApiMessage({
         message: `${totalRemoved} chat${isPlural} removido${isPlural} com sucesso.`,
-        isError: false
+        type: 'success'
       })
     }
     setSelectingChats(false)
@@ -34,7 +34,6 @@ export const Sidebar: React.FC = () => {
   return (
     <SidebarContainer>
       <Search filter={filter} setFilter={setFilter} />
-      <SidebarActions setFilter={setFilter} />
 
       {selectingChats ? (
         <RemoveChatsButton onClick={handleChatsRemove}>
@@ -46,6 +45,7 @@ export const Sidebar: React.FC = () => {
       )}
 
       <Chats filter={filter} />
+      <SidebarActions setFilter={setFilter} />
     </SidebarContainer>
   )
 }

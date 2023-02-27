@@ -15,7 +15,7 @@ export const ChatTitleActions: React.FC<Props> = ({
   setEditingTitle,
   updateTitle
 }) => {
-  const { currentChatId, setChats } = useChats()
+  const { currentChat,currentChatId, setChats } = useChats()
   const { setApiMessage } = useApi()
 
   const handleClickEdit = () => {
@@ -27,13 +27,13 @@ export const ChatTitleActions: React.FC<Props> = ({
 
   const handleDeleteClick = () => {
     setChats(prevChats => prevChats.filter(chat => chat.id !== currentChatId))
-    setApiMessage({ message: 'Chat excluído com sucesso.', isError: false });
+    setApiMessage({ message: 'Chat excluído com sucesso.', type: 'success' });
   }
 
   const editButtonClass = editingTitle ? 'check' : 'pencil-fill'
 
   return (
-    <ActionsContainer>
+    <ActionsContainer hasChat={!!currentChat}>
       <Button onClick={handleClickEdit} data-action='edit'>
         <i className={`bi bi-${editButtonClass}`} />
       </Button>

@@ -3,7 +3,7 @@ import { useChats } from "../../contexts/chatsContext"
 
 import { ChatsContainer, Placeholder } from "./styles"
 
-import { Chat } from "./Chat"
+import { ChatCard } from "./ChatCard"
 
 interface ChatsProps {
   filter: string
@@ -20,7 +20,7 @@ export const Chats: React.FC<ChatsProps> = ({ filter }) => {
     <ChatsContainer>
       {!!chats.length ? (
         filteredChats.map(chat => (
-          <Chat
+          <ChatCard
             key={chat.id}
             id={chat.id}
             title={chat.title}

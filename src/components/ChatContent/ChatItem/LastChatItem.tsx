@@ -1,17 +1,28 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { useSettings } from "../../contexts/settingsContext";
-import { useApi } from "../../contexts/apiContext";
+import { useSettings } from "../../../contexts/settingsContext";
+import { useApi } from "../../../contexts/apiContext";
 
-import { ChatContentItem, Answer, Question } from "./styles";
+import {
+  ChatContentItem,
+  Answer,
+  Question,
+  Output,
+  Header,
+  Title,
+  Icon,
+  Prompt
+} from "./styles"
 
-import { ChatCardProps } from "./ChatCard";
+import { CopyButton } from "../../CopyButton";
 
-interface LastChatCardProps extends ChatCardProps {
+import { ChatItemProps } from "./index";
+
+interface LastChatItemProps extends ChatItemProps {
   chatContainerRef: RefObject<HTMLUListElement>,
   stored: boolean
 }
 
-export const LastChatCard: React.FC<LastChatCardProps> = ({
+export const LastChatItem: React.FC<LastChatItemProps> = ({
   question,
   answer,
   chatContainerRef,
@@ -51,8 +62,8 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
       const letter = answer[index];
       setCurrentAnswer((prevState) => prevState + letter);
       setApiMessage({
-        message: `Respondendo [ ${index + 1} / ${answer.length}  ] ${Math.floor((index + 1) / answer.length * 100)}%`,
-        isError: false
+        message: `Gerando resposta [ ${index + 1} / ${answer.length}  ] ${Math.floor((index + 1) / answer.length * 100)}%`,
+        type: 'info'
       })
 
       chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight;
@@ -63,17 +74,30 @@ export const LastChatCard: React.FC<LastChatCardProps> = ({
 
     setApiMessage({
       message: `Concluído [ ${answer.length} / ${answer.length}  ] 100%`,
-      isError: false
+      type: 'success'
     })
   }, [answer, chatContainerRef]);
 
   return (
     <ChatContentItem>
       <Question>
-        <i className="bi bi-send-fill" />
-        <h3>{question}</h3>
+        <Icon className="bi bi-person-circle" />
+        <Prompt>{question}</Prompt>
       </Question>
-      <Answer>{currentAnswer}</Answer>
+      <Answer>
+        <Header>
+          <Title>
+            <Icon className="bi bi-robot" />
+            <h4>ChatGpt:</h4>
+          </Title>
+
+          <CopyButton answer={answer} />
+        </Header>
+
+        <Output>
+          {currentAnswer}
+        </Output>
+      </Answer>
     </ChatContentItem>
   );
 };

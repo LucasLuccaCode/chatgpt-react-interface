@@ -14,7 +14,7 @@ import { API_KEY } from "../../config"
 
 type ApiMessageTypes = {
   message: string,
-  isError: boolean
+  type: 'info' | 'success' | 'error'
 }
 
 interface ApiContextProps {
@@ -81,9 +81,9 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       return response.json()
     } catch (error: any) {
       if (error.name === 'AbortError') {
-        setApiMessage({ message: 'A busca foi interrompida com sucesso.', isError: false });
+        setApiMessage({ message: 'A busca foi interrompida com sucesso.', type: 'success' });
       } else {
-        setApiMessage({ message: 'Erro ao fazer a requisição, tente mais tarde.', isError: true });
+        setApiMessage({ message: 'Erro ao fazer a requisição, tente mais tarde.', type: 'error' });
         console.error('Erro ao fazer a requisição:', error);
       }
     } finally {

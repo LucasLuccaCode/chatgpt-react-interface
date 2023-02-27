@@ -9,12 +9,7 @@ import React, {
 
 import { useChats } from "../../contexts/chatsContext";
 
-import {
-  HeaderContainer,
-  Title,
-  ChatTitleContainer,
-  ChatTitle,
-} from "./styles";
+import { HeaderContainer, ChatTitle, } from "./styles";
 
 import { ChatTitleActions } from "../../components/ChatTitleActions";
 
@@ -60,28 +55,25 @@ export const Header: React.FC = () => {
   }, [currentChat])
 
   return (
-    <HeaderContainer>
-      <Title>Chat GPT</Title>
-      <ChatTitleContainer>
-        <ChatTitle
-          ref={titleRef}
-          className={`${editingTitle ? "editing" : ""} nowrap`}
-          contentEditable={editingTitle}
-          suppressContentEditableWarning={true}
-          onBlur={handleBlurTitle}
-          onKeyPress={handleKeypressTitle}
-        >
-          {currentChat?.title || "Clique em um chat para mostrar o conteúdo ou crie um novo"}
-        </ChatTitle>
+    <HeaderContainer hasTitle={!!currentChat}>
+      <ChatTitle
+        ref={titleRef}
+        className="nowrap"
+        hasTitle={!!currentChat}
+        editingTitle={editingTitle}
+        contentEditable={editingTitle}
+        suppressContentEditableWarning={true}
+        onBlur={handleBlurTitle}
+        onKeyPress={handleKeypressTitle}
+      >
+        {currentChat?.title || "O título do chat aparecerá aqui"}
+      </ChatTitle>
 
-        {currentChat && (
-          <ChatTitleActions
-            editingTitle={editingTitle}
-            setEditingTitle={setEditingTitle}
-            updateTitle={updateTitle}
-          />
-        )}
-      </ChatTitleContainer>
+      <ChatTitleActions
+        editingTitle={editingTitle}
+        setEditingTitle={setEditingTitle}
+        updateTitle={updateTitle}
+      />
     </HeaderContainer>
   );
 };

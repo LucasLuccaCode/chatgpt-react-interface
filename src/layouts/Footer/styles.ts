@@ -4,14 +4,14 @@ export const FooterContainer = styled.footer`
 grid-area: footer;
 display: flex;
 flex-direction: column;
-margin-bottom: ${props => props.theme.margins.space};
-border: 1.5px solid rgba(255, 255, 255, .05);
-border-radius: ${props => props.theme.b_radius};
-background-image: linear-gradient(to right, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .02));
-/* overflow: hidden; */
+margin-bottom: ${props => props.theme.spacing.medium};
+border: 1px solid ${props => props.theme.colors.border};
+border-radius: ${props => props.theme.borderRadius.large};
+/* background-image: ${props => props.theme.colors.bg.gradient}; */
 transition: all .2s;
+/* overflow: hidden; */
 
   &:focus-within {
-    border: 2px solid ${props => props.theme.colors.details};
+    border-color: ${props => props.theme.colors.borderFocus};
   }
 `

@@ -2,10 +2,11 @@ import React, { FormEvent, useEffect, useRef } from "react"
 import { useApi } from "../../contexts/apiContext"
 import { useChats } from "../../contexts/chatsContext"
 
-import { AskFormContainer, QuestionEntry, SearchButton } from './styles'
+import { AskFormContainer, QuestionEntry, SendButton } from './styles'
 
 export const AskForm: React.FC = () => {
   const questionEntryRef = useRef<HTMLTextAreaElement>(null)
+  const sendButtonRef = useRef<HTMLButtonElement>(null)
   const { sendQuestionApi, setApiMessage, prompt, setPrompt, isFetching, controller } = useApi()
   const { updateChats } = useChats()
 
@@ -13,7 +14,7 @@ export const AskForm: React.FC = () => {
     questionEntryRef.current && questionEntryRef.current.focus()
   }, [])
 
-  const handleAskForm = async (e: FormEvent) => {
+  const handleAskFormSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
     if (isFetching) {
@@ -26,8 +27,10 @@ export const AskForm: React.FC = () => {
       return
     }
 
+    questionEntryRef.current?.blur()
+    sendButtonRef.current?.blur()
 
-    setApiMessage({ message: 'Aguardando resposta da api.', isError: false });
+    setApiMessage({ message: 'Aguardando resposta da api.', type: 'info' });
 
     const jsonResponse = await sendQuestionApi()
 
@@ -35,17 +38,22 @@ export const AskForm: React.FC = () => {
 
     const hasError = jsonResponse.error?.message
     if (hasError) {
-      setApiMessage({ message: jsonResponse.error.message, isError: true });
+      setApiMessage({ message: jsonResponse.error.message, type: 'error' });
       return
     }
 
     const answer = jsonResponse.choices?.[0].text || 'Sem resposta'
 
     updateChats({ question: prompt, answer })
+    
+    setApiMessage({
+      message: 'Sem resposta',
+      type: 'error'
+    })
   }
 
   return (
-    <AskFormContainer onSubmit={handleAskForm}>
+    <AskFormContainer onSubmit={handleAskFormSubmit}>
       <QuestionEntry
         ref={questionEntryRef}
         rows={3}
@@ -55,13 +63,13 @@ export const AskForm: React.FC = () => {
         className={isFetching ? 'disabled' : ''}
         data-question-entry
       />
-      <SearchButton type="submit">
+      <SendButton type="submit" ref={sendButtonRef}>
         {isFetching ? (
           <i className="bi bi-stop" />
         ) : (
           <i className="bi bi-send-fill"></i>
         )}
-      </SearchButton>
+      </SendButton>
     </AskFormContainer>
   )
 }

@@ -4,47 +4,45 @@ export const AskFormContainer = styled.form`
 flex: 1;
 display: flex;
 align-items: center;
-gap: .5rem;
-border-radius: .2rem;
-padding: .4rem;
+gap: ${props => props.theme.spacing.medium};
+padding: ${props => props.theme.spacing.medium};
 transition: border .3s;
 `
 
 export const QuestionEntry = styled.textarea`
 flex: 1;
-font-size: .8rem;
-color: ${props => props.theme.colors.text};
-border-radius: .3rem;
+font-size: .7rem;
+font-family: 'Poppins', sans-serif;
+color: ${props => props.theme.colors.text.title};
 background: transparent;
 
   &.disabled {
-    cursor: none;
     pointer-events: none;
     opacity: .5;
   }
 
   &::placeholder {
-    color: #4a4a50;
+    color: ${props => props.theme.colors.text.placeholder};
   }
 `
 
-export const SearchButton = styled.button`
+export const SendButton = styled.button`
 padding: .25rem;
 border-radius: .2rem;
-border: 1.5px solid transparent;
+border: 1px solid transparent;
 background: transparent;
 transition: background .3s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, .08);
+    background: ${props => props.theme.colors.opaque};
   }
 
   &:focus {
-    border: 1.5px solid rgba(255, 255, 255, .1);
+    border-color: ${props => props.theme.colors.borderFocus};
   }
 
   i {
     font-size: 1rem;
-    color: ${props => props.theme.colors.details};
+    color: ${props => props.theme.colors.bg.details};
   }
 `

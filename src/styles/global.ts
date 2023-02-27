@@ -18,8 +18,8 @@ html,
   width: 100%;
   height: 100%;
   font-size: var(--font-size);
-  background: ${props => props.theme.colors.background};
-  color: ${props => props.theme.colors.text};
+  background: ${props => props.theme.colors.bg.body};
+  color: ${props => props.theme.colors.text.title};
 }
 
 textarea,
@@ -31,6 +31,15 @@ button {
 
 button {
   cursor: pointer;
+}
+
+i {
+  /* display: flex; */
+  vertical-align: 0;
+}
+
+button:active {
+  transform: scale(.95);
 }
 
 li {

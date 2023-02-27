@@ -16,12 +16,17 @@ import {
 
 export const Settings: React.FC = () => {
   const { settings, updateSettings, restoreSettings } = useSettings()
-  
+
   return (
     <SettingsContainer>
       <Division>
         <Control>
-          <Label htmlFor="darkTheme">Tema dark</Label>
+          <Label
+            htmlFor="darkTheme"
+            title="Alternar entre tema dark e light"
+          >
+            Tema dark
+          </Label>
           <InputToggle
             type="checkbox"
             name="darkTheme"
@@ -31,7 +36,12 @@ export const Settings: React.FC = () => {
           />
         </Control>
         <Control>
-          <Label htmlFor="contexts">Ativar contexto</Label>
+          <Label
+            htmlFor="contexts"
+            title="Incluir respostas anteriores do chat nas futuras consultas"
+          >
+            Habilitar contexto
+          </Label>
           <InputToggle
             type="checkbox"
             name="contexts"
@@ -41,7 +51,12 @@ export const Settings: React.FC = () => {
           />
         </Control>
         <Control>
-          <Label htmlFor="queries">Salvar consultas</Label>
+          <Label
+            htmlFor="queries"
+            title="Salvar todas as consultas dos chats"
+          >
+            Salvar consultas
+          </Label>
           <InputToggle
             type="checkbox"
             name="queries"
@@ -54,12 +69,12 @@ export const Settings: React.FC = () => {
 
       <Division>
         <Wrapper>
-          <Label>Tamanho dos textos</Label>
+          <Label title="Tamanho da fonte dos textos">Tamanho dos textos</Label>
           <Control>
             <InputRange
               type="range"
               min="14"
-              max="30"
+              max="25"
               step="1"
               value={settings.size}
               name="size"
@@ -69,7 +84,7 @@ export const Settings: React.FC = () => {
           </Control>
         </Wrapper>
         <Wrapper>
-          <Label>Temperatura</Label>
+          <Label title="Temperatura da resposta">Temperatura</Label>
           <Control>
             <InputRange
               type="range"
@@ -84,7 +99,7 @@ export const Settings: React.FC = () => {
           </Control>
         </Wrapper>
         <Wrapper>
-          <Label>Máximo de tokens</Label>
+          <Label title="Máximo de token">Máximo de tokens</Label>
           <Control>
             <InputRange
               type="range"
@@ -99,11 +114,11 @@ export const Settings: React.FC = () => {
           </Control>
         </Wrapper>
         <Wrapper>
-          <Label>Velocidade de renderização(ms)</Label>
+          <Label title="Velocidade de renderização(ms)">Velocidade de renderização(ms)</Label>
           <Control>
             <InputRange
               type="range"
-              max="1000"
+              max="150"
               min="0"
               step="1"
               value={settings.speed}
@@ -117,7 +132,7 @@ export const Settings: React.FC = () => {
 
       <Buttons>
         <Button onClick={restoreSettings}>
-          Restaurar configurações
+          Restaurar
         </Button>
       </Buttons>
     </SettingsContainer >

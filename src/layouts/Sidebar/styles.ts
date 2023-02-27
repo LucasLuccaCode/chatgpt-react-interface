@@ -5,15 +5,14 @@ grid-area: sidebar;
 display: flex;
 flex-direction: column;
 padding: .6rem;
-background: #1a1a1a;
-background-image: linear-gradient(to right, #1a1a1a, #151515);
+background: ${props => props.theme.colors.bg.secondary};
 overflow: hidden;
 `
 
 export const Title = styled.h2`
 font-size: .6rem;
-color: #5a5a60;
-margin-top: 1rem;
+color: ${props => props.theme.colors.text.placeholder};
+margin-top: ${props => props.theme.spacing.top};
 `
 
 export const RemoveChatsButton = styled.button`
@@ -22,25 +21,21 @@ align-items: center;
 justify-content: center;
 gap: .3rem;
 padding: .4rem .5rem;
-margin-top: 1rem;
+margin-top: ${props => props.theme.spacing.top};
 font-size: .6rem;
-font-weight: bold;
-color: ${props => props.theme.colors.secondary};
-border-radius: .2rem;
-border: 2px solid ${props => props.theme.colors.details};
-white-space: nowrap;
-background: ${props => props.theme.colors.details};
+font-family: 'Poppins', sans-serif;
+font-weight: 600;
+color: ${props => props.theme.colors.text.details};
+border-radius: ${props => props.theme.borderRadius.medium};
+border: 2px solid ${props => props.theme.colors.bg.details};
+background: ${props => props.theme.colors.bg.details};
 
   &:hover {
-    color: ${props => props.theme.colors.details};
+    color: ${props => props.theme.colors.bg.details};
     background: transparent;
   }
 
   &:active {
     transform: scale(.95)
-  }
-
-  span {
-    /* color: ${props => props.theme.colors.text}; */
   }
 `

@@ -10,7 +10,7 @@ interface ChatProps {
   isActive: boolean
 }
 
-export const Chat: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isActive }) => {
+export const ChatCard: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isActive }) => {
   const { removeChats, selectingChats, handleCheckboxChange } = useChatActions()
 
   const handleChatClick = () => {

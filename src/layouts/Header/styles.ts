@@ -1,52 +1,54 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const HeaderContainer = styled.header`
-grid-area: header;
-display: flex;
-flex-direction: column;
-gap: .8rem;
-padding-bottom: .3rem;
-margin-top: ${props => props.theme.margins.space};
-/* overflow: hidden; */
-`
+interface HeaderContainerProps { 
+  hasTitle: boolean; 
+}
 
-export const Title = styled.h1`
-font-size: 1rem;
-color: ${props => props.theme.colors.text};
-`
+export const HeaderContainer = styled.header<HeaderContainerProps>`${({ theme, hasTitle }) => css`
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${theme.spacing.medium};
+  margin-top: ${theme.spacing.medium};
+  padding: ${theme.spacing.medium};
+  border: 1.5px solid ${theme.colors.border};
+  border-radius: ${theme.borderRadius.large};
+  ${!hasTitle && `
+  pointer-events: 
+  none; cursor: not-allowed;`
+  }
+  /* overflow: hidden; */
 
-export const ChatTitleContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: .5rem;
-`
+  &:focus-within {
+    border-color: ${theme.colors.borderFocus};
+  }
+  `
+}`
 
-export const ChatTitle = styled.h2`
-flex: 1;
-font-size: .9rem;
-color: ${props => props.theme.colors.text};
-padding: .2rem 0;
-padding-left: .4rem;
-/* font-weight: normal; */
-border-left: 2px solid  ${props => props.theme.colors.details};
-transition: all .3s;
-font-family: serif;
+interface ChatTitleProps { 
+  hasTitle: boolean; 
+  editingTitle: boolean;
+}
+
+export const ChatTitle = styled.h1<ChatTitleProps>`${({ hasTitle, editingTitle, theme }) => css`
+  flex: 1;
+  font-size: .85rem;
+  font-family: 'Poppins', sans-serif;
+  color: ${hasTitle ? theme.colors.text.title : theme.colors.text.placeholder};
 
   &::first-letter {
     text-transform: uppercase;
+    ${editingTitle && 'text-transform: none'}
   }
 
   &:focus {
     text-overflow: initial;
-    outline: 1px solid rgba(255, 255, 255, .1);
+    outline: none;
+    ${editingTitle && 'cursor: text'}
   }
 
-  &.editing {
-    padding-left: .3rem;
-
-    &::first-letter {
-      text-transform: none;
-    }
+  &.nowrap {
+    white-space: nowrap;
   }
-`
+`}`

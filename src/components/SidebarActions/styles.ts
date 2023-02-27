@@ -5,11 +5,11 @@ display: flex;
 justify-content: space-between;
 flex-wrap: wrap;
 align-items: center;
-gap: .5rem;
-padding: .3rem;
-margin-top: 1rem;
-border-radius: ${props => props.theme.b_radius};
-background: ${props => props.theme.colors.second_bg};
+gap: ${props => props.theme.spacing.small};
+padding: ${props => props.theme.spacing.small};
+margin-top: ${props => props.theme.spacing.top};
+border-radius: ${props => props.theme.borderRadius.medium};
+background: ${props => props.theme.colors.bg.primary};
 overflow: hidden;
 `
 
@@ -20,21 +20,21 @@ justify-content: center;
 flex: 1;
 gap: .3rem;
 padding: .35rem .3rem;
-border-radius: .3rem;
-background: #1a1a1a;
+border-radius: ${props => props.theme.borderRadius.medium};
+background: ${props => props.theme.colors.bg.button};
 
   &:hover,
   &.active {
-    background: #2a2a2a;
+    background: ${props => props.theme.colors.bg.buttonHover};
 
     i,span {
-      color: ${props => props.theme.colors.text}
+      color: ${props => props.theme.colors.text.title}
     }
   }
 
   i, span {
     pointer-events: none;
-    color: #9a9aa0;
+    color: ${props => props.theme.colors.text.button};
   }
   
   i {
@@ -45,6 +45,7 @@ background: #1a1a1a;
   span {
     pointer-events: none;
     font-size: .58rem;
-    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
   }
 `

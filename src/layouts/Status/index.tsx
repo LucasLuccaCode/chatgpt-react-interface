@@ -8,7 +8,7 @@ export const Status: React.FC = () => {
 
   const renderMessage = () => {
     if (apiMessage) {
-      return <p className={apiMessage.isError ? 'error' : 'success'}>{apiMessage.message}</p>
+      return <p className={apiMessage.type}>{apiMessage.message}</p>
     }
     if (prompt.length) {
       return <p>Sua pergunta contém {prompt.length} caracteres...</p>
