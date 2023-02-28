@@ -6,8 +6,8 @@ display: flex;
 flex-direction: column;
 margin-bottom: ${props => props.theme.spacing.medium};
 border-radius: ${props => props.theme.borderRadius.large};
-background: ${props => props.theme.colors.bg.container};
 box-shadow: ${props => props.theme.boxShadow.container};
+background: ${props => props.theme.colors.bg.secondary};
 /* transition: border .2s; */
 /* overflow: hidden; */
 

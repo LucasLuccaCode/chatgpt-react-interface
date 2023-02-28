@@ -5,7 +5,7 @@ grid-area: sidebar;
 display: flex;
 flex-direction: column;
 padding: .6rem;
-background: ${props => props.theme.colors.bg.container};
+background: ${props => props.theme.colors.bg.secondary};
 box-shadow: ${props => props.theme.boxShadow.container};
 overflow: hidden;
 `

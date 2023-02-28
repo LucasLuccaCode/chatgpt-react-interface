@@ -44,8 +44,9 @@ export const Answer = styled.div`
   width: 100%;
   margin-top: .6rem;
   margin-left: 1px;
+  margin-bottom: 3px;
   border-radius: ${props => props.theme.borderRadius.large};
-  background: ${props => props.theme.colors.bg.container};
+  background: ${props => props.theme.colors.bg.secondary};
   box-shadow: ${props => props.theme.boxShadow.container};
 `
 

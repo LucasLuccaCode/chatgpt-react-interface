@@ -114,8 +114,12 @@ export const InputToggle = styled.input`
   min-width: var(--width);
   max-width: var(--width);
   height: .8rem;
-  background: ${props => props.theme.colors.bg.inputRange};
+  background: ${props => props.theme.colors.opaque};
   border-radius: 50px;
+
+  &:checked {
+    background: ${props => props.theme.colors.bg.inputRange};
+  }
 
   &::before {
     content: "";

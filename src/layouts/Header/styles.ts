@@ -23,9 +23,6 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`${({ theme, h
   }
   /* overflow: hidden; */
 
-  &:focus-within {
-    box-shadow: 0 0 0 1px ${props => props.theme.colors.bg.details};
-  }
   `
 }`
 
@@ -38,16 +35,21 @@ export const ChatTitle = styled.h1<ChatTitleProps>`${({ editingTitle, theme }) =
   font-size: .85rem;
   font-family: 'Poppins', sans-serif;
   color: ${theme.colors.text.title};
+  /* background: cyan; */
+  border-radius: ${props => props.theme.borderRadius.medium};
+  padding: .2rem 0;
+  transition: padding-left .3s ease;
+
+  &:focus {
+    outline: 1px solid ${props => props.theme.colors.bg.details};
+    padding-left: .5rem;
+    text-overflow: initial;
+    cursor: text;
+  }
 
   &::first-letter {
     text-transform: uppercase;
     ${editingTitle && 'text-transform: none'}
-  }
-
-  &:focus {
-    text-overflow: initial;
-    outline: none;
-    ${editingTitle && 'cursor: text'}
   }
 
   &.nowrap {
