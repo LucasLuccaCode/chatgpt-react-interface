@@ -30,15 +30,14 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`${({ theme, h
 }`
 
 interface ChatTitleProps { 
-  hasTitle: boolean; 
   editingTitle: boolean;
 }
 
-export const ChatTitle = styled.h1<ChatTitleProps>`${({ hasTitle, editingTitle, theme }) => css`
+export const ChatTitle = styled.h1<ChatTitleProps>`${({ editingTitle, theme }) => css`
   flex: 1;
   font-size: .85rem;
   font-family: 'Poppins', sans-serif;
-  color: ${hasTitle ? theme.colors.text.title : theme.colors.text.placeholder};
+  color: ${theme.colors.text.title};
 
   &::first-letter {
     text-transform: uppercase;

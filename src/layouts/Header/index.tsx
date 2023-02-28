@@ -59,7 +59,6 @@ export const Header: React.FC = () => {
       <ChatTitle
         ref={titleRef}
         className="nowrap"
-        hasTitle={!!currentChat}
         editingTitle={editingTitle}
         contentEditable={editingTitle}
         suppressContentEditableWarning={true}
