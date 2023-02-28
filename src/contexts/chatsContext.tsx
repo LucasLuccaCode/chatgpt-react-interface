@@ -7,6 +7,7 @@ import {
   useMemo,
   useState
 } from "react";
+
 import { Loading } from "../components/Loading";
 
 import {
@@ -22,7 +23,8 @@ const ChatsContext = createContext<ChatsContextTypes>({
   currentChat: null,
   currentChatId: 0,
   setCurrentChatId() { },
-  updateChats() { }
+  updateChats() { },
+  setLoaderChat() { }
 })
 
 const chatsStorageKey = "@mr:chatgpt:chats"
@@ -39,13 +41,13 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   useEffect(() => {
     if (!isLoading && currentChatId) {
       const currentChat = chats.find(chat => chat.id === currentChatId)
-      
-      if(!currentChat) return 
+
+      if (!currentChat) return
 
       const data = currentChat.data
       const lastItem = data[data.length - 1]
 
-      if (lastItem.answer !== 'Sem resposta') {
+      if (lastItem.answer !== 'Sem resposta' && !lastItem.isLoading) {
         localStorage.setItem(chatsStorageKey, JSON.stringify(chats))
       }
     }
@@ -72,6 +74,40 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     return chats.find(chat => chat.id === currentChatId) || null
   }, [chats, currentChatId])
 
+  const setLoaderChat = useCallback((question: string) => {
+    if (!currentChat) {
+      const currentId = Date.now()
+
+      const newChat: ChatsInfo = {
+        id: currentId,
+        title: question,
+        data: [
+          {
+            id: currentId + 1,
+            question: question,
+            answer: 'Loading...',
+            isLoading: true
+          }
+        ]
+      }
+
+      setChats(prevState => [newChat, ...prevState])
+      setCurrentChatId(currentId)
+      return
+    }
+
+    const currentChats = [...chats]
+    const currentChatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
+
+    currentChats[currentChatIndex].data.push({
+      id: 0,
+      question,
+      answer: 'Loading...',
+      isLoading: true
+    })
+    setChats(currentChats)
+  }, [chats, currentChat, currentChatId])
+
   const updateChats = useCallback(({ question, answer }: QuestionAnswerType) => {
     if (!currentChat) {
       const currentId = Date.now()
@@ -81,7 +117,7 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         title: question,
         data: [
           {
-            id: Date.now(),
+            id: currentId + 1,
             question: question,
             answer: answer
           }
@@ -95,6 +131,9 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     const updatedChats = [...chats]
     const currentChatIndex = updatedChats.findIndex(chat => chat.id === currentChatId)
+
+    // remove last loading chat
+    updatedChats[currentChatIndex].data.pop()
 
     updatedChats[currentChatIndex].data.push({
       id: Date.now(),
@@ -110,7 +149,8 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     currentChat,
     currentChatId,
     setCurrentChatId,
-    updateChats
+    updateChats,
+    setLoaderChat
   }
 
   if (isLoading) {

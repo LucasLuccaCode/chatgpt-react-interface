@@ -43,6 +43,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [prompt, setPrompt] = useState<string>('')
   const [apiMessage, setApiMessage] = useState<ApiMessageTypes | null>(null)
   const [isFetching, setIsFetching] = useState<boolean>(false)
+  
   const { settings } = useSettings()
   const { currentChat } = useChats()
 
@@ -59,9 +60,9 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setController(newController)
       setIsFetching(true)
 
-      const response = await api.requestQuestion({
-        prompt, tokens:
-          settings.tokens,
+      const response = await api.createCompletion({
+        prompt, 
+        tokens: settings.tokens,
         temperature: settings.temperature,
         contextPreviousAnswers,
         signal

@@ -8,7 +8,7 @@ export const AskForm: React.FC = () => {
   const questionEntryRef = useRef<HTMLTextAreaElement>(null)
   const sendButtonRef = useRef<HTMLButtonElement>(null)
   const { sendQuestionApi, setApiMessage, prompt, setPrompt, isFetching, controller } = useApi()
-  const { updateChats } = useChats()
+  const { updateChats, setLoaderChat } = useChats()
 
   useEffect(() => {
     questionEntryRef.current && questionEntryRef.current.focus()
@@ -31,6 +31,8 @@ export const AskForm: React.FC = () => {
     sendButtonRef.current?.blur()
 
     setApiMessage({ message: 'Aguardando resposta da api.', type: 'info' });
+
+    setLoaderChat(prompt)
 
     const jsonResponse = await sendQuestionApi()
 

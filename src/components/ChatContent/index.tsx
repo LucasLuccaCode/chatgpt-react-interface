@@ -5,6 +5,7 @@ import { ChatContainer } from "./styles";
 
 import { ChatItem } from "./ChatItem";
 import { LastChatItem } from "./ChatItem/LastChatItem";
+import { PreTyping } from "./ChatItem/PreTyping";
 
 export const ChatContent: React.FC = () => {
   const chatContainerRef = useRef<HTMLUListElement>(null);
@@ -33,13 +34,19 @@ export const ChatContent: React.FC = () => {
         ))
       )}
 
-      {lastChat && (
+      {lastChat && !lastChat.isLoading ? (
         <LastChatItem
           key={lastChat.id}
           question={lastChat.question}
           answer={formatAnswer(lastChat.answer)}
           chatContainerRef={chatContainerRef}
           stored={!!lastChat.stored}
+        />
+      ) : (
+        <PreTyping 
+          key={lastChat.id}
+          question={lastChat.question}
+          chatContainerRef={chatContainerRef}
         />
       )}
     </ChatContainer>

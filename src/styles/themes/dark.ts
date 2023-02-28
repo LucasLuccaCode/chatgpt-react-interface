@@ -23,7 +23,7 @@ export default {
       button: 'rgba(255, 255, 255, .1)',
       buttonHover: 'rgba(255, 255, 255, .2)',
       chat: '#3f54fa',
-      inputRange: '#282e5e',
+      inputRange: 'rgba(255, 255, 255, 0.08)',
       gradient: 'linear-gradient(to right, #1b1b1b 50%, #121212)'
     },
 

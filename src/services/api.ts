@@ -1,6 +1,6 @@
 import { API_KEY } from "../../config"
 
-interface RequestQuestionTypes {
+interface CreateCompletionTypes {
   prompt: string,
   tokens: number,
   temperature: number
@@ -9,13 +9,13 @@ interface RequestQuestionTypes {
 }
 
 export default {
-  async requestQuestion({
+  async createCompletion({
     prompt,
     tokens,
     temperature,
     contextPreviousAnswers,
     signal
-  }: RequestQuestionTypes) {
+  }: CreateCompletionTypes) {
     
     return await fetch("https://api.openai.com/v1/completions", {
       method: "POST",

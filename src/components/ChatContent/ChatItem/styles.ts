@@ -1,8 +1,8 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const ChatContentItem = styled.li`
   width: 100%;
-  border-radius: ${props => props.theme.spacing.large};
+  border-radius: ${props => props.theme.spacing.medium};
 `
 
 export const Question = styled.div`
@@ -37,18 +37,22 @@ export const Prompt = styled.pre`
   }
 `
 
-export const Answer = styled.div`
+interface ChatContentItemProps {
+  isLoading?: boolean
+}
+
+export const Answer = styled.div<ChatContentItemProps>`${({ theme, isLoading }) => css`
   font-size: .7rem;
-  color: ${props => props.theme.colors.text.answer};
-  padding: ${props => props.theme.spacing.medium};
+  color: ${theme.colors.text.answer};
+  padding: ${theme.spacing.medium};
   width: 100%;
   margin-top: .6rem;
   margin-left: 1px;
-  margin-bottom: 3px;
-  border-radius: ${props => props.theme.borderRadius.large};
-  background: ${props => props.theme.colors.bg.secondary};
-  box-shadow: ${props => props.theme.boxShadow.container};
-`
+  border-radius: ${isLoading ? theme.spacing.small : theme.spacing.medium};
+  background: ${theme.colors.bg.secondary};
+  box-shadow: ${theme.boxShadow.container};
+  `
+}`
 
 export const Header = styled.div`
   width: 100%;

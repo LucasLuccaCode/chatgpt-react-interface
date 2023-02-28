@@ -2,7 +2,8 @@ export interface ChatsItem {
   id: number;
   question: string;
   answer: string;
-  stored?: boolean 
+  stored?: boolean, 
+  isLoading?: boolean 
 }
 
 export interface ChatsInfo {
@@ -25,5 +26,6 @@ export interface ChatsContextTypes {
   currentChat: CurrentChatsType,
   currentChatId: number,
   setCurrentChatId: setCurrentChatIdType,
-  updateChats: (chat: QuestionAnswerType) => void
+  updateChats: (chat: QuestionAnswerType) => void,
+  setLoaderChat(question: string): void
 }
