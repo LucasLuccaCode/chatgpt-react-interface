@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 export const ChatContentItem = styled.li`
   width: 100%;
+  border-radius: ${props => props.theme.spacing.large};
 `
 
 export const Question = styled.div`
@@ -26,7 +27,7 @@ export const Prompt = styled.pre`
   font-size: .7rem;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  color: ${props => props.theme.colors.text.answer};
+  color: ${props => props.theme.colors.text.question};
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.2rem; 
@@ -40,12 +41,12 @@ export const Answer = styled.div`
   font-size: .7rem;
   color: ${props => props.theme.colors.text.answer};
   padding: ${props => props.theme.spacing.medium};
-  border-radius: ${props => props.theme.borderRadius.medium};
   width: 100%;
   margin-top: .6rem;
-  border: 1px solid ${props => props.theme.colors.opaque};
+  margin-left: 1px;
   border-radius: ${props => props.theme.borderRadius.large};
-  /* background-image: ${props => props.theme.colors.bg.gradient}; */
+  background: ${props => props.theme.colors.bg.container};
+  box-shadow: ${props => props.theme.boxShadow.container};
 `
 
 export const Header = styled.div`
@@ -74,6 +75,7 @@ export const Title = styled.div`
 
 export const Output = styled(Prompt)`
   margin-top: 1rem;
+  font-family: 'Poppins', sans-serif;
   font-weight: 400;
   color: ${props => props.theme.colors.text.answer};
 `

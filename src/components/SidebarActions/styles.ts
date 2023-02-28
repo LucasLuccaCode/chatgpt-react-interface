@@ -21,20 +21,22 @@ flex: 1;
 gap: .3rem;
 padding: .35rem .3rem;
 border-radius: ${props => props.theme.borderRadius.medium};
-background: ${props => props.theme.colors.bg.button};
+/* border: 2px solid ${props => props.theme.colors.bg.details}; */
+background: ${props => props.theme.colors.bg.secondary};
+transition: background .2s ease;
 
   &:hover,
   &.active {
-    background: ${props => props.theme.colors.bg.buttonHover};
+    background: transparent;
 
     i,span {
-      color: ${props => props.theme.colors.text.title}
+      color: ${props => props.theme.colors.bg.details}
     }
   }
 
   i, span {
     pointer-events: none;
-    color: ${props => props.theme.colors.text.button};
+    color: ${props => props.theme.colors.text.title};
   }
   
   i {

@@ -10,7 +10,7 @@ export const SearchForm = styled.form`
   background: ${props => props.theme.colors.bg.primary};
 
   &:focus-within {
-    border-color: ${props => props.theme.colors.borderFocus};
+    border-color: ${props => props.theme.colors.bg.details};
   }
 `
 
@@ -32,22 +32,28 @@ export const InputSearch = styled.input`
 `
 
 export const Button = styled.button`
-  background: ${props => props.theme.colors.bg.button};
-  padding: .3rem;
+  padding: .2rem;
   border-radius: ${props => props.theme.borderRadius.medium};
-  outline: 1.7px solid transparent;
+  background: ${props => props.theme.colors.bg.details};
+  border: 2px solid ${props => props.theme.colors.bg.details};
+  outline: 1px solid transparent;
+  transition: background .2s ease;
 
   &:hover {
-    background: ${props => props.theme.colors.bg.buttonHover};
+    background: transparent;
+    
+    i {
+      color: ${props => props.theme.colors.bg.details};
+    }
   }
-
+  
   &:focus {
-    outline-color: ${props => props.theme.colors.borderFocus};
+    outline-color: ${props => props.theme.colors.bg.details};
   }
 
   i {
-    font-size: .8rem;
-    color: ${props => props.theme.colors.text.title};
+    font-size: .7rem;
+    color: ${props => props.theme.colors.text.details};
   }
 
 `

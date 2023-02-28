@@ -19,7 +19,7 @@ export const ChatCard: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isA
 
   return (
     <ChatContainer
-      className={isActive ? 'active' : ''}
+      className={isActive && !selectingChats ? 'active' : ''}
       onClick={handleChatClick}
     >
       <Label>

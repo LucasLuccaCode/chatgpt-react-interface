@@ -38,7 +38,7 @@ transition: background .3s ease;
   }
 
   &:focus {
-    border-color: ${props => props.theme.colors.borderFocus};
+    border-color: ${props => props.theme.colors.bg.details};
   }
 
   i {

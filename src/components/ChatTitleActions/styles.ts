@@ -15,19 +15,21 @@ export const ActionsContainer = styled.div<ActionsContainerProps>`${({ hasChat, 
 export const Button = styled.button`
   padding: .35rem .3rem;
   border-radius: ${props => props.theme.borderRadius.medium};
-  background: ${props => props.theme.colors.bg.button};
+  border: 2px solid ${props => props.theme.colors.bg.details};
+  background: ${props => props.theme.colors.bg.details};
+  transition: background .2s ease;
 
   &:hover {
-    background: ${props => props.theme.colors.bg.buttonHover};
+    background: transparent;
 
     i {
-      color: ${props => props.theme.colors.text.title};
+      color: ${props => props.theme.colors.bg.details};
     }
   }
 
   i {
     display: flex;
     font-size: .7rem;
-    color: ${props => props.theme.colors.text.button};
+    color: ${props => props.theme.colors.text.details};
   }
 `

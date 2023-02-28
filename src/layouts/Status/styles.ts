@@ -8,7 +8,8 @@ export const StatusContainer = styled.div`
   height: 100%;
   border-radius: ${props => props.theme.borderRadius.medium};
   padding: 0 .4rem;
-  border: 1.5px solid ${props => props.theme.colors.border};
+  background: ${props => props.theme.colors.bg.container};
+  box-shadow: ${props => props.theme.boxShadow.container};
   overflow: hidden;
 `
 

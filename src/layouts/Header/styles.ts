@@ -12,16 +12,19 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`${({ theme, h
   gap: ${theme.spacing.medium};
   margin-top: ${theme.spacing.medium};
   padding: ${theme.spacing.medium};
-  border: 1.5px solid ${theme.colors.border};
-  border-radius: ${theme.borderRadius.large};
+  border-radius: ${theme.borderRadius.medium};
+  background: ${props => props.theme.colors.bg.container};
+  box-shadow: ${props => props.theme.boxShadow.container};
+
   ${!hasTitle && `
   pointer-events: 
-  none; cursor: not-allowed;`
+  none; 
+  cursor: not-allowed;`
   }
   /* overflow: hidden; */
 
   &:focus-within {
-    border-color: ${theme.colors.borderFocus};
+    box-shadow: 0 0 0 1px ${props => props.theme.colors.bg.details};
   }
   `
 }`

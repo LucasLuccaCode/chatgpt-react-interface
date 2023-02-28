@@ -8,34 +8,42 @@ export default {
     large: '1rem'
   },
 
+  boxShadow: {
+    container: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, #efefff 0px 1px 2px',
+    button: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, #efefff 0px 1px 2px',
+  },
+
   colors: {
     bg: {
-      body: '#0f0f0f',
-      primary: '#121212',
-      secondary: '#1b1b1b',
-      details: '#ce90f4',
-      button: 'rgba(255, 255, 255, .1)',
-      buttonHover: 'rgba(255, 255, 255, .2)',
-      inputRange: 'rgba(255, 255, 255, 0.1)',
-      gradient: 'linear-gradient(to right, #1b1b1b 50%, #121212)'
+      body: '#fafafa',
+      primary: '#efefff',
+      secondary: '#ffffff',
+      container: '#fff',
+      details: '#3f54fa',
+      button: '#3f54fa',
+      buttonHover: '#3f54fa',
+      chat: '#3f54fa',
+      inputRange: '#eaeaef',
+      gradient: 'linear-gradient(to right, #ffffff 50%, #121212)'
     },
 
-    opaque: 'rgba(255, 255, 255, 0.1)',
+    opaque: '#efefff',
 
     border: 'rgba(255, 255, 255, .1)',
-    borderFocus: '#ce90f4',
+    borderFocus: 'rgba(0,0,0, .1)',
     
     text: {
-      title: '#efefff',
-      details: '#3a3a40',
+      title: '#56566b',
+      details: '#efefff',
       button: '#efefff',
-      info: '#e7f1f3',
-      success: '#4adeef',
-      error: '#f591d0',
-      question: '#d3d3d7',
-      answer: '#efefff',
-      chat: '#efefff',
-      placeholder: '#5a5a60',
+      info: '#46465b',
+      success: '#27a9e9',
+      error: '#eb41ac',
+      question: '#66667b',
+      answer: '#46465b',
+      chat: '#86869b',
+      settings: '#6a6a70',
+      placeholder: '#babac0',
     }
   },
 
@@ -50,5 +58,5 @@ export default {
     small: '.2rem',
     medium: '.3rem',
     large: '.5rem',
-  }
+  } 
 }

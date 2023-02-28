@@ -15,10 +15,10 @@ export const MainContainer = styled.main<MainContainerProps>`${ ({ theme, hasCha
 }`
 
 export const Placeholder = styled.li`
-display: grid;
-place-content: center;
-width: 100%;
-height: 100%;
-font-size: .8rem;
-color: ${props => props.theme.colors.text.placeholder};
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: .8rem;
+  color: ${props => props.theme.colors.text.placeholder};
 `

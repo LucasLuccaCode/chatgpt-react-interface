@@ -8,10 +8,16 @@ export const SettingsContainer = styled.section`
   height: 100%;
   gap: ${props => props.theme.spacing.top};
   border-radius: ${props => props.theme.borderRadius.large};
-  padding: ${props => props.theme.spacing.large};
-  border: 1px solid ${props => props.theme.colors.border};
+  padding: ${props => props.theme.spacing.medium};
   overflow-x: hidden;
+  /* border: 1px solid ${props => props.theme.colors.opaque}; */
+  background: ${props => props.theme.colors.bg.container};
+  box-shadow: ${props => props.theme.boxShadow.container};
   overflow-y: auto;
+
+  input {
+    cursor: pointer;
+  }
 
 
   &::-webkit-scrollbar {
@@ -83,7 +89,7 @@ export const InputRange = styled.input`
     appearance: none;
     width: .7rem;
     height: .7rem;
-    background-color: ${props => props.theme.colors.bg.details};
+    background: ${props => props.theme.colors.bg.details};
     border-radius: 50%;
   }
 
@@ -91,7 +97,7 @@ export const InputRange = styled.input`
     appearance: none;
     width: .7rem;
     height: .7rem;
-    background-color: ${props => props.theme.colors.bg.details};
+    background: ${props => props.theme.colors.bg.details};
     border-radius: 50%;
   }
 `
@@ -139,18 +145,19 @@ export const Button = styled.button`
   flex: 1;
   font-size: .6rem;
   font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  color: ${props => props.theme.colors.text.title};
-  /* border: 1px solid ${props => props.theme.colors.opaque}; */
+  font-weight: 600;
   padding: .4rem .3rem;
   margin-top: ${props => props.theme.spacing.top};
   text-transform: capitalize;
   border-radius: ${props => props.theme.borderRadius.small};
-  background: ${props => props.theme.colors.bg.button};
-
+  color: ${props => props.theme.colors.text.details};
+  border: 2px solid ${props => props.theme.colors.bg.details};
+  background: ${props => props.theme.colors.bg.details};
+  transition: background .2s ease;
+  
   &:hover {
-    background: ${props => props.theme.colors.bg.buttonHover};
-    color: ${props => props.theme.colors.text.title};
+    color: ${props => props.theme.colors.bg.details};
+    background: transparent;
   }
 
   &:active {

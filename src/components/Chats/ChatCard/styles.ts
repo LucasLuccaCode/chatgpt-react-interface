@@ -1,24 +1,27 @@
 import styled from "styled-components";
 
 export const ChatContainer = styled.li`
+  border-radius: ${props => props.theme.borderRadius.medium};
+
+  
   &:not(:last-child){
     /* border-bottom: 1.5px solid ${props => props.theme.colors.opaque}; */
-    margin-bottom: .2rem;
+    margin-bottom: .5rem;
   }
   
   &:hover,
   &.active {
-    background: ${props => props.theme.colors.opaque};
-    border-radius: ${props => props.theme.borderRadius.medium};
+    background: ${props => props.theme.colors.bg.details};
+    backdrop-filter: blur(100px);
 
     h3, i {
-      color: ${props => props.theme.colors.text.title};
+      color: ${props => props.theme.colors.text.details};
     }
   }
-
+/* 
   &:hover {
     background: ${props => props.theme.colors.opaque};
-  }
+  } */
 `
 
 export const Label = styled.label`
@@ -47,9 +50,15 @@ min-width: 1rem;
 height: 1rem;
 border-radius: .2rem;
 border: .1rem solid ${props => props.theme.colors.opaque};
-background: ${props => props.theme.colors.bg.button};
+background: ${props => props.theme.colors.opaque};
+z-index: 2;
 
-  &:checked::before {
+
+  &:hover {
+    background: ${props => props.theme.colors.bg.secondary};
+  }
+
+  &::before {
     content: "";
     position: absolute;
     border-left: .18rem solid ${props => props.theme.colors.bg.details};
@@ -59,6 +68,12 @@ background: ${props => props.theme.colors.bg.button};
     height: .2rem;
     margin-top: -.15rem;
     transform: rotate(-45deg);
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+
+  &:checked::before {
+    opacity: 1;
   }
 `
 
