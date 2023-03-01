@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const ChatContainer = styled.li`
   border-radius: ${props => props.theme.borderRadius.medium};
 
+  &:active {
+    transform: scale(.98);
+  }
   
   &:not(:last-child){
     /* border-bottom: 1.5px solid ${props => props.theme.colors.opaque}; */
@@ -18,10 +21,10 @@ export const ChatContainer = styled.li`
       color: ${props => props.theme.colors.text.details};
     }
   }
-/* 
+
   &:hover {
     background: ${props => props.theme.colors.opaque};
-  } */
+  }
 `
 
 export const Label = styled.label`
@@ -55,7 +58,7 @@ z-index: 2;
 
 
   &:hover {
-    background: ${props => props.theme.colors.bg.secondary};
+    /* background: ${props => props.theme.colors.bg.secondary}; */
   }
 
   &::before {

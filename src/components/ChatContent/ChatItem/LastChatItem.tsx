@@ -72,6 +72,8 @@ export const LastChatItem: React.FC<LastChatItemProps> = ({
       await sleep(settingsRef.current.speed);
     }
 
+    chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight;
+
     setApiMessage({
       message: `Concluído [ ${answer.length} / ${answer.length}  ] 100%`,
       type: 'success'

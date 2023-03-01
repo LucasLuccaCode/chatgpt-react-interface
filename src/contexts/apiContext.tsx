@@ -6,10 +6,11 @@ import React, {
   useState
 } from "react";
 
-import { QuestionEntryType } from "../components/SidebarActions";
-import { useSettings } from "./settingsContext";
-import { useChats } from "./chatsContext";
 import api from "../services/api";
+import { ChatsInfo } from "../types/Chats";
+import { useSettings } from "./settingsContext";
+
+import { QuestionEntryType } from "../components/SidebarActions";
 
 type ApiMessageTypes = {
   message: string,
@@ -19,7 +20,7 @@ type ApiMessageTypes = {
 interface ApiContextProps {
   controller: AbortController | undefined;
   apiMessage: ApiMessageTypes | null;
-  sendQuestionApi(): Promise<any>,
+  sendQuestionApi(currentChat: ChatsInfo | null): Promise<any>,
   setApiMessage: React.Dispatch<React.SetStateAction<ApiMessageTypes | null>>,
   prompt: string,
   setPrompt: React.Dispatch<React.SetStateAction<string>>,
@@ -43,12 +44,10 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [prompt, setPrompt] = useState<string>('')
   const [apiMessage, setApiMessage] = useState<ApiMessageTypes | null>(null)
   const [isFetching, setIsFetching] = useState<boolean>(false)
-  
+
   const { settings } = useSettings()
-  const { currentChat } = useChats()
 
-
-  const sendQuestionApi = useCallback(async () => {
+  const sendQuestionApi = useCallback(async (currentChat: ChatsInfo | null) => {
     try {
       const contextPreviousAnswers = currentChat && settings.contexts
         ? currentChat.data.map(({ answer }) => answer)?.join('')
@@ -61,7 +60,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setIsFetching(true)
 
       const response = await api.createCompletion({
-        prompt, 
+        prompt,
         tokens: settings.tokens,
         temperature: settings.temperature,
         contextPreviousAnswers,
@@ -85,7 +84,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       const questionEntry: QuestionEntryType = document.querySelector('[data-question-entry]')
       questionEntry && questionEntry.focus()
     }
-  }, [settings, currentChat, prompt])
+  }, [settings, prompt])
 
   const value: ApiContextProps = {
     controller,

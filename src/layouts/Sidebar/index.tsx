@@ -12,22 +12,11 @@ import { SidebarActions } from "../../components/SidebarActions"
 export const Sidebar: React.FC = () => {
   const [filter, setFilter] = useState('')
 
-  const { setChats } = useChats()
-  const { selectingChats, setSelectingChats, removeChats } = useChatActions()
-  const { setApiMessage } = useApi()
+  const { removeChats } = useChats()
+  const { selectingChats, setSelectingChats, chatIdsRemove } = useChatActions()
 
   const handleChatsRemove = () => {
-    if (removeChats.length) {
-      setChats(prevChats => prevChats.filter(chat => !removeChats.includes(chat.id)))
-
-      const totalRemoved = removeChats.length
-      const isPlural = totalRemoved > 1 ? 's' : ''
-
-      setApiMessage({
-        message: `${totalRemoved} chat${isPlural} removido${isPlural} com sucesso.`,
-        type: 'success'
-      })
-    }
+    chatIdsRemove.length && removeChats(chatIdsRemove)
     setSelectingChats(false)
   }
 
@@ -35,17 +24,18 @@ export const Sidebar: React.FC = () => {
     <SidebarContainer>
       <Search filter={filter} setFilter={setFilter} />
 
+      <SidebarActions setFilter={setFilter} />
+
       {selectingChats ? (
         <RemoveChatsButton onClick={handleChatsRemove}>
           <p>Remover selecionados:</p>
-          <span>{removeChats.length}</span>
+          <span>{chatIdsRemove.length}</span>
         </RemoveChatsButton>
       ) : (
         <Title>CHATS</Title>
       )}
 
       <Chats filter={filter} />
-      <SidebarActions setFilter={setFilter} />
     </SidebarContainer>
   )
 }

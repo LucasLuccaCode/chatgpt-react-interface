@@ -8,7 +8,7 @@ margin-bottom: ${props => props.theme.spacing.medium};
 border-radius: ${props => props.theme.borderRadius.large};
 box-shadow: ${props => props.theme.boxShadow.container};
 background: ${props => props.theme.colors.bg.secondary};
-/* transition: border .2s; */
+transition: box-shadow .3s ease;
 /* overflow: hidden; */
 
   &:focus-within {

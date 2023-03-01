@@ -1,6 +1,5 @@
 import React from "react"
 import { useChats } from "../../contexts/chatsContext"
-import { useApi } from "../../contexts/apiContext"
 
 import { ActionsContainer, Button } from "./styles"
 
@@ -15,8 +14,7 @@ export const ChatTitleActions: React.FC<Props> = ({
   setEditingTitle,
   updateTitle
 }) => {
-  const { currentChat,currentChatId, setChats } = useChats()
-  const { setApiMessage } = useApi()
+  const { currentChat, currentChatId, removeChats } = useChats()
 
   const handleClickEdit = () => {
     if (editingTitle) {
@@ -26,8 +24,7 @@ export const ChatTitleActions: React.FC<Props> = ({
   }
 
   const handleDeleteClick = () => {
-    setChats(prevChats => prevChats.filter(chat => chat.id !== currentChatId))
-    setApiMessage({ message: 'Chat excluído com sucesso.', type: 'success' });
+    removeChats([currentChatId])
   }
 
   const editButtonClass = editingTitle ? 'check' : 'pencil-fill'

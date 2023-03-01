@@ -1,4 +1,3 @@
-import { MouseEvent } from "react"
 import { useChatActions } from "../../../contexts/chatActionsContext"
 
 import { ChatContainer, InputCheckbox, Label, Title } from "./styles"
@@ -11,7 +10,7 @@ interface ChatProps {
 }
 
 export const ChatCard: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isActive }) => {
-  const { removeChats, selectingChats, handleCheckboxChange } = useChatActions()
+  const { chatIdsRemove, selectingChats, handleCheckboxChange } = useChatActions()
 
   const handleChatClick = () => {
     !selectingChats && setCurrentChatId()
@@ -28,7 +27,7 @@ export const ChatCard: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isA
           <InputCheckbox
             type="checkbox"
             name={String(id)}
-            checked={removeChats.includes(id)}
+            checked={chatIdsRemove.includes(id)}
             onChange={() => handleCheckboxChange(id)}
           />
         ) : (

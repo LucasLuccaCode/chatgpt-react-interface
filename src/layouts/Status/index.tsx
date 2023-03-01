@@ -4,22 +4,12 @@ import { useApi } from "../../contexts/apiContext"
 import { StatusContainer, Message } from "./styles"
 
 export const Status: React.FC = () => {
-  const { apiMessage, prompt } = useApi()
-
-  const renderMessage = () => {
-    if (apiMessage) {
-      return <p className={apiMessage.type}>{apiMessage.message}</p>
-    }
-    if (prompt.length) {
-      return <p>Sua pergunta contém {prompt.length} caracteres...</p>
-    }
-    return null
-  }
+  const { apiMessage } = useApi()
 
   return (
     <StatusContainer>
       <Message className="nowrap">
-        {renderMessage()}
+        {apiMessage && <p className={apiMessage.type}>{apiMessage.message}</p>}
       </Message>
     </StatusContainer>
   )

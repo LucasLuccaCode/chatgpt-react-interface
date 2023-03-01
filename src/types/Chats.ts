@@ -27,5 +27,6 @@ export interface ChatsContextTypes {
   currentChatId: number,
   setCurrentChatId: setCurrentChatIdType,
   updateChats: (chat: QuestionAnswerType) => void,
-  setLoaderChat(question: string): void
+  setLoaderChat(question: string): void,
+  removeChats(chatIds: number[]): void
 }

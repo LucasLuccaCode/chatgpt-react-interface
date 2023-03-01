@@ -1,4 +1,4 @@
-import { API_KEY } from "../../config"
+import { REACT_APP_API_KEY } from "../../config"
 
 interface CreateCompletionTypes {
   prompt: string,
@@ -16,13 +16,13 @@ export default {
     contextPreviousAnswers,
     signal
   }: CreateCompletionTypes) {
-    
+
     return await fetch("https://api.openai.com/v1/completions", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `Bearer ${REACT_APP_API_KEY}`,
       },
       body: JSON.stringify({
         model: "text-davinci-003",

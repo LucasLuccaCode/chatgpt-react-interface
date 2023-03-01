@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useRef } from "react"
+import React, { ChangeEvent, FormEvent, useEffect, useRef } from "react"
 import { useApi } from "../../contexts/apiContext"
 import { useChats } from "../../contexts/chatsContext"
 
@@ -8,11 +8,18 @@ export const AskForm: React.FC = () => {
   const questionEntryRef = useRef<HTMLTextAreaElement>(null)
   const sendButtonRef = useRef<HTMLButtonElement>(null)
   const { sendQuestionApi, setApiMessage, prompt, setPrompt, isFetching, controller } = useApi()
-  const { updateChats, setLoaderChat } = useChats()
+  const { updateChats, setLoaderChat, currentChat } = useChats()
 
-  useEffect(() => {
-    questionEntryRef.current && questionEntryRef.current.focus()
-  }, [])
+  const handlePromptChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.target.value
+
+    setPrompt(value)
+
+    setApiMessage(value ? {
+      message: `Seu texto possui ${value.length} caracteres`,
+      type: 'info'
+    } : null)
+  }
 
   const handleAskFormSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -34,7 +41,7 @@ export const AskForm: React.FC = () => {
 
     setLoaderChat(prompt)
 
-    const jsonResponse = await sendQuestionApi()
+    const jsonResponse = await sendQuestionApi(currentChat)
 
     if (!jsonResponse) return
 
@@ -47,7 +54,7 @@ export const AskForm: React.FC = () => {
     const answer = jsonResponse.choices?.[0].text || 'Sem resposta'
 
     updateChats({ question: prompt, answer })
-    
+
     setApiMessage({
       message: 'Sem resposta',
       type: 'error'
@@ -60,9 +67,10 @@ export const AskForm: React.FC = () => {
         ref={questionEntryRef}
         rows={3}
         value={prompt}
-        onChange={e => setPrompt(e.target.value)}
+        onChange={handlePromptChange}
         placeholder="Faça sua pergunta aqui..."
         className={isFetching ? 'disabled' : ''}
+        autoFocus
         data-question-entry
       />
       <SendButton type="submit" ref={sendButtonRef}>

@@ -9,11 +9,11 @@ import { App } from './App'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
   <SettingsProvider>
-    <ChatsProvider>
-      <ApiProvider>
+    <ApiProvider>
+      <ChatsProvider>
         <App />
-      </ApiProvider>
-    </ChatsProvider>
+      </ChatsProvider>
+    </ApiProvider>
   </SettingsProvider>
   // </React.StrictMode>,
 )

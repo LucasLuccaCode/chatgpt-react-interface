@@ -15,16 +15,16 @@ export default {
 
   colors: {
     bg: {
-      body: '#131313',
-      primary: '#191919',
+      body: '#161616',
+      primary: '#161616',
       secondary: '#1f1f1f',
-      container: '#141414',
+      container: '#171717',
       details: '#5768ef',
       button: 'rgba(255, 255, 255, .1)',
       buttonHover: 'rgba(255, 255, 255, .2)',
       chat: '#3f54fa',
       inputRange: 'rgba(255, 255, 255, 0.08)',
-      gradient: 'linear-gradient(to right, #1b1b1b 50%, #121212)'
+      gradient: 'linear-gradient(to right, #1f1f1f 50%, #121212)'
     },
 
     opaque: 'rgba(255, 255, 255, 0.1)',

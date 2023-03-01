@@ -8,6 +8,7 @@ export const SearchForm = styled.form`
   border-radius: ${props => props.theme.borderRadius.medium};
   border: 1px solid transparent;
   background: ${props => props.theme.colors.bg.primary};
+  transition: border-color .3s ease;
 
   &:focus-within {
     border-color: ${props => props.theme.colors.bg.details};
