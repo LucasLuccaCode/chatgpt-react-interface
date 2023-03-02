@@ -23,7 +23,8 @@ let currentChat = {}
 let currentChatId = 0
 let settings = {}
 
-const API_KEY = "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"
+const API_KEY = ""
+
 let isPrinting = false
 let controller = null
 
@@ -269,10 +270,10 @@ const sendQuestion = async (question) => {
 
   const hasError = jsonResponse.error?.message
   if (!!hasError) {
-    statusProgress.textContent = 'Erro ao fazer consulta, tente mais tarde.'
+    statusProgress.textContent = 'Erro ao realizar consulta, tente mais tarde.'
     statusStopBtn.classList.add('hide')
 
-    const h2 = createElement('h2', 'c-responses__response--error', jsonResponse.error.message)
+    const h2 = createElement('h2', 'c-responses__response --error', jsonResponse.error.message)
     responses.appendChild(h2)
     responses.scrollTop = responses.scrollHeight;
     return
@@ -365,7 +366,7 @@ const writeText = async (text) => {
     responseEl.textContent = hasText ? hasText + text[i] : text[i];
 
     statusProgress.textContent =
-      `Respondendo [ ${i + 1} / ${text.length}  ] ${Math.floor((i + 1) / text.length * 100)}%`;
+      `Gerando resposta [ ${i + 1} / ${text.length}  ] ${Math.floor((i + 1) / text.length * 100)}%`;
 
     main.scrollTop = main.scrollHeight
 
@@ -379,7 +380,7 @@ const writeText = async (text) => {
 
   isPrinting = false
 
-  statusProgress.textContent = `[ ${text.length} / ${text.length}  ] 100%`
+  statusProgress.textContent = `Renderizado [ ${text.length} / ${text.length}  ] 100%`
 
   statusStopBtn.classList.add('hide')
 }
