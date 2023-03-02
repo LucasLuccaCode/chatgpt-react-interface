@@ -1,5 +1,3 @@
-import { REACT_APP_API_KEY } from "../../config"
-
 interface CreateCompletionTypes {
   prompt: string,
   tokens: number,
@@ -22,7 +20,7 @@ export default {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${REACT_APP_API_KEY}`,
+        Authorization: `Bearer ${import.meta.env.VITE_APP_API_KEY}`,
       },
       body: JSON.stringify({
         model: "text-davinci-003",
