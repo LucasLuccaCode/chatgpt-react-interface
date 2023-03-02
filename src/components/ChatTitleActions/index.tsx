@@ -6,19 +6,19 @@ import { ActionsContainer, Button } from "./styles"
 interface Props {
   editingTitle: boolean,
   setEditingTitle: React.Dispatch<React.SetStateAction<boolean>>,
-  updateTitle(): void
+  renameTitle(): void
 }
 
 export const ChatTitleActions: React.FC<Props> = ({
   editingTitle,
   setEditingTitle,
-  updateTitle
+  renameTitle
 }) => {
   const { currentChat, currentChatId, removeChats } = useChats()
 
   const handleClickEdit = () => {
     if (editingTitle) {
-      updateTitle()
+      renameTitle()
     }
     setEditingTitle(!editingTitle)
   }

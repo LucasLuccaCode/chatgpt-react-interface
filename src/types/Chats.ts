@@ -2,8 +2,8 @@ export interface ChatsItem {
   id: number;
   question: string;
   answer: string;
-  stored?: boolean, 
-  isLoading?: boolean 
+  stored?: boolean,
+  isLoading?: boolean
 }
 
 export interface ChatsInfo {
@@ -15,9 +15,9 @@ export interface ChatsInfo {
 export type CurrentChatsType = ChatsInfo | null
 export type setCurrentChatIdType = React.Dispatch<React.SetStateAction<number>>
 
-export interface QuestionAnswerType { 
-  question: string, 
-  answer: string 
+export interface QuestionAnswerType {
+  question: string,
+  answer: string
 }
 
 export interface ChatsContextTypes {
@@ -28,5 +28,6 @@ export interface ChatsContextTypes {
   setCurrentChatId: setCurrentChatIdType,
   updateChats: (chat: QuestionAnswerType) => void,
   setLoaderChat(question: string): void,
-  removeChats(chatIds: number[]): void
+  removeChats(chatIds: number[]): void,
+  updateTitle(newTitle: string): void
 }

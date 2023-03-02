@@ -26,7 +26,8 @@ const ChatsContext = createContext<ChatsContextTypes>({
   setCurrentChatId() { },
   updateChats() { },
   setLoaderChat() { },
-  removeChats() { }
+  removeChats() { },
+  updateTitle(){}
 })
 
 const chatsStorageKey = "@mr:chatgpt:chats"
@@ -77,6 +78,16 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       type: 'success'
     })
   }, [chats])
+
+  const updateTitle = useCallback((newTitle: string) => {
+    const currentChats = [...chats]
+
+    const chatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
+    currentChats[chatIndex].title = newTitle
+
+    setChats(currentChats)
+    localStorage.setItem(chatsStorageKey, JSON.stringify(currentChats))
+  }, [currentChatId, chats])
 
   const setLoaderChat = useCallback((question: string) => {
     if (!currentChat) {
@@ -159,7 +170,8 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setCurrentChatId,
     updateChats,
     setLoaderChat,
-    removeChats
+    removeChats,
+    updateTitle
   }
 
   if (isLoading) {

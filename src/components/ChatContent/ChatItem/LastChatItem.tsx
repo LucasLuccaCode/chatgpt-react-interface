@@ -68,7 +68,7 @@ export const LastChatItem: React.FC<LastChatItemProps> = ({
 
       chatContainerRef.current!.scrollTop = chatContainerRef.current!.scrollHeight;
 
-      console.log(settingsRef.current.speed);
+      // console.log(settingsRef.current.speed);
       await sleep(settingsRef.current.speed);
     }
 

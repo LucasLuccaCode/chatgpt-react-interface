@@ -153,7 +153,7 @@ export const Button = styled.button`
   padding: .4rem .3rem;
   margin-top: ${props => props.theme.spacing.top};
   text-transform: capitalize;
-  border-radius: ${props => props.theme.borderRadius.small};
+  border-radius: ${props => props.theme.borderRadius.medium};
   color: ${props => props.theme.colors.text.details};
   border: 2px solid ${props => props.theme.colors.bg.details};
   background: ${props => props.theme.colors.bg.details};

@@ -16,7 +16,7 @@ import { ChatTitleActions } from "../../components/ChatTitleActions";
 export const Header: React.FC = () => {
   const [editingTitle, setEditingTitle] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const { currentChat, currentChatId, chats, setChats } = useChats();
+  const { currentChat, currentChatId, chats, setChats, updateTitle } = useChats();
 
   useEffect(() => {
     if (editingTitle) {
@@ -36,23 +36,19 @@ export const Header: React.FC = () => {
   const handleKeypressTitle = (event: KeyboardEvent<HTMLHeadingElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      updateTitle()
+      renameTitle()
       event.currentTarget.blur();
     }
   }
 
-  const updateTitle = useCallback(() => {
+  const renameTitle = useCallback(() => {
     const currentTitle = currentChat!.title
     const newTitle = titleRef.current!.textContent
 
     if (newTitle && currentTitle !== newTitle) {
-      const currentChats = [...chats]
-      const chatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
-      currentChats[chatIndex].title = newTitle
-
-      setChats(currentChats)
+      updateTitle(newTitle)
     }
-  }, [currentChat])
+  }, [currentChat, titleRef])
 
   return (
     <HeaderContainer hasTitle={!!currentChat}>
@@ -71,7 +67,7 @@ export const Header: React.FC = () => {
       <ChatTitleActions
         editingTitle={editingTitle}
         setEditingTitle={setEditingTitle}
-        updateTitle={updateTitle}
+        renameTitle={renameTitle}
       />
     </HeaderContainer>
   );
