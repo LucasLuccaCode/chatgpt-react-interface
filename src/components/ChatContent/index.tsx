@@ -20,7 +20,7 @@ export const ChatContent: React.FC = () => {
   }, [currentChat]);
 
   const formatAnswer = (answer: string) => {
-    return answer.replace(/^.?\n\n/, "");
+    return answer.trim();
   }
 
   const { data: chatData } = currentChat || { data: [] };

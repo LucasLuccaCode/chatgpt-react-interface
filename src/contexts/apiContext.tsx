@@ -6,7 +6,7 @@ import React, {
   useState
 } from "react";
 
-import api from "../services/api";
+import { api } from "../services/api";
 import { ChatsInfo } from "../types/Chats";
 import { useSettings } from "./settingsContext";
 

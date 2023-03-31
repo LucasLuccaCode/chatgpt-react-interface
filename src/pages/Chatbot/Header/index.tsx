@@ -7,11 +7,11 @@ import React, {
   KeyboardEvent
 } from "react";
 
-import { useChats } from "../../contexts/chatsContext";
+import { useChats } from "../../../contexts/chatsContext";
 
 import { HeaderContainer, ChatTitle, } from "./styles";
 
-import { ChatTitleActions } from "../../components/ChatTitleActions";
+import { ChatTitleActions } from "../../../components/ChatTitleActions";
 
 export const Header: React.FC = () => {
   const [editingTitle, setEditingTitle] = useState(false);

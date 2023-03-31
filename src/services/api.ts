@@ -6,7 +6,7 @@ interface CreateCompletionTypes {
   signal: AbortSignal
 }
 
-export default {
+export const api = {
   async createCompletion({
     prompt,
     tokens,

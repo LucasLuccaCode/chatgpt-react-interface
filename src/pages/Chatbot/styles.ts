@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AppContainer = styled.div`
+export const ChatbotContainer = styled.section`
   display: grid;
   gap:  ${props => props.theme.spacing.medium};
   padding-right: ${props => props.theme.spacing.medium};

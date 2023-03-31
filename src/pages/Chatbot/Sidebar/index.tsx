@@ -1,13 +1,13 @@
 import React, { useState } from "react"
-import { useChats } from "../../contexts/chatsContext"
-import { useChatActions } from "../../contexts/chatActionsContext"
-import { useApi } from "../../contexts/apiContext"
+import { useChats } from "../../../contexts/chatsContext"
+import { useChatActions } from "../../../contexts/chatActionsContext"
+import { useApi } from "../../../contexts/apiContext"
 
 import { RemoveChatsButton, SidebarContainer, Title } from "./styles"
 
-import { Search } from "../../components/Search"
-import { Chats } from "../../components/Chats"
-import { SidebarActions } from "../../components/SidebarActions"
+import { Search } from "../../../components/Search"
+import { Chats } from "../../../components/Chats"
+import { SidebarActions } from "../../../components/SidebarActions"
 
 export const Sidebar: React.FC = () => {
   const [filter, setFilter] = useState('')

@@ -1,19 +1,23 @@
 import ReactDOM from 'react-dom/client'
 
+import { AuthProvider } from './contexts/authContext'
 import { SettingsProvider } from './contexts/settingsContext'
-import { ChatsProvider } from './contexts/chatsContext'
 import { ApiProvider } from './contexts/apiContext'
+import { ChatsProvider } from './contexts/chatsContext'
+import { RouterProvider } from 'react-router-dom'
 
-import { App } from './App'
+import { router } from './routes'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
-  <SettingsProvider>
-    <ApiProvider>
-      <ChatsProvider>
-        <App />
-      </ChatsProvider>
-    </ApiProvider>
-  </SettingsProvider>
+  <AuthProvider>
+    <SettingsProvider>
+      <ApiProvider>
+        <ChatsProvider>
+          <RouterProvider router={router} />
+        </ChatsProvider>
+      </ApiProvider>
+    </SettingsProvider>
+  </AuthProvider>
   // </React.StrictMode>,
 )

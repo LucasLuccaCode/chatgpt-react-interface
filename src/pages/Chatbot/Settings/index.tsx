@@ -1,6 +1,6 @@
 import React from "react"
 
-import { useSettings } from "../../contexts/settingsContext"
+import { useSettings } from "../../../contexts/settingsContext"
 
 import {
   SettingsContainer,

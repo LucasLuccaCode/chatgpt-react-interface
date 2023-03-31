@@ -2,7 +2,7 @@ import React from "react"
 
 import { FooterContainer } from "./styles"
 
-import { AskForm } from "../../components/AskForm"
+import { AskForm } from "../../../components/AskForm"
 
 export const Footer: React.FC = () => {
   return (

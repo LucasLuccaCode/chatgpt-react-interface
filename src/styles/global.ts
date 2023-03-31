@@ -9,7 +9,7 @@ export default createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body,
@@ -31,15 +31,16 @@ button {
 
 button {
   cursor: pointer;
+
+  &:active {
+    transform: scale(.95);
+  }
 }
 
 i {
-  /* display: flex; */
-  vertical-align: 0;
-}
-
-button:active {
-  transform: scale(.95);
+  /* vertical-align: 0; */
+  display: flex;
+  overflow: hidden;
 }
 
 li {
