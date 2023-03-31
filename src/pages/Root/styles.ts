@@ -41,7 +41,7 @@ background: ${props => props.theme.colors.bg.secondary};
 
   a {
     display: flex;
-    padding: .4rem;
+    padding: .2rem .4rem;
     border-radius: ${props => props.theme.borderRadius.medium};
     transition: .3s ease ;
   }

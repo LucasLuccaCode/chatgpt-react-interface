@@ -64,18 +64,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const signIn = useCallback(async ({ email, password }: SignInProps) => {
     try {
-      const { data } = await axios.post('/users/login', {
+      const { data } = await axios.post('/auth/login', {
         email,
         password
       })
-
-      setUser(data.user)
+      
+      if(data?.error){
+        return console.log(data.error)
+      }
+      setUser(data)
 
       axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 
       // creating user cache and token
       Cookies.set(tokenStoredKey, data.token, { expires: 7 }) // Espira em 7 dias
-      Cookies.set(userStoredKey, JSON.stringify(user), { expires: 7 }) // Espira em 7 dias
+      Cookies.set(userStoredKey, JSON.stringify(data.user), { expires: 7 }) // Espira em 7 dias
     } catch (error) {
       console.log(error)
     }

@@ -38,9 +38,7 @@ button {
 }
 
 i {
-  /* vertical-align: 0; */
-  display: flex;
-  overflow: hidden;
+  vertical-align: 0;
 }
 
 li {

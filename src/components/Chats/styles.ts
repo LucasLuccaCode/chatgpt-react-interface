@@ -14,7 +14,7 @@ overflow-y: auto;
   }
   
   &::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.colors.bg.details};
+    background: ${props => props.theme.colors.opaque};
     border-radius: 20px;
   }
 `
