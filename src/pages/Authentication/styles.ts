@@ -16,7 +16,7 @@ export const Card = styled.div<PropsWithIsLogin>`
     position: relative;
     display: flex;
     width: 70%;
-    min-height: 60%;
+    min-height: 65%;
     border-radius: ${theme.borderRadius.large};
     background: ${theme.colors.bg.secondary};
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;

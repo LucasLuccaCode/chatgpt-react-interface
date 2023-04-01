@@ -36,8 +36,8 @@ interface AuthContextTypes {
   signed: boolean,
   signIn({ email, password }: SignInProps): Promise<void>,
   signUp({ user, setIsLogin }: SignUpProps): Promise<void>,
-  isLoading: boolean,
-  logout(): void
+  signOut(): void,
+  isLoading: boolean
 }
 
 const userStoredKey = "@mr:chatgpt:user"
@@ -48,8 +48,8 @@ const AuthContext = createContext<AuthContextTypes>({
   signed: false,
   async signIn() { },
   async signUp() { },
-  isLoading: true,
-  logout() { }
+  signOut() { },
+  isLoading: true
 })
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -117,7 +117,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [])
 
-  const logout = useCallback(async () => {
+  const signOut = useCallback(async () => {
     Cookies.remove(tokenStoredKey)
     Cookies.remove(userStoredKey)
 
@@ -129,8 +129,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     signed: !!user,
     signIn,
     signUp,
-    isLoading,
-    logout
+    signOut,
+    isLoading
   }
 
   if (isLoading) {

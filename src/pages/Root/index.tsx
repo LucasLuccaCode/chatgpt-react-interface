@@ -1,8 +1,10 @@
 import { useMemo } from "react"
 import { Link, NavLink, Outlet } from "react-router-dom"
-import { ThemeProvider } from "styled-components"
-import { useSettings } from "../../contexts/settingsContext"
 
+import { useSettings } from "../../contexts/settingsContext"
+import { useAuth } from "../../contexts/authContext"
+
+import { ThemeProvider } from "styled-components"
 import GlobalStyle from "../../styles/global"
 import dark from "../../styles/themes/dark"
 import light from "../../styles/themes/light"
@@ -11,10 +13,15 @@ import { RootContainer, Details, Navbar } from "./styles"
 
 export const Root: React.FC = () => {
   const { settings } = useSettings()
+  const { signOut } = useAuth()
 
   const theme = useMemo(() => {
     return settings.darkTheme ? dark : light
   }, [settings.darkTheme])
+
+  const handleSignOut = () => {
+    signOut()
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -46,9 +53,9 @@ export const Root: React.FC = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/logout">
+              <button onClick={handleSignOut}>
                 <i className="bi bi-box-arrow-left"></i>
-              </NavLink>
+              </button>
             </li>
           </ul>
 

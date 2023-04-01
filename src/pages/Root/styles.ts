@@ -39,15 +39,18 @@ background: ${props => props.theme.colors.bg.secondary};
     }
   }
 
-  a {
+  a,
+  button {
     display: flex;
     padding: .2rem .4rem;
     border-radius: ${props => props.theme.borderRadius.medium};
-    transition: .3s ease ;
+    transition: .3s ease;
+    background: transparent;
   }
 
   a:hover,
-  a.active {
+  a.active,
+  button:hover {
     background: ${props => props.theme.colors.bg.details};
     
     i {
