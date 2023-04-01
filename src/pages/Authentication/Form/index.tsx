@@ -9,23 +9,43 @@ import { useState } from "react";
 
 interface FormProps {
   isLogin: boolean;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Form: React.FC<FormProps> = ({ isLogin }) => {
+export const Form: React.FC<FormProps> = ({ isLogin, setIsLogin }) => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { user, signIn } = useAuth()
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const { user, signIn, signUp } = useAuth()
 
   const handleForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    signIn({ email, password })
+    if (isLogin) {
+      signIn({
+        email,
+        password
+      })
+      return
+    }
+
+    signUp({
+      user: {
+        name,
+        email,
+        password,
+        confirmPassword
+      },
+      setIsLogin
+    })
   }
 
 
   if (user) {
-    return <Navigate to="/chatbot" />
+    return (
+      <Navigate to="/chatbot" />
+    )
   }
 
   return (
@@ -57,6 +77,17 @@ export const Form: React.FC<FormProps> = ({ isLogin }) => {
         title="Senha precisa ter entre 6 e 12 caracteres"
         onChange={e => setPassword(e.target.value)}
       />
+      {!isLogin && (
+        <Input
+          type="password"
+          name="confirm_password"
+          value={confirmPassword}
+          placeholder="Confirmar senha"
+          required pattern=".{6,12}"
+          title="Senha precisa ter entre 6 e 12 caracteres"
+          onChange={e => setConfirmPassword(e.target.value)}
+        />
+      )}
       <Button type="submit">
         {isLogin ? 'Logar' : 'Cadastrar'}
       </Button>

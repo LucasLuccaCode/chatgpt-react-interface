@@ -21,10 +21,21 @@ interface SignInProps {
   password: string
 }
 
+interface SignUpProps {
+  user: {
+    name: string;
+    email: string;
+    password: string
+    confirmPassword: string;
+  },
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 interface AuthContextTypes {
   user: IUser | null,
   signed: boolean,
-  signIn({ email, password }: SignInProps): void,
+  signIn({ email, password }: SignInProps): Promise<void>,
+  signUp({ user, setIsLogin }: SignUpProps): Promise<void>,
   isLoading: boolean,
   logout(): void
 }
@@ -35,7 +46,8 @@ const tokenStoredKey = "@mr:chatgpt:token"
 const AuthContext = createContext<AuthContextTypes>({
   user: null,
   signed: false,
-  signIn() { },
+  async signIn() { },
+  async signUp() { },
   isLoading: true,
   logout() { }
 })
@@ -68,8 +80,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         email,
         password
       })
-      
-      if(data?.error){
+
+      if (data?.error) {
         return console.log(data.error)
       }
       setUser(data)
@@ -79,6 +91,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // creating user cache and token
       Cookies.set(tokenStoredKey, data.token, { expires: 7 }) // Espira em 7 dias
       Cookies.set(userStoredKey, JSON.stringify(data.user), { expires: 7 }) // Espira em 7 dias
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  const signUp = useCallback(async ({ user, setIsLogin }: SignUpProps) => {
+    try {
+      const { name, email, password, confirmPassword } = user
+      const { data } = await axios.post('/auth/register', {
+        name,
+        email,
+        password,
+        confirmPassword
+      })
+
+      if (data?.error) {
+        console.log(data.error)
+        return
+      }
+
+      setIsLogin(true)
     } catch (error) {
       console.log(error)
     }
@@ -95,11 +128,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     user,
     signed: !!user,
     signIn,
+    signUp,
     isLoading,
     logout
   }
 
-  if(isLoading){
+  if (isLoading) {
     // return null
   }
 

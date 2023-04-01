@@ -12,7 +12,7 @@ export const Authentication: React.FC = () => {
       <Card isLogin={isLogin}>
         <InfoColumn isLogin={isLogin} setIsLogin={setIsLogin} />
 
-        <FormColumn isLogin={isLogin} />
+        <FormColumn isLogin={isLogin} setIsLogin={setIsLogin} />
       </Card>
     </Container>
   )

@@ -8,9 +8,10 @@ import { Form } from "../Form";
 
 interface FormColumnProps {
   isLogin: boolean;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const FormColumn: React.FC<FormColumnProps> = ({ isLogin }) => {
+export const FormColumn: React.FC<FormColumnProps> = ({ isLogin, setIsLogin }) => {
   return (
     <FormColumnStyled>
       <Title>
@@ -26,7 +27,7 @@ export const FormColumn: React.FC<FormColumnProps> = ({ isLogin }) => {
         }
       </Description>
 
-      <Form isLogin={isLogin} />
+      <Form isLogin={isLogin} setIsLogin={setIsLogin} />
     </FormColumnStyled>
   )
 } 
