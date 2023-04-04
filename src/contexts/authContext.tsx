@@ -10,6 +10,7 @@ import {
 import Cookies from "js-cookie";
 import axios from "../services/axios"
 import { Loading } from "../components/Loading";
+import { useToast } from "./toaskContext";
 
 interface IUser {
   id: number;
@@ -55,6 +56,7 @@ const AuthContext = createContext<AuthContextTypes>({
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const { updateToast } = useToast()
 
   useEffect(() => {
     loadCacheData()
@@ -91,8 +93,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // creating user cache and token
       Cookies.set(tokenStoredKey, data.token, { expires: 7 }) // Espira em 7 dias
       Cookies.set(userStoredKey, JSON.stringify(data.user), { expires: 7 }) // Espira em 7 dias
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : error.message
+
+      console.log(errorMessage)
+
+      updateToast({
+        title: errorMessage,
+        type: 'error'
+      })
     }
   }, [])
 
@@ -112,8 +123,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
 
       setIsLogin(true)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : error.message
+
+      console.log(errorMessage)
+
+      updateToast({
+        title: errorMessage,
+        type: 'error'
+      })
     }
   }, [])
 
@@ -122,6 +142,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     Cookies.remove(userStoredKey)
 
     setUser(null)
+
+    updateToast({
+      title: 'Desconectado com sucesso.',
+      type: 'success'
+    })
   }, [])
 
   const value: AuthContextTypes = {

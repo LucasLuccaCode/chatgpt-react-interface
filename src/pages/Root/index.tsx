@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom"
 
 import { useSettings } from "../../contexts/settingsContext"
 import { useAuth } from "../../contexts/authContext"
+import { Toast } from "../../components/Toast"
 
 import { ThemeProvider } from "styled-components"
 import GlobalStyle from "../../styles/global"
@@ -13,15 +14,11 @@ import { RootContainer, Details, Navbar } from "./styles"
 
 export const Root: React.FC = () => {
   const { settings } = useSettings()
-  const { signOut } = useAuth()
+  const { user, signOut } = useAuth()
 
   const theme = useMemo(() => {
     return settings.darkTheme ? dark : light
   }, [settings.darkTheme])
-
-  const handleSignOut = () => {
-    signOut()
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,26 +34,43 @@ export const Root: React.FC = () => {
                 <i className="bi bi-house-door-fill"></i>
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/chatbot">
-                <i className="bi bi-wechat"></i>
-              </NavLink>
-            </li>
+
+            {user && (
+              <li>
+                <NavLink to="/chatbot">
+                  <i className="bi bi-wechat"></i>
+                </NavLink>
+              </li>
+            )}
+
             <li>
               <NavLink to="/search">
                 <i className="bi bi-search"></i>
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/profile">
-                <i className="bi bi-person-fill"></i>
-              </NavLink>
-            </li>
-            <li>
-              <button onClick={handleSignOut}>
-                <i className="bi bi-box-arrow-left"></i>
-              </button>
-            </li>
+
+            {!user && (
+              <li>
+                <NavLink to="/auth">
+                  <i className="bi bi-person-fill-add"></i>
+                </NavLink>
+              </li>
+            )}
+
+            {user && (
+              <>
+                <li>
+                  <NavLink to="/profile">
+                    <i className="bi bi-person-fill"></i>
+                  </NavLink>
+                </li>
+                <li>
+                  <button onClick={signOut}>
+                    <i className="bi bi-box-arrow-left"></i>
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
 
           <NavLink to="/menu">
@@ -67,6 +81,8 @@ export const Root: React.FC = () => {
         <Details>
           <Outlet />
         </Details>
+
+        <Toast />
       </RootContainer>
 
       <GlobalStyle />

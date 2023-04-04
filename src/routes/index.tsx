@@ -39,10 +39,6 @@ export const router = createBrowserRouter([
         ]
       },
       {
-        path: 'logout',
-        element: <h1>Logout</h1>
-      },
-      {
         path: 'menu',
         element: <h1>Menu</h1>
       }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { FormEvent } from "react";
 
@@ -5,7 +6,6 @@ import { FormStyled, Input } from "./styles";
 import { Button } from "../styles";
 
 import { useAuth } from "../../../contexts/authContext";
-import { useState } from "react";
 
 interface FormProps {
   isLogin: boolean;
