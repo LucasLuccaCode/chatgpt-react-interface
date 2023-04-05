@@ -25,7 +25,7 @@ export const Root: React.FC = () => {
       <RootContainer>
         <Navbar>
           <Link to="/" className="logo">
-            <img src="assets/icons/logo.png" alt="Logo da aplicação" />
+            <img src="/assets/icons/logo.png" alt="Logo da aplicação" />
           </Link>
 
           <ul>

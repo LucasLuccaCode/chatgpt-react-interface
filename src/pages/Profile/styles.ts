@@ -13,7 +13,8 @@ export const ContentRoute = styled.div`
   width: 100%;
   max-width: 500px;
   height: 100%;
-  margin: 0 auto;
+  padding: 1rem .5rem;
+  /* padding: .5rem; */
   background: ${props => props.theme.colors.bg.primary};
 `
 

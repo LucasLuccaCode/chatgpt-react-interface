@@ -5,6 +5,7 @@ import { Root } from '../pages/Root'
 import { Chatbot } from "../pages/Chatbot";
 import { Authentication } from "../pages/Authentication";
 import { Profile } from "../pages/Profile";
+import { EditUser } from "../pages/Profile/EditUser";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,13 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/profile',
-            element: <Profile />
+            element: <Profile />,
+            children: [
+              {
+                path: 'edit',
+                element: <EditUser />
+              }
+            ]
           },
         ]
       },

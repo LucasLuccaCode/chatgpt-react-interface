@@ -9,12 +9,19 @@ import {
 
 import Cookies from "js-cookie";
 import axios from "../services/axios"
-import { Loading } from "../components/Loading";
 import { useToast } from "./toaskContext";
+
+interface IUserUpdate {
+  name?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
 
 interface IUser {
   id: number;
   name: string;
+  email: string;
 }
 
 interface SignInProps {
@@ -33,11 +40,12 @@ interface SignUpProps {
 }
 
 interface AuthContextTypes {
-  user: IUser | null,
-  signed: boolean,
-  signIn({ email, password }: SignInProps): Promise<void>,
-  signUp({ user, setIsLogin }: SignUpProps): Promise<void>,
-  signOut(): void,
+  user: IUser | null;
+  signed: boolean;
+  signIn({ email, password }: SignInProps): Promise<void>;
+  signUp({ user, setIsLogin }: SignUpProps): Promise<void>;
+  signOut(): void;
+  update(user: IUserUpdate): void;
   isLoading: boolean
 }
 
@@ -50,6 +58,7 @@ const AuthContext = createContext<AuthContextTypes>({
   async signIn() { },
   async signUp() { },
   signOut() { },
+  update() { },
   isLoading: true
 })
 
@@ -137,6 +146,35 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [])
 
+  const update = useCallback(async ({ name, email, password, confirmPassword }: IUserUpdate) => {
+    try {
+      const userId = user?.id
+
+      const { data } = await axios.patch(`/users/${userId}`, {
+        name,
+        email,
+        password,
+        confirmPassword
+      })
+
+      updateToast({
+        title: data.message,
+        type: 'success'
+      })
+    } catch (error: any) {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : error.message
+
+      console.log(errorMessage)
+
+      updateToast({
+        title: errorMessage,
+        type: 'error'
+      })
+    }
+  }, [user])
+
   const signOut = useCallback(async () => {
     Cookies.remove(tokenStoredKey)
     Cookies.remove(userStoredKey)
@@ -155,6 +193,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     signIn,
     signUp,
     signOut,
+    update,
     isLoading
   }
 

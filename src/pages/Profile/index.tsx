@@ -1,13 +1,24 @@
-import { useState } from "react"
-import { NavLink } from "react-router-dom"
+import React from "react"
+import { NavLink, Outlet } from "react-router-dom"
 
-import { Actions, Avatar, Container, ContentRoute, Cover, Details, EditButton, NavItem, NavList, Navbar, Title } from "./styles"
+import {
+  Actions,
+  Avatar,
+  Container,
+  ContentRoute,
+  Cover,
+  Details,
+  EditButton,
+  NavItem,
+  NavList,
+  Navbar,
+  Title
+} from "./styles"
 
-import { Form } from "../Authentication/Form"
+
 import { useAuth } from "../../contexts/authContext"
 
 export const Profile: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(false)
   const { user } = useAuth()
 
   const handleMenuClick = () => {
@@ -23,7 +34,7 @@ export const Profile: React.FC = () => {
         <Avatar style={{ backgroundImage: `url(${userAvatar})` }} />
         <Title>
           <h2>{user?.name}</h2>
-          <p>50 Amigos</p>
+          <p>0 Amigos</p>
         </Title>
         <Actions>
           <EditButton to="edit">
@@ -53,7 +64,7 @@ export const Profile: React.FC = () => {
       </Navbar >
 
       <ContentRoute>
-
+        <Outlet />
       </ContentRoute>
     </Container >
   )
