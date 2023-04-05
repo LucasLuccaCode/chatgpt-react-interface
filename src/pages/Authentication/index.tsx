@@ -1,11 +1,21 @@
 import { useState } from "react"
+import { Navigate } from "react-router-dom"
+
 import { Container, Card } from "./styles"
 
-import { InfoColumn } from "./InfoColumn"
-import { FormColumn } from "./FormColumn"
+import { useAuth } from "../../contexts/authContext"
+import { InfoColumn } from "../Authentication/InfoColumn"
+import { FormColumn } from "../Authentication/FormColumn"
 
 export const Authentication: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
+  const { user } = useAuth()
+
+  if (user) {
+    return (
+      <Navigate to="/chatbot" />
+    )
+  }
 
   return (
     <Container>

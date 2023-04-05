@@ -45,6 +45,10 @@ li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .nowrap {
   white-space: nowrap;
   text-overflow: ellipsis;

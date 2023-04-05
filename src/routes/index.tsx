@@ -4,6 +4,7 @@ import { PrivateRoute } from "./private";
 import { Root } from '../pages/Root'
 import { Chatbot } from "../pages/Chatbot";
 import { Authentication } from "../pages/Authentication";
+import { Profile } from "../pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/profile',
-            element: <h1>Profile</h1>
+            element: <Profile />
           },
         ]
       },

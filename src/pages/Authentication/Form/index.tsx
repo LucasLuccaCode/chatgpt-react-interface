@@ -17,7 +17,7 @@ export const Form: React.FC<FormProps> = ({ isLogin, setIsLogin }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const { user, signIn, signUp } = useAuth()
+  const { signIn, signUp } = useAuth()
 
   const handleForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -39,13 +39,6 @@ export const Form: React.FC<FormProps> = ({ isLogin, setIsLogin }) => {
       },
       setIsLogin
     })
-  }
-
-
-  if (user) {
-    return (
-      <Navigate to="/chatbot" />
-    )
   }
 
   return (

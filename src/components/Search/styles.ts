@@ -56,5 +56,4 @@ export const Button = styled.button`
     font-size: .7rem;
     color: ${props => props.theme.colors.text.details};
   }
-
 `

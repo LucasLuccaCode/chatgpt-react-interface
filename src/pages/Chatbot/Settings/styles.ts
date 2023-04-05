@@ -148,7 +148,6 @@ export const Buttons = styled.div`
 export const Button = styled.button`
   flex: 1;
   font-size: .6rem;
-  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   padding: .4rem .3rem;
   margin-top: ${props => props.theme.spacing.top};
