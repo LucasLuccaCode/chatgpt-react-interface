@@ -95,7 +95,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (data?.error) {
         return console.log(data.error)
       }
-      setUser(data)
+      setUser(data.user)
 
       axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 

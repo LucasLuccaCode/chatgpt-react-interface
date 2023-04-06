@@ -21,10 +21,6 @@ import { useAuth } from "../../contexts/authContext"
 export const Profile: React.FC = () => {
   const { user } = useAuth()
 
-  const handleMenuClick = () => {
-    console.log("Menu clicked")
-  }
-
   const userAvatar = "https://avatars.githubusercontent.com/u/91238215?v=4"
 
   return (
@@ -45,17 +41,17 @@ export const Profile: React.FC = () => {
       </Details>
       <Navbar>
         <NavList>
-          <NavItem onClick={handleMenuClick}>
+          <NavItem>
             <NavLink to="prompts">
               Prompts
             </NavLink>
           </NavItem>
-          <NavItem onClick={handleMenuClick}>
+          <NavItem>
             <NavLink to="favorites">
               Favoritos
             </NavLink>
           </NavItem>
-          <NavItem onClick={handleMenuClick}>
+          <NavItem>
             <NavLink to="about">
               Sobre
             </NavLink>

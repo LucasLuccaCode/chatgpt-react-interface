@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import { PrivateRoute } from "./private";
 
 import { Root } from '../pages/Root'
@@ -39,9 +39,25 @@ export const router = createBrowserRouter([
             element: <Profile />,
             children: [
               {
+                index: true,
+                element: <Navigate to="prompts" />
+              },
+              {
+                path: 'prompts',
+                element: <h1>Prompts</h1>
+              },
+              {
+                path: 'favorites',
+                element: <h1>Favoritos</h1>
+              },
+              {
+                path: 'about',
+                element: <h1>Sobre</h1>
+              },
+              {
                 path: 'edit',
                 element: <EditUser />
-              }
+              },
             ]
           },
         ]
