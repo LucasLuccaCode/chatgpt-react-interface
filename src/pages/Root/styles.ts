@@ -66,7 +66,22 @@ background: ${props => props.theme.colors.bg.secondary};
 `
 
 export const Details = styled.section`
-flex: 1;
-padding-left: ${props => props.theme.spacing.small};
-overflow: hidden;
+  flex: 1;
+  /* padding-left: ${props => props.theme.spacing.small}; */
+  border-left: 2px solid ${props => props.theme.colors.opaque};
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: .25rem;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colors.bg.details};
+    border-radius: 20px;
+  }
 `

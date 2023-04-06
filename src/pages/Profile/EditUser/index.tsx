@@ -6,7 +6,9 @@ import {
   Title,
   Form,
   Input,
-  SubmitButton
+  SubmitButton,
+  Wrapper,
+  Label
 } from "./styles";
 
 import { useAuth } from "../../../contexts/authContext";
@@ -16,7 +18,7 @@ export const EditUser: React.FC = () => {
   const [name, setName] = useState(user?.name)
   const [email, setEmail] = useState(user?.email)
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [oldPassword, setOldPassword] = useState("")
 
   const handleForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -25,7 +27,7 @@ export const EditUser: React.FC = () => {
       name,
       email,
       password,
-      confirmPassword
+      oldPassword
     })
   }
 
@@ -33,40 +35,54 @@ export const EditUser: React.FC = () => {
     <Container>
       <Title>Atualizar dados de usuário</Title>
       <Form onSubmit={handleForm}>
-        <Input
-          type="text"
-          name="username"
-          value={name}
-          placeholder="Nome"
-          required
-          onChange={e => setName(e.target.value)}
-        />
-        <Input
-          type="email"
-          name="email"
-          value={email}
-          placeholder="Email"
-          required
-          onChange={e => setEmail(e.target.value)}
-        />
-        <Input
-          type="password"
-          name="password"
-          value={password}
-          placeholder="Senha"
-          // required pattern=".{6,12}"
-          title="Senha precisa ter entre 6 e 12 caracteres"
-          onChange={e => setPassword(e.target.value)}
-        />
-        <Input
-          type="password"
-          name="confirm_password"
-          value={confirmPassword}
-          placeholder="Confirmar senha"
-          // required pattern=".{6,12}"
-          title="Senha precisa ter entre 6 e 12 caracteres"
-          onChange={e => setConfirmPassword(e.target.value)}
-        />
+        <Wrapper>
+          <Label htmlFor="name">Nome:</Label>
+          <Input
+            type="text"
+            id="name"
+            name="username"
+            value={name}
+            required
+            onChange={e => setName(e.target.value)}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Label htmlFor="email">Email:</Label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            required
+            onChange={e => setEmail(e.target.value)}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Label htmlFor="password">Senha nova:</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            // required 
+            pattern=".{6,12}"
+            title="Senha precisa ter entre 6 e 12 caracteres"
+            onChange={e => setPassword(e.target.value)}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Label htmlFor="oldPassword">Senha atual:</Label>
+          <Input
+            type="password"
+            id="oldPassword"
+            name="oldPassword"
+            value={oldPassword}
+            // required 
+            pattern=".{6,12}"
+            title="Senha deve estar entre 6 e 12 caracteres"
+            onChange={e => setOldPassword(e.target.value)}
+          />
+        </Wrapper>
         <SubmitButton type="submit">
           Atualizar
         </SubmitButton>

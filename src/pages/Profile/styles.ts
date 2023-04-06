@@ -2,25 +2,28 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.section`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  max-width: 500px;
+  /* max-width: 500px; */
   height: 100%;
   margin: 0 auto;
   background: ${props => props.theme.colors.bg.secondary};
 `
 
 export const ContentRoute = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: 500px;
-  height: 100%;
-  padding: 1rem .5rem;
-  /* padding: .5rem; */
+  padding-top: 1rem;
   background: ${props => props.theme.colors.bg.primary};
 `
 
 export const Cover = styled.div`
   width: 100%;
-  height: 100px;
+  height: 50px;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   background-image: linear-gradient(to bottom, ${props => props.theme.colors.opaque}, transparent);
@@ -32,13 +35,12 @@ export const Details = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0.5rem ${props => props.theme.spacing.top};
+  padding: 0.8rem ${props => props.theme.spacing.top};
 `
 
 export const Avatar = styled.div`
   width: 6rem;
   height: 6rem;
-  margin-top: -6%;
   border: 3px solid ${props => props.theme.colors.text.title};
   border-radius: 50%;
   background-size: cover;
@@ -68,6 +70,10 @@ export const Title = styled.div`
 `
 
 export const Actions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   /* min-width: 6rem; */
   height: 100%;
   padding: 0 0.5rem;
@@ -94,6 +100,7 @@ export const NavItem = styled.li`
     /* font-weight: bold; */
     color: ${props => props.theme.colors.text.title};
     box-shadow: 0 2px 0 transparent;
+    border-bottom: 2px solid transparent;
     transition: 0.3s;
     
     &:hover {
@@ -101,7 +108,7 @@ export const NavItem = styled.li`
     }
 
     &.active {
-      box-shadow: 0 2px ${props => props.theme.colors.bg.details};
+      border-bottom: 2px solid ${props => props.theme.colors.bg.details};
     }
   }
 `

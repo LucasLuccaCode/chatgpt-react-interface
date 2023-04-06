@@ -6,7 +6,6 @@ import {
   Avatar,
   Container,
   ContentRoute,
-  Cover,
   Details,
   EditButton,
   NavItem,
@@ -25,7 +24,6 @@ export const Profile: React.FC = () => {
 
   return (
     <Container>
-      <Cover />
       <Details>
         <Avatar style={{ backgroundImage: `url(${userAvatar})` }} />
         <Title>
@@ -39,6 +37,7 @@ export const Profile: React.FC = () => {
           </EditButton>
         </Actions>
       </Details>
+      
       <Navbar>
         <NavList>
           <NavItem>

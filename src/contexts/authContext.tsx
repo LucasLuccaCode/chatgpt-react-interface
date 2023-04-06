@@ -15,7 +15,7 @@ interface IUserUpdate {
   name?: string;
   email?: string;
   password?: string;
-  confirmPassword?: string;
+  oldPassword?: string;
 }
 
 interface IUser {
@@ -85,6 +85,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(false)
   }, [])
 
+  const saveStorageData = (user: IUser, token: string) => {
+    // creating user cache and token
+    Cookies.set(tokenStoredKey, token, { expires: 7 }) // Espira em 7 dias
+    Cookies.set(userStoredKey, JSON.stringify(user), { expires: 7 }) // Espira em 7 dias
+  }
+
   const signIn = useCallback(async ({ email, password }: SignInProps) => {
     try {
       const { data } = await axios.post('/auth/login', {
@@ -99,9 +105,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 
-      // creating user cache and token
-      Cookies.set(tokenStoredKey, data.token, { expires: 7 }) // Espira em 7 dias
-      Cookies.set(userStoredKey, JSON.stringify(data.user), { expires: 7 }) // Espira em 7 dias
+      saveStorageData(data.user, data.token)
     } catch (error: any) {
       const errorMessage = error.response
         ? error.response.data.error
@@ -146,7 +150,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [])
 
-  const update = useCallback(async ({ name, email, password, confirmPassword }: IUserUpdate) => {
+  const update = useCallback(async ({ name, email, password, oldPassword }: IUserUpdate) => {
     try {
       const userId = user?.id
 
@@ -154,9 +158,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         name,
         email,
         password,
-        confirmPassword
+        oldPassword
       })
 
+      setUser(data.user)
+      saveStorageData(data.user, data.token)
+      
       updateToast({
         title: data.message,
         type: 'success'
