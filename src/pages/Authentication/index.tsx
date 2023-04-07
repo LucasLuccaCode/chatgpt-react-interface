@@ -13,7 +13,7 @@ export const Authentication: React.FC = () => {
 
   if (user) {
     return (
-      <Navigate to="/chatbot" />
+      <Navigate to={`/${user.id}/chatbot`} />
     )
   }
 

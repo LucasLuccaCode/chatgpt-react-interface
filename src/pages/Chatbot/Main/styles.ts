@@ -8,9 +8,14 @@ export const MainContainer = styled.main<MainContainerProps>`${ ({ theme, hasCha
   grid-area: main;
   width: 100%;
   height: 100%;
+  border-radius: ${theme.borderRadius.large};
   /* border-radius: ${theme.borderRadius.large}; */
   ${!hasChats && `border: 1px solid ${theme.colors.border}`};
   overflow: hidden;
+
+  &.loading {
+    opacity: .5;
+  }
   `
 }`
 

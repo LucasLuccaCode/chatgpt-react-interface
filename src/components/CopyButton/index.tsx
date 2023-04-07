@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { Icon } from "../ChatContent/ChatItem/styles"
+import { Icon } from "../ChatContent/ChatMessage/styles"
 import { StyledCopyButton } from "./styles"
 
 interface CopyButtonProps {

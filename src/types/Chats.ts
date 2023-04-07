@@ -1,3 +1,5 @@
+import { IMessages, IMessagesModel } from "./Messages";
+
 export interface ChatsItem {
   id: number;
   question: string;
@@ -6,19 +8,7 @@ export interface ChatsItem {
   isLoading?: boolean
 }
 
-export interface ChatsInfo {
-  id: number;
-  title: string;
-  data: ChatsItem[];
-}
-
-export type CurrentChatsType = ChatsInfo | null
 export type setCurrentChatIdType = React.Dispatch<React.SetStateAction<number>>
-
-export interface QuestionAnswerType {
-  question: string,
-  answer: string
-}
 
 export interface IChats {
   id: number;
@@ -30,13 +20,16 @@ export interface IChatsModel extends IChats {
   user_id: number;
 }
 
+export interface IChatsWithMessages extends IChatsModel {
+  messages: IMessagesModel[]
+}
+
 export interface ChatsContextTypes {
-  chats: ChatsInfo[],
-  setChats: React.Dispatch<React.SetStateAction<ChatsInfo[]>>,
-  currentChat: CurrentChatsType,
-  currentChatId: number,
-  setCurrentChatId: setCurrentChatIdType,
-  updateChats: (chat: QuestionAnswerType) => void,
+  chats: IChatsModel[],
+  setChats: React.Dispatch<React.SetStateAction<IChatsModel[]>>,
+  currentChat: IChatsWithMessages | null,
+  setCurrentChat: React.Dispatch<React.SetStateAction<IChatsWithMessages | null>>,
+  updateChats: (chat: IMessages) => void,
   setLoaderChat(question: string): void,
   removeChats(chatIds: number[]): void,
   updateTitle(newTitle: string): void

@@ -16,7 +16,7 @@ export interface ChatItemProps {
   answer: string
 }
 
-export const ChatItem: React.FC<ChatItemProps> = ({ question, answer }) => {
+export const ChatMessage: React.FC<ChatItemProps> = ({ question, answer }) => {
   return (
     <ChatContentItem>
       <Question>

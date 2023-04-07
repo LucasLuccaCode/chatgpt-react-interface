@@ -37,7 +37,7 @@ export const Root: React.FC = () => {
 
             {user && (
               <li>
-                <NavLink to="/chatbot">
+                <NavLink to={`${user.id}/chatbot`}>
                   <i className="bi bi-wechat"></i>
                 </NavLink>
               </li>

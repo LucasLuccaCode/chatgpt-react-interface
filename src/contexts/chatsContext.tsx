@@ -6,9 +6,9 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState
 } from "react";
+import { IMessages } from "../types/Messages";
 
 import { useApi } from "./apiContext";
 import { useAuth } from "./authContext";
@@ -16,19 +16,13 @@ import { useToast } from "./toastContext";
 
 import { Loading } from "../components/Loading";
 
-import {
-  ChatsContextTypes,
-  ChatsInfo,
-  CurrentChatsType,
-  QuestionAnswerType
-} from "../types/Chats";
+import { ChatsContextTypes, IChatsModel, IChatsWithMessages } from "../types/Chats";
 
 const ChatsContext = createContext<ChatsContextTypes>({
   chats: [],
   setChats() { },
   currentChat: null,
-  currentChatId: 0,
-  setCurrentChatId() { },
+  setCurrentChat() { },
   updateChats() { },
   setLoaderChat() { },
   removeChats() { },
@@ -38,8 +32,8 @@ const ChatsContext = createContext<ChatsContextTypes>({
 const chatsStorageKey = "@mr:chatgpt:chats"
 
 export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [chats, setChats] = useState<ChatsInfo[]>([])
-  const [currentChatId, setCurrentChatId] = useState<number>(0)
+  const [chats, setChats] = useState<IChatsModel[]>([])
+  const [currentChat, setCurrentChat] = useState<IChatsWithMessages | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const { user } = useAuth()
   const { updateToast } = useToast()
@@ -47,9 +41,12 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const { setApiMessage } = useApi()
 
   useEffect(() => {
-    // loadDataStorage()
-    requestChats()
-  }, [])
+    if(user){
+      requestChats()
+      return
+    }
+    setIsLoading(false)
+  }, [user])
 
   const requestChats = useCallback(async () => {
     try {
@@ -73,130 +70,125 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [user])
 
   const loadDataStorage = () => {
-    const storedData = localStorage.getItem(chatsStorageKey)
+    // const storedData = localStorage.getItem(chatsStorageKey)
 
-    if (storedData) {
-      const storedChats: ChatsInfo[] = JSON.parse(storedData)
+    // if (storedData) {
+    //   const storedChats: IMessages[] = JSON.parse(storedData)
 
-      storedChats.forEach(chatInfo => {
-        const lastIndex = chatInfo.data.length - 1
-        chatInfo.data[lastIndex].stored = true
-      })
+    //   storedChats.forEach(chatInfo => {
+    //     const lastIndex = chatInfo.data.length - 1
+    //     chatInfo.data[lastIndex].stored = true
+    //   })
 
-      setChats(storedChats)
-    }
+    //   setChats(storedChats)
+    // }
 
-    setIsLoading(false)
+    // setIsLoading(false)
   }
 
-  const currentChat: CurrentChatsType = useMemo(() => {
-    return chats.find(chat => chat.id === currentChatId) || null
-  }, [chats, currentChatId])
-
   const removeChats = useCallback((chatIds: number[]) => {
-    const updatedChats = chats.filter(chat => !chatIds.includes(chat.id))
+    // const updatedChats = chats.filter(chat => !chatIds.includes(chat.id))
 
-    setChats(updatedChats)
-    localStorage.setItem(chatsStorageKey, JSON.stringify(updatedChats))
+    // setChats(updatedChats)
+    // localStorage.setItem(chatsStorageKey, JSON.stringify(updatedChats))
 
-    const totalRemoved = chatIds.length
-    const isPlural = totalRemoved > 1 ? 's' : ''
+    // const totalRemoved = chatIds.length
+    // const isPlural = totalRemoved > 1 ? 's' : ''
 
-    setApiMessage({
-      message: `${totalRemoved} chat${isPlural} removido${isPlural} com sucesso.`,
-      type: 'success'
-    })
+    // setApiMessage({
+    //   message: `${totalRemoved} chat${isPlural} removido${isPlural} com sucesso.`,
+    //   type: 'success'
+    // })
   }, [chats])
 
   const updateTitle = useCallback((newTitle: string) => {
-    const currentChats = [...chats]
+    // const currentChats = [...chats]
 
-    const chatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
-    currentChats[chatIndex].title = newTitle
+    // const chatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
+    // currentChats[chatIndex].title = newTitle
 
-    setChats(currentChats)
-    localStorage.setItem(chatsStorageKey, JSON.stringify(currentChats))
-  }, [currentChatId, chats])
+    // setChats(currentChats)
+    // localStorage.setItem(chatsStorageKey, JSON.stringify(currentChats))
+  }, [chats])
 
   const setLoaderChat = useCallback((question: string) => {
-    if (!currentChat) {
-      const currentId = Date.now()
+    // if (!currentChat) {
+    //   const currentId = Date.now()
 
-      const newChat: ChatsInfo = {
-        id: currentId,
-        title: question,
-        data: [
-          {
-            id: currentId + 1,
-            question: question,
-            answer: 'Loading...',
-            isLoading: true
-          }
-        ]
-      }
+      // const newChat: IChatsWithMessages = {
+      //   id: currentId,
+      //   title: question,
+      //   data: [
+      //     {
+      //       id: currentId + 1,
+      //       question: question,
+      //       answer: 'Loading...',
+      //       isLoading: true
+      //     }
+      //   ]
+      // }
 
-      setChats(prevState => [newChat, ...prevState])
-      setCurrentChatId(currentId)
-    } else {
-      const currentChats = [...chats]
-      const currentChatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
+      // setChats(prevState => [newChat, ...prevState])
+      // setCurrentChatId(currentId)
+    // } else {
+    //   const currentChats = [...chats]
+    //   const currentChatIndex = currentChats.findIndex(chat => chat.id === currentChatId)
 
-      currentChats[currentChatIndex].data.push({
-        id: 0,
-        question,
-        answer: 'Loading...',
-        isLoading: true
-      })
-      setChats(currentChats)
-    }
+    //   currentChats[currentChatIndex].data.push({
+    //     id: 0,
+    //     question,
+    //     answer: 'Loading...',
+    //     isLoading: true
+    //   })
+    //   setChats(currentChats)
+    // }
 
-  }, [chats, currentChat, currentChatId])
+  }, [chats, currentChat])
 
-  const updateChats = useCallback(({ question, answer }: QuestionAnswerType) => {
-    let updatedChats = []
+  const updateChats = useCallback(({ question, answer }: IMessages) => {
+    // let updatedChats = []
 
-    if (!currentChat) {
-      const currentId = Date.now()
+    // if (!currentChat) {
+    //   const currentId = Date.now()
 
-      const newChat: ChatsInfo = {
-        id: currentId,
-        title: question,
-        data: [
-          {
-            id: currentId + 1,
-            question: question,
-            answer: answer
-          }
-        ]
-      }
+    //   const newChat: ChatsInfo = {
+    //     id: currentId,
+    //     title: question,
+    //     data: [
+    //       {
+    //         id: currentId + 1,
+    //         question: question,
+    //         answer: answer
+    //       }
+    //     ]
+    //   }
 
-      updatedChats = [newChat, ...chats]
+    //   updatedChats = [newChat, ...chats]
 
-      setCurrentChatId(currentId)
-    } else {
-      updatedChats = [...chats]
-      const currentChatIndex = updatedChats.findIndex(chat => chat.id === currentChatId)
+    //   setCurrentChatId(currentId)
+    // } else {
+    //   updatedChats = [...chats]
+    //   const currentChatIndex = updatedChats.findIndex(chat => chat.id === currentChatId)
 
-      // remove last loading chat
-      updatedChats[currentChatIndex].data.pop()
+    //   // remove last loading chat
+    //   updatedChats[currentChatIndex].data.pop()
 
-      updatedChats[currentChatIndex].data.push({
-        id: Date.now(),
-        question,
-        answer
-      })
-    }
+    //   updatedChats[currentChatIndex].data.push({
+    //     id: Date.now(),
+    //     question,
+    //     answer
+    //   })
+    // }
 
-    setChats(updatedChats)
-    localStorage.setItem(chatsStorageKey, JSON.stringify(updatedChats))
-  }, [chats, currentChat, currentChatId])
+    // setChats(updatedChats)
+    // localStorage.setItem(chatsStorageKey, JSON.stringify(updatedChats))
+  }, [chats, currentChat])
 
   const value: ChatsContextTypes = {
     chats,
     setChats,
     currentChat,
-    currentChatId,
-    setCurrentChatId,
+    setCurrentChat,
     updateChats,
     setLoaderChat,
     removeChats,
