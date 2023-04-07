@@ -10,7 +10,7 @@ interface ChatsProps {
 }
 
 export const Chats: React.FC<ChatsProps> = ({ filter }) => {
-  const { chats, currentChatId, setCurrentChatId } = useChats()
+  const { chats } = useChats()
 
   const filteredChats = useMemo(() => {
     return chats.filter(({ title }) => title.toLowerCase().includes(filter.toLowerCase()))
@@ -24,8 +24,6 @@ export const Chats: React.FC<ChatsProps> = ({ filter }) => {
             key={chat.id}
             id={chat.id}
             title={chat.title}
-            isActive={chat.id === currentChatId}
-            setCurrentChatId={() => setCurrentChatId(chat.id)}
           />
         ))
       ) : (

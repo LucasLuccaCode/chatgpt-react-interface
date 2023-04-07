@@ -7,6 +7,7 @@ flex-wrap: wrap;
 align-items: center;
 gap: ${props => props.theme.spacing.small};
 padding: ${props => props.theme.spacing.small};
+margin: 0 .6rem;
 margin-top: ${props => props.theme.spacing.top};
 border-radius: ${props => props.theme.borderRadius.medium};
 background: ${props => props.theme.colors.bg.primary};

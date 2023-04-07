@@ -3,7 +3,7 @@ import { useChats } from "../../../contexts/chatsContext";
 
 import { MainContainer, Placeholder } from "./styles"
 
-import { ChatContent } from "../../../components/ChatContent"
+import { Outlet } from "react-router-dom";
 
 export const Main: React.FC = () => {
   const { currentChat } = useChats();
@@ -13,7 +13,7 @@ export const Main: React.FC = () => {
       {!currentChat?.data.length ? (
         <Placeholder>O conteúdo do chat aparecerá aqui...</Placeholder>
       ) : (
-        <ChatContent />
+        <Outlet />
       )}
     </MainContainer>
   )

@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 
-import { ToastProvider } from './contexts/toaskContext'
+import { ToastProvider } from './contexts/toastContext'
 import { AuthProvider } from './contexts/authContext'
 import { SettingsProvider } from './contexts/settingsContext'
 import { ApiProvider } from './contexts/apiContext'

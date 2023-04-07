@@ -7,9 +7,9 @@ import {
   useState
 } from "react";
 
+import { useToast } from "./toastContext";
 import Cookies from "js-cookie";
 import axios from "../services/axios"
-import { useToast } from "./toaskContext";
 
 interface IUserUpdate {
   name?: string;

@@ -6,6 +6,7 @@ import { ChatContainer } from "./styles";
 import { ChatItem } from "./ChatItem";
 import { LastChatItem } from "./ChatItem/LastChatItem";
 import { PreTyping } from "./ChatItem/PreTyping";
+import { Outlet } from "react-router-dom";
 
 export const ChatContent: React.FC = () => {
   const chatContainerRef = useRef<HTMLUListElement>(null);

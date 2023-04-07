@@ -7,7 +7,7 @@ import {
   ToastTitle,
   ToastViewport
 } from './styles';
-import { useToast } from '../../contexts/toaskContext';
+import { useToast } from '../../contexts/toastContext';
 
 export const Toast = () => {
   const { isOpen, setIsOpen, toast } = useToast()

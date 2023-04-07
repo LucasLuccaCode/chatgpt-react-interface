@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const SearchForm = styled.form`
   display: flex;
-  gap: .3rem;
-  width: 100%;
+  gap: .2rem;
   padding: ${props => props.theme.spacing.small};
+  margin: 0 .6rem;
   border-radius: ${props => props.theme.borderRadius.medium};
   border: 1px solid transparent;
   background: ${props => props.theme.colors.bg.primary};
@@ -20,7 +20,6 @@ export const InputSearch = styled.input`
   flex-direction: column;
   border: 0;
   font-size: .7rem;
-  font-family: 'Poppins', sans-serif;
   font-weight: 400;
   outline: 0;
   color: ${props => props.theme.colors.text.title};
@@ -33,7 +32,7 @@ export const InputSearch = styled.input`
 `
 
 export const Button = styled.button`
-  padding: .2rem;
+  padding: .1rem .2rem;
   border-radius: ${props => props.theme.borderRadius.medium};
   background: ${props => props.theme.colors.bg.details};
   border: 2px solid ${props => props.theme.colors.bg.details};

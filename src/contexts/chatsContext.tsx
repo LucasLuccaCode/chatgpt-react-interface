@@ -1,3 +1,5 @@
+import axios from "../services/axios";
+
 import {
   createContext,
   ReactNode,
@@ -9,6 +11,9 @@ import {
 } from "react";
 
 import { useApi } from "./apiContext";
+import { useAuth } from "./authContext";
+import { useToast } from "./toastContext";
+
 import { Loading } from "../components/Loading";
 
 import {
@@ -27,7 +32,7 @@ const ChatsContext = createContext<ChatsContextTypes>({
   updateChats() { },
   setLoaderChat() { },
   removeChats() { },
-  updateTitle(){}
+  updateTitle() { }
 })
 
 const chatsStorageKey = "@mr:chatgpt:chats"
@@ -36,12 +41,36 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [chats, setChats] = useState<ChatsInfo[]>([])
   const [currentChatId, setCurrentChatId] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
+  const { user } = useAuth()
+  const { updateToast } = useToast()
 
   const { setApiMessage } = useApi()
 
   useEffect(() => {
-    loadDataStorage()
+    // loadDataStorage()
+    requestChats()
   }, [])
+
+  const requestChats = useCallback(async () => {
+    try {
+      const { data } = await axios.get(`/users/${user?.id}/chats`)
+
+      setChats(data)
+    } catch (error: any) {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : error.message
+
+      console.log(errorMessage)
+
+      updateToast({
+        title: errorMessage,
+        type: 'error'
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }, [user])
 
   const loadDataStorage = () => {
     const storedData = localStorage.getItem(chatsStorageKey)

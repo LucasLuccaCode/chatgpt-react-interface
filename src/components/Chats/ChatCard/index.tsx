@@ -1,41 +1,42 @@
+import { MouseEvent } from "react"
+import { NavLink } from "react-router-dom"
 import { useChatActions } from "../../../contexts/chatActionsContext"
-
 import { ChatContainer, InputCheckbox, Label, Title } from "./styles"
 
 interface ChatProps {
-  id: number,
-  title: string,
-  setCurrentChatId(): void,
-  isActive: boolean
+  id: number
+  title: string
 }
 
-export const ChatCard: React.FC<ChatProps> = ({ id, title, setCurrentChatId, isActive }) => {
+export const ChatCard: React.FC<ChatProps> = ({ id, title }) => {
   const { chatIdsRemove, selectingChats, handleCheckboxChange } = useChatActions()
 
-  const handleChatClick = () => {
-    !selectingChats && setCurrentChatId()
+  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (selectingChats) {
+      e.preventDefault()
+      handleCheckboxChange(id)
+    }
   }
 
+  const isChecked = chatIdsRemove.includes(id)
+  
   return (
-    <ChatContainer
-      className={isActive && !selectingChats ? 'active' : ''}
-      onClick={handleChatClick}
-    >
-      <Label>
+    <ChatContainer>
+      <NavLink to={`${id}`} onClick={handleLinkClick}>
+        <Label>
+          {selectingChats ? (
+            <InputCheckbox
+              type="checkbox"
+              checked={isChecked}
+              onChange={() => { }}
+            />
+          ) : (
+            <i className="bi bi-chat-left" />
+          )}
 
-        {selectingChats ? (
-          <InputCheckbox
-            type="checkbox"
-            name={String(id)}
-            checked={chatIdsRemove.includes(id)}
-            onChange={() => handleCheckboxChange(id)}
-          />
-        ) : (
-          <i className="bi bi-chat-left" />
-        )}
-
-        <Title className="nowrap">{title}</Title>
-      </Label>
+          <Title className="nowrap">{title}</Title>
+        </Label>
+      </NavLink>
     </ChatContainer>
   )
 }

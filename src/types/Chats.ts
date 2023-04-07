@@ -20,6 +20,16 @@ export interface QuestionAnswerType {
   answer: string
 }
 
+export interface IChats {
+  id: number;
+  title: string;
+}
+
+export interface IChatsModel extends IChats {
+  created_at: Date;
+  user_id: number;
+}
+
 export interface ChatsContextTypes {
   chats: ChatsInfo[],
   setChats: React.Dispatch<React.SetStateAction<ChatsInfo[]>>,

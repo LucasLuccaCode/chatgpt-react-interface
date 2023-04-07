@@ -6,6 +6,7 @@ import { Chatbot } from "../pages/Chatbot";
 import { Authentication } from "../pages/Authentication";
 import { Profile } from "../pages/Profile";
 import { EditUser } from "../pages/Profile/EditUser";
+import { ChatContent } from "../components/ChatContent";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,13 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/chatbot',
-            element: <Chatbot />
+            element: <Chatbot />,
+            children: [
+              {
+                path: ':chatId',
+                element: <ChatContent />
+              }
+            ]
           }
         ]
       },
