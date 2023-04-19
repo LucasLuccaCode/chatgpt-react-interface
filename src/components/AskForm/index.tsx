@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef } from "react"
+import React, { ChangeEvent, FormEvent, useRef } from "react"
 import { useApi } from "../../contexts/apiContext"
 import { useChats } from "../../contexts/chatsContext"
 
@@ -16,7 +16,7 @@ export const AskForm: React.FC = () => {
     setPrompt(value)
 
     setApiMessage(value ? {
-      message: `Seu texto possui ${value.length} caracteres`,
+      message: `Sua pergunta contém ${value.length} caracteres`,
       type: 'info'
     } : null)
   }

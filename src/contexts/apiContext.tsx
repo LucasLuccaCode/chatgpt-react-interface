@@ -6,11 +6,11 @@ import React, {
   useState
 } from "react";
 
-import { api } from "../services/api";
-import { ChatsInfo } from "../types/Chats";
 import { useSettings } from "./settingsContext";
 
 import { QuestionEntryType } from "../components/SidebarActions";
+import axios from "../services/axios";
+import { IChatsWithMessages } from "../types/Chats";
 
 type ApiMessageTypes = {
   message: string,
@@ -20,7 +20,7 @@ type ApiMessageTypes = {
 interface ApiContextProps {
   controller: AbortController | undefined;
   apiMessage: ApiMessageTypes | null;
-  sendQuestionApi(currentChat: ChatsInfo | null): Promise<any>,
+  sendQuestionApi(currentChat: IChatsWithMessages | null): Promise<any>,
   setApiMessage: React.Dispatch<React.SetStateAction<ApiMessageTypes | null>>,
   prompt: string,
   setPrompt: React.Dispatch<React.SetStateAction<string>>,
@@ -44,32 +44,30 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [prompt, setPrompt] = useState<string>('')
   const [apiMessage, setApiMessage] = useState<ApiMessageTypes | null>(null)
   const [isFetching, setIsFetching] = useState<boolean>(false)
-
   const { settings } = useSettings()
 
-  const sendQuestionApi = useCallback(async (currentChat: ChatsInfo | null) => {
+  const sendQuestionApi = useCallback(async (currentChat: IChatsWithMessages | null) => {
     try {
-      const contextPreviousAnswers = currentChat && settings.contexts
-        ? currentChat.data.map(({ answer }) => answer)?.join('')
-        : ''
-
       const newController = new AbortController()
       const signal = newController?.signal;
 
       setController(newController)
       setIsFetching(true)
 
-      const response = await api.createCompletion({
-        prompt,
-        tokens: settings.tokens,
-        temperature: settings.temperature,
-        contextPreviousAnswers,
+      const { data } = await axios.post("/openai/completions", {
+        body: {
+          model: "text-davinci-003",
+          prompt,
+          chatId: currentChat?.id || 0,
+          max_tokens: settings.tokens,
+          temperature: settings.temperature,
+        },
         signal
       })
-
+      
       setApiMessage(null)
 
-      return response.json()
+      return data
     } catch (error: any) {
       if (error.name === 'AbortError') {
         setApiMessage({ message: 'A busca foi interrompida com sucesso.', type: 'success' });

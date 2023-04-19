@@ -1,9 +1,12 @@
+import React from "react"
+import { useNavigate } from "react-router-dom"
+
 import { useChats } from "../../contexts/chatsContext"
 import { useApi } from "../../contexts/apiContext"
 import { useChatActions } from "../../contexts/chatActionsContext"
+import { useAuth } from "../../contexts/authContext"
 
 import { Actions, Button } from "./styles"
-import React from "react"
 
 export type QuestionEntryType = HTMLTextAreaElement | null
 
@@ -12,18 +15,18 @@ interface Props {
 }
 
 export const SidebarActions: React.FC<Props> = ({ setFilter }) => {
-  const { setCurrentChatId } = useChats()
+  const { setCurrentChat } = useChats()
   const { setApiMessage, setPrompt } = useApi()
   const { selectingChats, setSelectingChats } = useChatActions()
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   const handleNewChat = () => {
     setApiMessage(null)
     setPrompt('')
     setFilter('')
-    setCurrentChatId(0)
-
-    const questionEntry: QuestionEntryType = document.querySelector('[data-question-entry]')
-    questionEntry && questionEntry.focus()
+    setCurrentChat(null)
+    navigate(`/${user?.id}/chatbot`)
   }
 
   const handleRemoveChat = () => {

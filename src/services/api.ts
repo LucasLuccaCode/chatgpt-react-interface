@@ -1,8 +1,9 @@
-interface CreateCompletionTypes {
+import axios from "./axios"
+
+interface CreateCompletionProps {
   prompt: string,
   tokens: number,
   temperature: number
-  contextPreviousAnswers: string,
   signal: AbortSignal
 }
 
@@ -11,23 +12,16 @@ export const api = {
     prompt,
     tokens,
     temperature,
-    contextPreviousAnswers,
     signal
-  }: CreateCompletionTypes) {
+  }: CreateCompletionProps) {
 
-    return await fetch("https://api.openai.com/v1/completions", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_APP_API_KEY}`,
-      },
-      body: JSON.stringify({
+    return await axios.post("/completions", {
+      body: {
         model: "text-davinci-003",
-        prompt: prompt + contextPreviousAnswers,
+        prompt: prompt,
         max_tokens: tokens, // tamanho da resposta
         temperature: temperature, // criatividade na resposta
-      }),
+      },
       signal
     })
 
