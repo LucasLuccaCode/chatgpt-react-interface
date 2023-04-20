@@ -23,4 +23,5 @@ export const Title = styled.h2`
   backdrop-filter: blur(5px);
   border-bottom: 2px solid ${props => props.theme.colors.border};
   background-color: ${props => props.theme.colors.bg.primary};
+  z-index: 10;
 `;

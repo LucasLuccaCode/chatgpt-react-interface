@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PromptFormStyled = styled.div`
+export const PromptFormStyled = styled.form`
   display: flex;
   gap: .8rem;
   border-bottom: 2px solid ${props => props.theme.colors.border};
@@ -60,7 +60,7 @@ export const Status = styled.div`
 
 export const Button = styled.button`
   color: #fff;
-  font-size: .8rem;
+  font-size: .7rem;
   padding: .3rem .5rem;
   border-radius: 20px;
   width: 30%;
@@ -69,5 +69,10 @@ export const Button = styled.button`
 
   &:hover {
     background-color: #0c8de4;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: .5;
   }
 `;

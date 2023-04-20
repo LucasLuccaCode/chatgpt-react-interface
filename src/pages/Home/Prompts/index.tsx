@@ -10,7 +10,8 @@ import { Loading } from "../../../components/Loading"
 export const Prompts: React.FC = () => {
   const {  data, isLoading } = useQuery({
     queryKey: ['prompts'], 
-    queryFn: () => axios.get("/prompts")
+    queryFn: () => axios.get("/prompts"),
+    refetchOnWindowFocus: false,
   })
 
   const prompts: IPromptWithAuthor[] = data?.data || [];
