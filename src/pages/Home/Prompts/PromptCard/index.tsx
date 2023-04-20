@@ -1,3 +1,4 @@
+import { IPromptWithAuthor } from "../../../../types/Prompts"
 import {
   Reactions,
   Avatar,
@@ -8,14 +9,18 @@ import {
   PromptCardStyled,
 } from "./styles"
 
-export const PromptCard: React.FC = () => {
+interface PromptCardProps {
+  prompt: IPromptWithAuthor
+}
+
+export const PromptCard: React.FC<PromptCardProps> = ({ prompt }) => {
   return (
     <PromptCardStyled>
       <Avatar />
 
       <Content>
-        <Name>John Programmer</Name>
-        <Description>Se comporte como um professor de Inglês com doutorado em Harvard.</Description>
+        <Name>{prompt.author.name}</Name>
+        <Description>{prompt.content}</Description>
         <Reactions>
           <button className="like">
             <i className="bi bi-heart" />

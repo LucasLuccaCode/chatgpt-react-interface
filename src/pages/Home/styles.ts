@@ -10,6 +10,7 @@ export const HomeContainer = styled.div`
 `;
 
 export const Feed = styled.div`
+  position: relative;
   border-right: 2px solid ${props => props.theme.colors.border};
   background-color: ${props => props.theme.colors.bg.primary};
 `;

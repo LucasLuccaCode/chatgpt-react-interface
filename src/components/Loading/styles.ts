@@ -15,7 +15,7 @@ export const Spinner = styled.div<SpinnerProps>`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: .27rem solid rgba(0, 0, 0, 0.1);
+    border: .27rem solid rgba(255, 255, 255, .1);
     border-left-color: #5768ef;
     border-radius: 50%;
     margin: auto;

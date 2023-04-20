@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { ToastProvider } from './contexts/toastContext'
 import { AuthProvider } from './contexts/authContext'
@@ -9,18 +10,23 @@ import { RouterProvider } from 'react-router-dom'
 
 import { router } from './routes'
 
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
-  <ToastProvider>
-    <AuthProvider>
-      <SettingsProvider>
-        <ApiProvider>
-          <ChatsProvider>
-            <RouterProvider router={router} />
-          </ChatsProvider>
-        </ApiProvider>
-      </SettingsProvider>
-    </AuthProvider>
-  </ToastProvider>
+  <QueryClientProvider client={queryClient}>
+
+    <ToastProvider>
+      <AuthProvider>
+        <SettingsProvider>
+          <ApiProvider>
+            <ChatsProvider>
+              <RouterProvider router={router} />
+            </ChatsProvider>
+          </ApiProvider>
+        </SettingsProvider>
+      </AuthProvider>
+    </ToastProvider>
+  </QueryClientProvider>
   // </React.StrictMode>,
 )
