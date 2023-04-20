@@ -2,6 +2,7 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import { PrivateRoute } from "./private";
 
 import { Root } from '../pages/Root'
+import { Home } from "../pages/Home";
 import { Chatbot } from "../pages/Chatbot";
 import { Authentication } from "../pages/Authentication";
 import { Profile } from "../pages/Profile";
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Root />,
     children: [
+      {
+        index: true,
+        element: <Home />
+      },
       {
         path: 'auth',
         element: <Authentication />

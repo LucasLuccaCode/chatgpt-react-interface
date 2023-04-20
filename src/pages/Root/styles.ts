@@ -16,7 +16,7 @@ justify-content: space-between;
 /* gap: ${props => props.theme.spacing.large}; */
 width: 100%;
 height: 100%;
-padding: ${props => props.theme.spacing.medium};
+padding: .8rem ${props => props.theme.spacing.medium};
 background: ${props => props.theme.colors.bg.secondary};
 
   img {
