@@ -1,6 +1,7 @@
 export interface IPrompt {
   content: string;
   user_id: number;
+  privacy: "PUBLIC" | "PRIVATE";
 }
 
 export interface IPromptModel extends IPrompt {

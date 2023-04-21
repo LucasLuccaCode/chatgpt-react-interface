@@ -18,18 +18,21 @@ import {
 
 export const PromptForm: React.FC = () => {
   const [prompt, setPrompt] = useState("")
-  const [privacy, setPrivacy] = useState<"public" | "private">("public");
+  const [privacy, setPrivacy] = useState<"PUBLIC" | "PRIVATE">("PUBLIC");
   const { user } = useAuth()
   const { updateToast } = useToast()
 
   const queryClient = useQueryClient()
 
   const handlePrivacyChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setPrivacy(event.target.value as "public" | "private");
+    setPrivacy(event.target.value as "PUBLIC" | "PRIVATE");
   };
 
   const mutation = useMutation({
-    mutationFn: () => axios.post(`/users/${user?.id}/prompts`, { content: prompt }),
+    mutationFn: () => axios.post(`/users/${user?.id}/prompts`, {
+      content: prompt,
+      privacy
+    }),
     onSuccess(data) {
       queryClient.invalidateQueries({ queryKey: ['prompts'] })
 
@@ -40,18 +43,17 @@ export const PromptForm: React.FC = () => {
       })
 
       setPrompt("")
-      setPrivacy("public")
+      setPrivacy("PUBLIC")
     },
     onError(error: any) {
-      if (error.response) {
-        updateToast({
-          title: error.response.data.error,
-          type: "error"
-        })
-        return
-      }
+      const message = error.response
+        ? error.response.data.error
+        : error.message
 
-      console.log(error)
+      updateToast({
+        title: message,
+        type: "error"
+      })
     },
   })
 
@@ -72,8 +74,8 @@ export const PromptForm: React.FC = () => {
           value={privacy}
           onChange={handlePrivacyChange}
         >
-          <option value="public">Publico</option>
-          <option value="private">Privado</option>
+          <option value="PUBLIC">Publico</option>
+          <option value="PRIVATE">Privado</option>
         </Select>
         <TextArea
           name="content"
