@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const PromptCardStyled = styled.li`
   display: flex;
@@ -21,11 +22,34 @@ export const Content = styled.div`
   flex: 1;
 `
 
-export const Name = styled.h3`
-  font-size: .9rem;
-  color: ${props => props.theme.colors.text.title};
+export const Title = styled.div`
+  display: flex;
+  /* align-items: center; */
+  align-items: baseline;
+  gap: .5rem;
+  width: 100%;
+  /* background: red; */
 `
 
+export const Name = styled(Link)`
+  font-size: .9rem;
+  color: ${props => props.theme.colors.text.title};
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+export const PastTime = styled.span`
+  font-size: .7rem;
+  color: ${props => props.theme.colors.text.placeholder};
+`
+
+export const Privacy = styled.i`
+  font-size: .7rem;
+  color: ${props => props.theme.colors.text.placeholder};
+`
 
 export const More = styled.div`
   cursor: pointer;

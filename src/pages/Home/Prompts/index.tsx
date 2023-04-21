@@ -16,6 +16,8 @@ export const Prompts: React.FC = () => {
 
   const prompts: IPromptWithAuthor[] = data?.data || [];
 
+  console.log(prompts)
+
   return (
     <PromptsStyled>
       {isLoading && <Loading size="1.2rem" />}
