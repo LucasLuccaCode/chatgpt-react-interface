@@ -1,9 +1,10 @@
 import React from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { IPromptWithAuthor } from "../../../../types/Prompts";
 
-import axios from "../../../../../services/axios";
-import { IToast } from "../../../../../contexts/toastContext";
+import axios from "../../../../services/axios";
+import { IToast } from "../../../../contexts/toastContext";
 
 import {
   PopoverTrigger,
@@ -13,19 +14,21 @@ import {
   Actions,
   Action
 } from "./styles"
-
+import { useDialog } from "../../../../contexts/dialogContext";
 
 interface MoreProps {
   userId?: number;
   authorId: number;
-  promptId: number;
+  prompt: IPromptWithAuthor;
   updateToast(toast: IToast): void;
 }
 
 
-export const More: React.FC<MoreProps> = ({ userId, authorId, promptId, updateToast }) => {
+export const More: React.FC<MoreProps> = ({ userId, authorId, prompt, updateToast }) => {
+  const { activateDialog } = useDialog()
+
   const deletePrompt = async () => {
-    return axios.delete(`users/${userId}/prompts/${promptId}`)
+    return axios.delete(`users/${userId}/prompts/${prompt.id}`)
   }
 
   const savePrompt = () => {
@@ -68,7 +71,7 @@ export const More: React.FC<MoreProps> = ({ userId, authorId, promptId, updateTo
             <Action onClick={savePrompt}>Salvar</Action>
             {userId === authorId && (
               <>
-                <Action onClick={savePrompt}>Editar</Action>
+                <Action onClick={() => activateDialog({ prompt })}>Editar</Action>
                 <Action onClick={() => mutation.mutate()}>Excluir</Action>
               </>
             )}

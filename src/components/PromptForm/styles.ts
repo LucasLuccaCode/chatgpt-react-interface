@@ -1,11 +1,17 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const PromptFormStyled = styled.form`
-  display: flex;
-  gap: .8rem;
-  border-bottom: 2px solid ${props => props.theme.colors.border};
-  padding: .5rem ${props => props.theme.spacing.large};
-`;
+interface Props {
+  isUpdate?: boolean;
+}
+
+export const PromptFormStyled = styled.form<Props>`
+  ${({ theme, isUpdate }) => css`
+    display: flex;
+    gap: .8rem;
+    ${!isUpdate && `border-bottom: 2px solid ${theme.colors.border}`};
+    padding: .5rem ${theme.spacing.large};`
+  }
+`
 
 export const Avatar = styled.div`
   display: grid;

@@ -11,6 +11,7 @@ import dark from "../../styles/themes/dark"
 import light from "../../styles/themes/light"
 
 import { RootContainer, Details, Navbar } from "./styles"
+import { Dialog } from "../../components/Dialog"
 
 export const Root: React.FC = () => {
   const { settings } = useSettings()
@@ -83,6 +84,8 @@ export const Root: React.FC = () => {
         </Details>
 
         <Toast />
+
+        <Dialog />
       </RootContainer>
 
       <GlobalStyle />

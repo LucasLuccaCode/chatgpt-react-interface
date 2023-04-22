@@ -1,8 +1,8 @@
 import React, { useMemo } from "react"
 
-import { IPromptWithAuthor } from "../../../../types/Prompts"
-import { calculateDiferenceData } from "../../../../utils/calculateDiferenceDate"
-import { IToast } from "../../../../contexts/toastContext"
+import { IPromptWithAuthor } from "../../../types/Prompts"
+import { calculateDiferenceData } from "../../../utils/calculateDiferenceDate"
+import { IToast } from "../../../contexts/toastContext"
 
 import {
   Reactions,
@@ -57,7 +57,7 @@ export const PromptCard: React.FC<PromptCardProps> = ({ prompt, userId, updateTo
       <More
         userId={userId}
         authorId={prompt.user_id}
-        promptId={prompt.id}
+        prompt={prompt}
         updateToast={updateToast}
       />
     </PromptCardStyled>

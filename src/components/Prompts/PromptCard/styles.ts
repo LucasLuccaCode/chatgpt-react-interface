@@ -49,6 +49,10 @@ export const Name = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
 `
 
 export const PastTime = styled.span`

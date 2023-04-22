@@ -15,11 +15,27 @@ import {
   TextArea,
   Wrapper
 } from "./styles"
+import { useDialog } from "../../contexts/dialogContext";
+import { IPrompt } from "../../types/Prompts";
 
-export const PromptForm: React.FC = () => {
-  const [prompt, setPrompt] = useState("")
-  const [privacy, setPrivacy] = useState<"PUBLIC" | "PRIVATE">("PUBLIC");
+interface PromptFormProps {
+  isUpdate?: boolean;
+  prompt?: {
+    content: string;
+    privacy: "PUBLIC" | "PRIVATE";
+    id: number;
+  }
+}
+
+interface UpdatePromptProps extends IPrompt {
+  promptId: number;
+}
+
+export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, prompt } = {}) => {
+  const [content, setPrompt] = useState(prompt?.content || "")
+  const [privacy, setPrivacy] = useState<"PUBLIC" | "PRIVATE">(prompt?.privacy || "PUBLIC");
   const { user } = useAuth()
+  const { setIsOpen } = useDialog()
   const { updateToast } = useToast()
 
   const queryClient = useQueryClient()
@@ -28,44 +44,79 @@ export const PromptForm: React.FC = () => {
     setPrivacy(event.target.value as "PUBLIC" | "PRIVATE");
   };
 
-  const mutation = useMutation({
-    mutationFn: () => axios.post(`/users/${user?.id}/prompts`, {
-      content: prompt,
-      privacy
-    }),
-    onSuccess(data) {
-      queryClient.invalidateQueries({ queryKey: ['prompts'] })
+  const createPrompt = async ({ user_id, content, privacy }: IPrompt) => {
+    try {
+      const response = await axios.post(`/users/${user_id}/prompts`, {
+        content,
+        privacy
+      });
+      return response.data.message;
+    } catch (error: any) {
+      throw new Error(error.response ? error.response.data.error : error.message);
+    }
+  };
 
-      updateToast({
-        title: data.data.message,
-        type: "success"
+  const updatePrompt = async ({ user_id, promptId, content, privacy }: UpdatePromptProps) => {
+    try {
+      const response = await axios.patch(`/users/${user_id}/prompts/${promptId}`, {
+        content,
+        privacy
+      });
+      return response.data.message;
+    } catch (error: any) {
+      throw new Error(error.response ? error.response.data.error : error.message);
+    } finally {
+      setIsOpen(false)
+    }
+  };
+
+  const mutation = useMutation(
+    () => {
+      if (isUpdate) {
+        return updatePrompt({
+          user_id: user!.id,
+          promptId: prompt!.id,
+          content,
+          privacy
+        })
+      }
+
+      return createPrompt({
+        user_id: user!.id,
+        content,
+        privacy
       })
-
-      setPrompt("")
-      setPrivacy("PUBLIC")
     },
-    onError(error: any) {
-      const message = error.response
-        ? error.response.data.error
-        : error.message
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({ queryKey: ['prompts'] });
+        updateToast({
+          title: data,
+          type: "success"
+        });
+        setPrompt("");
+        setPrivacy("PUBLIC");
+      },
+      onError: (error: any) => {
+        updateToast({
+          title: error.message,
+          type: "error"
+        });
+      }
+    }
+  );
 
-      updateToast({
-        title: message,
-        type: "error"
-      })
-    },
-  })
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    !!prompt && mutation.mutate()
+    !!content && mutation.mutate()
   }
 
-  const disableSubmitBtn = !Boolean(prompt.length) || mutation.isLoading
+  const disableSubmitBtn = !Boolean(content.length) || mutation.isLoading
 
   return (
-    <PromptFormStyled onSubmit={handleFormSubmit}>
+    <PromptFormStyled isUpdate={isUpdate} onSubmit={handleFormSubmit}>
       <Avatar>
         <span>{user?.name.charAt(0)}</span>
       </Avatar>
@@ -83,11 +134,11 @@ export const PromptForm: React.FC = () => {
           rows={3} onChange={e => setPrompt(e.target.value)}
           placeholder="Digite aqui um prompt para publicar..."
           maxLength={2000}
-          value={prompt}
+          value={content}
         />
         <Actions>
-          <Status>{prompt.length} / 2000</Status>
-          <Button type="submit" disabled={disableSubmitBtn}>Publicar</Button>
+          <Status>{content.length} / 2000</Status>
+          <Button type="submit" disabled={disableSubmitBtn}>{isUpdate ? "Atualizar" : "Publicar"}</Button>
         </Actions>
       </Wrapper>
     </PromptFormStyled>

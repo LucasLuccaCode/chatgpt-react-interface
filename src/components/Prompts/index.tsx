@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
-import axios from "../../../services/axios"
+import axios from "../../services/axios"
 
-import { IPromptWithAuthor } from "../../../types/Prompts"
+import { IPromptWithAuthor } from "../../types/Prompts"
 import { PromptsStyled } from "./styles"
 
-import { useAuth } from "../../../contexts/authContext"
-import { useToast } from "../../../contexts/toastContext"
+import { useAuth } from "../../contexts/authContext"
+import { useToast } from "../../contexts/toastContext"
 
 
 import { PromptCard } from "./PromptCard"
-import { Loading } from "../../../components/Loading"
+import { Loading } from "../Loading"
 
 export const Prompts: React.FC = () => {
   const { user } = useAuth()

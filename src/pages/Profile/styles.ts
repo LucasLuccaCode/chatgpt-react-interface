@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 export const Container = styled.section`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 60%;
   /* max-width: 500px; */
   height: 100%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   background: ${props => props.theme.colors.bg.secondary};
 `
 
@@ -51,7 +51,7 @@ export const Avatar = styled.div`
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%; */
   flex: 1;
   margin-left: 1rem;
   margin-right: 0.5rem;
