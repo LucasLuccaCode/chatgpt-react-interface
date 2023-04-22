@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 export const PromptCardStyled = styled.li`
@@ -7,13 +7,23 @@ export const PromptCardStyled = styled.li`
   padding: .5rem .8rem;
   border-bottom: 2px solid ${props => props.theme.colors.border};
 `
+interface AvatarProps {
+  isAuthor: boolean;
+}
 
-export const Avatar = styled.div`
+export const Avatar = styled.div<AvatarProps>`${({ theme, isAuthor }) => css`
+  display: grid;
+  place-items: center;
   height: 2rem;
   width: 2rem;
   border-radius: 50%;
-  background-color: ${props => props.theme.colors.bg.button};
-`;
+  background-color: ${isAuthor ? theme.colors.bg.details : theme.colors.bg.button};
+
+  & span::first-letter {
+    text-transform: uppercase;
+  }
+  `
+}`;
 
 export const Content = styled.div`
   display: flex;

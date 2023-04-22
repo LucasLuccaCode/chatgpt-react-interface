@@ -3,8 +3,8 @@ import styled, { keyframes } from 'styled-components';
 
 export const ToastContainer = styled.section`
   position: fixed;
-  bottom: 0;
-  right: 0;
+  bottom: .6rem;
+  right: .6rem;
 `
 
 export const ToastProvider = styled(Toast.Provider)`
@@ -13,14 +13,11 @@ export const ToastProvider = styled(Toast.Provider)`
 export const ToastViewport = styled(Toast.Viewport)`
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  gap: 10px;
-  width: 390px;
+  gap: .5rem;
+  width: max-content;
   max-width: 100vw;
-  margin: 0;
-  list-style: none;
-  z-index: 2147483647;
-  outline: none;
+  padding: .5rem;
+  z-index: 1000;
 `
 
 const Hide = keyframes`
@@ -50,24 +47,27 @@ const SwipeOut = keyframes`
 `
 
 export const ToastRoot = styled(Toast.Root)`
-  background-color: ${props => props.theme.colors.bg.secondary};
-  border-radius: 6px;
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-  padding: 15px;
   display: grid;
   grid-template-areas: 'title action' 'description action';
   grid-template-columns: auto max-content;
-  column-gap: 15px;
+  column-gap: .5rem;
   align-items: center;
-  box-shadow: 0 1px 2px 1px ${props => props.theme.colors.opaque};
-
+  padding: .8rem;
+  border-radius: ${props => props.theme.borderRadius.medium};
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  background-color: ${props => props.theme.colors.bg.secondary};
+  
   &[data-state='open']{
     animation: ${SlideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-
+  
   &[data-state='closed']{
     animation: ${Hide} 100ms ease-in;
     /* animation: ${SwipeOut} 100ms ease-out; */
+  }
+  
+  &:focus {
+    outline: 1px solid ${props => props.theme.colors.bg.details};
   }
 `
 
@@ -75,7 +75,7 @@ export const ToastTitle = styled(Toast.Title)`
   grid-area: title;
   margin-bottom: 5px;
   font-weight: 500;
-  color: #3a3a40;
+  color: ${props => props.theme.colors.text.title};
   font-size: .7rem;
 
   &.info {

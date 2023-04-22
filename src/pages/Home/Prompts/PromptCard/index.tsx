@@ -30,7 +30,9 @@ export const PromptCard: React.FC<PromptCardProps> = ({ prompt, userId, updateTo
 
   return (
     <PromptCardStyled>
-      <Avatar />
+      <Avatar isAuthor={userId === prompt.user_id}>
+        <span>{prompt.author.name.charAt(0)}</span>
+      </Avatar>
 
       <Content>
         <Title>

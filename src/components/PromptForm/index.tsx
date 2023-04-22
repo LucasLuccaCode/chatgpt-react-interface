@@ -66,7 +66,9 @@ export const PromptForm: React.FC = () => {
 
   return (
     <PromptFormStyled onSubmit={handleFormSubmit}>
-      <Avatar />
+      <Avatar>
+        <span>{user?.name.charAt(0)}</span>
+      </Avatar>
       <Wrapper>
         <Select
           name="privacy"
