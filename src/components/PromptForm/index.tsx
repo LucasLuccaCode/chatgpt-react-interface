@@ -38,8 +38,7 @@ export const PromptForm: React.FC = () => {
 
       updateToast({
         title: data.data.message,
-        type: "success",
-        duration: 3000
+        type: "success"
       })
 
       setPrompt("")

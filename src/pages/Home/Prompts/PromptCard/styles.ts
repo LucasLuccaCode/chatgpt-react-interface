@@ -51,24 +51,6 @@ export const Privacy = styled.i`
   color: ${props => props.theme.colors.text.placeholder};
 `
 
-export const More = styled.div`
-  cursor: pointer;
-  padding: 0 .2rem;
-  border-radius: 50px;
-  height: max-content;
-  border: 1px solid transparent;
-  transition: all .3s ease;
-
-  &:hover {
-    background: ${props => props.theme.colors.opaque};
-  }
-
-  &:active {
-    border-color: ${props => props.theme.colors.opaque};
-  }
-`
-
-
 export const Description = styled.section`
   font-size: .8rem;
   color: ${props => props.theme.colors.text.title};

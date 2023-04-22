@@ -1,24 +1,30 @@
-import { useMemo } from "react"
+import React, { useMemo } from "react"
+
 import { IPromptWithAuthor } from "../../../../types/Prompts"
 import { calculateDiferenceData } from "../../../../utils/calculateDiferenceDate"
+import { IToast } from "../../../../contexts/toastContext"
+
 import {
   Reactions,
   Avatar,
   Content,
   Description,
   Name,
-  More,
   Privacy,
   PromptCardStyled,
   Title,
   PastTime,
 } from "./styles"
 
+import { More } from "./More"
+
 interface PromptCardProps {
-  prompt: IPromptWithAuthor
+  prompt: IPromptWithAuthor;
+  userId?: number;
+  updateToast(toast: IToast): void;
 }
 
-export const PromptCard: React.FC<PromptCardProps> = ({ prompt }) => {
+export const PromptCard: React.FC<PromptCardProps> = ({ prompt, userId, updateToast }) => {
   const pastTime = useMemo(() => calculateDiferenceData(prompt.created_at), [prompt])
   const privacyIcon = prompt.privacy === "PUBLIC" ? "globe-americas" : "lock-fill"
 
@@ -46,9 +52,12 @@ export const PromptCard: React.FC<PromptCardProps> = ({ prompt }) => {
         </Reactions>
       </Content>
 
-      <More>
-        <i className="bi bi-three-dots" />
-      </More>
+      <More
+        userId={userId}
+        authorId={prompt.user_id}
+        promptId={prompt.id}
+        updateToast={updateToast}
+      />
     </PromptCardStyled>
   )
 }

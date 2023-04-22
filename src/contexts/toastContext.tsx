@@ -1,6 +1,6 @@
 import { useContext, useCallback, useState, useRef, createContext, ReactNode } from "react";
 
-interface IToast {
+export interface IToast {
   title: string;
   type: 'info' | 'error' | 'success';
   duration?: number;
