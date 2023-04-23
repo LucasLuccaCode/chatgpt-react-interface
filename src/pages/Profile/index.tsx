@@ -14,12 +14,12 @@ import {
   Title
 } from "./styles"
 
+import axios from "../../services/axios"
+import { IUserById } from "../../types/users"
 
 import { useAuth } from "../../contexts/authContext"
-import axios from "../../services/axios"
 import { useQuery } from "@tanstack/react-query"
 import { useToast } from "../../contexts/toastContext"
-import { IProfileData } from "../../types/users"
 
 
 const Profile: React.FC = () => {
@@ -30,8 +30,10 @@ const Profile: React.FC = () => {
   const { data } = useQuery({
     queryKey: ['profile', userId],
     queryFn() {
-      return axios.get(`/users/${userId}/profile`)
+      return axios.get(`/users/${userId}`)
     },
+    staleTime: 5 * 60 * 1000, // 5 min em milissegundos
+    refetchOnWindowFocus: false,
     onError(error: any) {
       const errorMessage = error.response
         ? error.response.data.error
@@ -44,7 +46,8 @@ const Profile: React.FC = () => {
     }
   })
 
-  const user: IProfileData | null = data?.data.user
+  const user: IUserById | null = data?.data.user
+  
   const isVisitingOwnProfile = user?.id === loggedUser?.id
 
   const userAvatar = "https://avatars.githubusercontent.com/u/91238215?v=4"

@@ -1,10 +1,10 @@
 import React from "react";
-import * as Popover from "@radix-ui/react-popover";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import * as Popover from "@radix-ui/react-popover";
+
 import { IPromptWithAuthor } from "../../../../types/Prompts";
 
 import axios from "../../../../services/axios";
-import { IToast } from "../../../../contexts/toastContext";
 
 import {
   PopoverTrigger,
@@ -14,50 +14,64 @@ import {
   Actions,
   Action
 } from "./styles"
+
+import { IToast } from "../../../../contexts/toastContext";
 import { useDialog } from "../../../../contexts/dialogContext";
 
 interface MoreProps {
-  userId?: number;
-  authorId: number;
+  loggedUserId?: number;
   prompt: IPromptWithAuthor;
   updateToast(toast: IToast): void;
 }
 
 
-export const More: React.FC<MoreProps> = ({ userId, authorId, prompt, updateToast }) => {
+export const More: React.FC<MoreProps> = ({
+  loggedUserId,
+  prompt,
+  updateToast
+}) => {
   const { activateDialog } = useDialog()
 
-  const deletePrompt = async () => {
-    return axios.delete(`users/${userId}/prompts/${prompt.id}`)
-  }
+  const deletePrompt = () => {
+    return axios.delete(`users/${loggedUserId}/prompts/${prompt.id}`);
+  };
 
   const savePrompt = () => {
-    console.log("Salvando prompt...")
-  }
+    console.log("Salvando prompts...")
+    return axios.post("/save")
+  };
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: deletePrompt,
-    onSuccess(data) {
-      queryClient.invalidateQueries({ queryKey: ['prompts'] })
+    mutationFn({ action }: { action: string }) {
+      if (action === "delete") {
+        return deletePrompt()
+      }
+
+      return savePrompt();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['prompts', loggedUserId]);
+      queryClient.invalidateQueries(['prompts', 0]);
 
       updateToast({
         title: data.data.message,
         type: "success"
-      })
+      });
     },
-    onError(error: any) {
+    onError: (error: any) => {
       const message = error.response
         ? error.response.data.error
-        : error.message
+        : error.message;
 
       updateToast({
         title: message,
         type: "error"
-      })
+      });
     },
-  })
+  });
+
 
   return (
     <Popover.Root>
@@ -68,11 +82,11 @@ export const More: React.FC<MoreProps> = ({ userId, authorId, prompt, updateToas
       <PopoverPortal>
         <PopoverContent>
           <Actions>
-            <Action onClick={savePrompt}>Salvar</Action>
-            {userId === authorId && (
+            <Action onClick={() => mutation.mutate({ action: "save" })}>Salvar</Action>
+            {loggedUserId === prompt.user_id && (
               <>
                 <Action onClick={() => activateDialog({ prompt })}>Editar</Action>
-                <Action onClick={() => mutation.mutate()}>Excluir</Action>
+                <Action onClick={() => mutation.mutate({ action: "delete" })}> Excluir</Action>
               </>
             )}
           </Actions>
@@ -80,6 +94,6 @@ export const More: React.FC<MoreProps> = ({ userId, authorId, prompt, updateToas
           <PopoverArrow height={8} width={16} />
         </PopoverContent>
       </PopoverPortal>
-    </Popover.Root>
+    </Popover.Root >
   )
 }

@@ -61,7 +61,7 @@ const Root: React.FC = () => {
             {user && (
               <>
                 <li>
-                  <NavLink to={`${user.id}/profile`}>
+                  <NavLink to={`${user.id}/profile/prompts`}>
                     <i className="bi bi-person-fill"></i>
                   </NavLink>
                 </li>

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 import { PrivateRoute } from './private';
 
@@ -9,6 +9,8 @@ import Authentication from '../pages/Authentication'
 import Profile from '../pages/Profile'
 import EditUser from '../pages/Profile/EditUser'
 import ChatContent from '../components/ChatContent'
+
+import { Prompts } from '../components/Prompts';
 
 export const router = createBrowserRouter([
   {
@@ -52,8 +54,12 @@ export const router = createBrowserRouter([
             element: <Profile />,
             children: [
               {
+                index: true,
+                element: <Navigate to="prompts" />
+              },
+              {
                 path: 'prompts',
-                element: <h1>Prompts</h1>
+                element: <Prompts />
               },
               {
                 path: 'favorites',

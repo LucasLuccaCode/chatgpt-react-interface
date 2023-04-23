@@ -1,7 +1,9 @@
 import React, { useMemo } from "react"
 
 import { IPromptWithAuthor } from "../../../types/Prompts"
+
 import { calculateDiferenceData } from "../../../utils/calculateDiferenceDate"
+
 import { IToast } from "../../../contexts/toastContext"
 
 import {
@@ -18,19 +20,23 @@ import {
 
 import { More } from "./More"
 
-interface PromptCardProps {
+interface IPromptCardProps {
+  loggedUserId?: number;
   prompt: IPromptWithAuthor;
-  userId?: number;
   updateToast(toast: IToast): void;
 }
 
-export const PromptCard: React.FC<PromptCardProps> = ({ prompt, userId, updateToast }) => {
+export const PromptCard: React.FC<IPromptCardProps> = ({
+  loggedUserId,
+  prompt,
+  updateToast
+}) => {
   const pastTime = useMemo(() => calculateDiferenceData(prompt.created_at), [prompt])
   const privacyIcon = prompt.privacy === "PUBLIC" ? "globe-americas" : "lock-fill"
 
   return (
     <PromptCardStyled>
-      <Avatar isAuthor={userId === prompt.user_id}>
+      <Avatar isAuthor={loggedUserId === prompt.user_id}>
         <span>{prompt.author.name.charAt(0)}</span>
       </Avatar>
 
@@ -55,8 +61,7 @@ export const PromptCard: React.FC<PromptCardProps> = ({ prompt, userId, updateTo
       </Content>
 
       <More
-        userId={userId}
-        authorId={prompt.user_id}
+        loggedUserId={loggedUserId}
         prompt={prompt}
         updateToast={updateToast}
       />

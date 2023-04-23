@@ -45,33 +45,21 @@ export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, pr
   };
 
   const createPrompt = async ({ user_id, content, privacy }: IPrompt) => {
-    try {
-      const response = await axios.post(`/users/${user_id}/prompts`, {
-        content,
-        privacy
-      });
-      return response.data.message;
-    } catch (error: any) {
-      throw new Error(error.response ? error.response.data.error : error.message);
-    }
+    return axios.post(`/users/${user_id}/prompts`, {
+      content,
+      privacy
+    });
   };
 
   const updatePrompt = async ({ user_id, promptId, content, privacy }: UpdatePromptProps) => {
-    try {
-      const response = await axios.patch(`/users/${user_id}/prompts/${promptId}`, {
-        content,
-        privacy
-      });
-      return response.data.message;
-    } catch (error: any) {
-      throw new Error(error.response ? error.response.data.error : error.message);
-    } finally {
-      setIsOpen(false)
-    }
+    return axios.patch(`/users/${user_id}/prompts/${promptId}`, {
+      content,
+      privacy
+    });
   };
 
-  const mutation = useMutation(
-    () => {
+  const mutation = useMutation({
+    mutationFn() {
       if (isUpdate) {
         return updatePrompt({
           user_id: user!.id,
@@ -87,23 +75,31 @@ export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, pr
         privacy
       })
     },
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: ['prompts'] });
-        updateToast({
-          title: data,
-          type: "success"
-        });
-        setPrompt("");
-        setPrivacy("PUBLIC");
-      },
-      onError: (error: any) => {
-        updateToast({
-          title: error.message,
-          type: "error"
-        });
-      }
-    }
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries({ queryKey: ['prompts'] });
+
+      updateToast({
+        title: data.data.message,
+        type: "success"
+      });
+
+      setPrompt("");
+      setPrivacy("PUBLIC");
+    },
+    onError: (error: any) => {
+      const message = error.response
+        ? error.response.data.error
+        : error.message;
+
+      updateToast({
+        title: message,
+        type: "error"
+      });
+    },
+    onSettled() {
+      setIsOpen(false)
+    },
+  }
   );
 
 
