@@ -13,7 +13,7 @@ import light from "../../styles/themes/light"
 import { RootContainer, Details, Navbar } from "./styles"
 import { Dialog } from "../../components/Dialog"
 
-export const Root: React.FC = () => {
+const Root: React.FC = () => {
   const { settings } = useSettings()
   const { user, signOut } = useAuth()
 
@@ -61,7 +61,7 @@ export const Root: React.FC = () => {
             {user && (
               <>
                 <li>
-                  <NavLink to="/profile">
+                  <NavLink to={`${user.id}/profile`}>
                     <i className="bi bi-person-fill"></i>
                   </NavLink>
                 </li>
@@ -92,3 +92,5 @@ export const Root: React.FC = () => {
     </ThemeProvider>
   )
 }
+
+export default Root

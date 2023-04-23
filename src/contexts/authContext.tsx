@@ -111,8 +111,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         ? error.response.data.error
         : error.message
 
-      console.log(errorMessage)
-
       updateToast({
         title: errorMessage,
         type: 'error'

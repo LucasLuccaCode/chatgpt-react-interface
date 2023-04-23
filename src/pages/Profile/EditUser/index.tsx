@@ -13,7 +13,7 @@ import {
 
 import { useAuth } from "../../../contexts/authContext";
 
-export const EditUser: React.FC = () => {
+const EditUser: React.FC = () => {
   const { user, update } = useAuth()
   const [name, setName] = useState(user?.name)
   const [email, setEmail] = useState(user?.email)
@@ -90,3 +90,5 @@ export const EditUser: React.FC = () => {
     </Container>
   )
 }
+
+export default EditUser

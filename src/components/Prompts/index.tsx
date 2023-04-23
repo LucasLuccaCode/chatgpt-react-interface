@@ -7,7 +7,6 @@ import { PromptsStyled } from "./styles"
 import { useAuth } from "../../contexts/authContext"
 import { useToast } from "../../contexts/toastContext"
 
-
 import { PromptCard } from "./PromptCard"
 import { Loading } from "../Loading"
 
@@ -18,6 +17,7 @@ export const Prompts: React.FC = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['prompts'],
     queryFn: () => axios.get("/prompts"),
+    staleTime: 1 * 60 * 1000, // 1 min em milissegundos
     refetchOnWindowFocus: false,
   })
 
@@ -25,14 +25,14 @@ export const Prompts: React.FC = () => {
 
   return (
     <PromptsStyled>
-      {isLoading && <Loading size="1.2rem" />}
+      {isLoading && <Loading size="1.4rem" position="RELATIVE" />}
 
       {prompts?.map(prompt => {
         return (
-          <PromptCard 
-            key={prompt.id} 
-            prompt={prompt} 
-            userId={user?.id} 
+          <PromptCard
+            key={prompt.id}
+            prompt={prompt}
+            userId={user?.id}
             updateToast={updateToast}
           />
         )

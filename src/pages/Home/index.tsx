@@ -4,7 +4,7 @@ import { PromptForm } from "../../components/PromptForm"
 import { Prompts } from "../../components/Prompts"
 import { NewUsers } from "./NewUsers"
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <HomeContainer>
       <Feed>
@@ -21,3 +21,5 @@ export const Home: React.FC = () => {
     </HomeContainer>
   )
 }
+
+export default Home

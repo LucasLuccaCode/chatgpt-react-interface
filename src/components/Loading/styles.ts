@@ -7,20 +7,23 @@ const spin = keyframes`
 
 interface SpinnerProps {
   size?: string
+  position: "ABSOLUTE" | "RELATIVE"
 }
 
 export const Spinner = styled.div<SpinnerProps>`
-  ${({ size }) => css` 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  ${({ size, position }) => css` 
+    ${position === "ABSOLUTE" ? css`
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    ` : css`margin: 1rem auto;`
+    }
     border: .27rem solid rgba(255, 255, 255, .1);
     border-left-color: #5768ef;
     border-radius: 50%;
-    margin: auto;
     width: ${size || '1rem'};
     height: ${size || '1rem'};
     animation: ${spin} .9s linear infinite;
   `
-}`
+  }`

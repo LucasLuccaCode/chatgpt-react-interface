@@ -7,8 +7,12 @@ export const PrivateRoute: React.FC = () => {
   const { signed, isLoading } = useAuth()
 
   if (isLoading) {
-    return <Loading />
+    return <Loading position="ABSOLUTE" />
   }
 
-  return signed ? <Outlet /> : <Navigate to="/auth" />
+  return (
+    signed
+      ? <Outlet />
+      : <Navigate to="/auth" />
+  )
 }

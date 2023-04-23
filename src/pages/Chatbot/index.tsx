@@ -12,7 +12,7 @@ import { Status } from "./Status"
 import { Footer } from "./Footer"
 
 
-export const Chatbot: React.FC = () => {
+const Chatbot: React.FC = () => {
   return (
     <ChatbotContainer>
       <Header />
@@ -26,3 +26,5 @@ export const Chatbot: React.FC = () => {
     </ChatbotContainer>
   )
 }
+
+export default Chatbot

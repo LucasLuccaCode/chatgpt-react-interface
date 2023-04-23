@@ -196,7 +196,7 @@ export const ChatsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
 
   if (isLoading) {
-    return <Loading size=".8rem" />
+    return <Loading size=".8rem" position="ABSOLUTE" />
   }
 
   return (

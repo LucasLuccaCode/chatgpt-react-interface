@@ -20,7 +20,7 @@ interface ILoaderData {
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   try {
     const { userId, chatId } = params
-    
+
     const { data } = await axios.get(`/users/${userId}/chats/${chatId}`)
 
     return { chat: data }
@@ -30,7 +30,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   }
 }
 
-export const ChatContent: React.FC = () => {
+const ChatContent: React.FC = () => {
   const chatContainerRef = useRef<HTMLUListElement>(null);
   const { currentChat, setCurrentChat } = useChats();
   const { chatId } = useParams()
@@ -62,3 +62,5 @@ export const ChatContent: React.FC = () => {
     </ChatContainer>
   );
 };
+
+export default ChatContent

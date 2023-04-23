@@ -7,7 +7,7 @@ import { useAuth } from "../../contexts/authContext"
 import { InfoColumn } from "../Authentication/InfoColumn"
 import { FormColumn } from "../Authentication/FormColumn"
 
-export const Authentication: React.FC = () => {
+const Authentication: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
   const { user } = useAuth()
 
@@ -27,3 +27,5 @@ export const Authentication: React.FC = () => {
     </Container>
   )
 }
+
+export default Authentication

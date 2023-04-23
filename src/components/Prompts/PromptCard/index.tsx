@@ -36,7 +36,7 @@ export const PromptCard: React.FC<PromptCardProps> = ({ prompt, userId, updateTo
 
       <Content>
         <Title>
-          <Name to="/">{prompt.author.name}</Name>
+          <Name to={`/${prompt.user_id}/profile`}>{prompt.author.name}</Name>
           <PastTime>{pastTime}</PastTime>
           <Privacy className={`bi bi-${privacyIcon}`} />
         </Title>

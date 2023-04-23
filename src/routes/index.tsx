@@ -1,13 +1,14 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
-import { PrivateRoute } from "./private";
+import { createBrowserRouter } from 'react-router-dom';
 
-import { Root } from '../pages/Root'
-import { Home } from "../pages/Home";
-import { Chatbot } from "../pages/Chatbot";
-import { Authentication } from "../pages/Authentication";
-import { Profile } from "../pages/Profile";
-import { EditUser } from "../pages/Profile/EditUser";
-import { ChatContent, loader as chatContentLoader } from "../components/ChatContent";
+import { PrivateRoute } from './private';
+
+import Root from '../pages/Root'
+import Home from '../pages/Home'
+import Chatbot from '../pages/Chatbot'
+import Authentication from '../pages/Authentication'
+import Profile from '../pages/Profile'
+import EditUser from '../pages/Profile/EditUser'
+import ChatContent from '../components/ChatContent'
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +33,6 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: ':chatId',
-                loader: chatContentLoader,
                 element: <ChatContent />
               }
             ]
@@ -44,17 +44,13 @@ export const router = createBrowserRouter([
         element: <h1>Search</h1>
       },
       {
-        path: '/profile',
+        path: '/:userId/profile',
         element: <PrivateRoute />,
         children: [
           {
-            path: '/profile',
+            path: '/:userId/profile',
             element: <Profile />,
             children: [
-              {
-                index: true,
-                element: <Navigate to="prompts" />
-              },
               {
                 path: 'prompts',
                 element: <h1>Prompts</h1>
@@ -81,4 +77,4 @@ export const router = createBrowserRouter([
       }
     ]
   }
-])
+]);
