@@ -14,7 +14,7 @@ const Home: React.FC = () => {
 
         <PromptForm />
 
-        <Prompts />
+        <Prompts type="all" />
       </Feed>
 
       <NewUsers />

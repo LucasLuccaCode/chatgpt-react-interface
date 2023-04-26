@@ -59,11 +59,11 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'prompts',
-                element: <Prompts />
+                element: <Prompts type='userId' />
               },
               {
                 path: 'favorites',
-                element: <h1>Favoritos</h1>
+                element: <Prompts type='favorites' />
               },
               {
                 path: 'about',
