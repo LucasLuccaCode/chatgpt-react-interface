@@ -81,6 +81,8 @@ export const Reactions = styled.section`
 
   button {
     display: flex;
+    align-items: baseline;
+    gap: .4rem;
     border-radius: 50px;
     padding: .2rem .6rem;
     background: transparent;
@@ -90,16 +92,24 @@ export const Reactions = styled.section`
       background: ${props => props.theme.colors.opaque};
     }
 
-    i {
+    i, span {
       font-size: .7rem;
       color: ${props => props.theme.colors.text.placeholder};
+    }
+
+    i.bi-heart-fill {
+      color: rgba(249, 24, 128);
+    }
+
+    i.bi-star-fill {
+      color: rgba(255, 255, 0);
     }
 
     &.like {
       &:hover {
         background: rgba(249, 24, 128, .2);
         
-        i {
+        i, span {
           color: rgba(249, 24, 128);
         }
       }
@@ -110,7 +120,7 @@ export const Reactions = styled.section`
       &:hover {
         background: rgba(255, 255, 0, .2);
         
-        i {
+        i, span {
           color: rgba(255, 255, 0);
         }
       }
@@ -121,7 +131,7 @@ export const Reactions = styled.section`
       &:hover {
         background: rgba(0, 186, 124, .2);
         
-        i {
+        i, span {
           color: rgba(0, 186, 124);
         }
       }

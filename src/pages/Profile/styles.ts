@@ -82,9 +82,8 @@ export const Actions = styled.div`
 export const Navbar = styled.div`
   position: sticky;
   top: 1px;
-  /* margin: 0 var(--horizontal-margin); */
   border-top: 2px solid rgba(255, 255, 255, 0.1);
-  /* border-bottom: 2px solid rgba(255, 255, 255, 0.1); */
+  background: ${props => props.theme.colors.bg.secondary};
   z-index: 100;
 `
 

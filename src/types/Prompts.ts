@@ -14,3 +14,8 @@ export interface IPromptWithAuthor extends IPromptModel {
     name: string;
   };
 }
+
+export interface IPromptWithReactions extends IPromptWithAuthor {
+  likesCount: number;
+  userLiked: boolean;
+}
