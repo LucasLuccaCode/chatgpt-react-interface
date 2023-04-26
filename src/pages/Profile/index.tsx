@@ -47,7 +47,7 @@ const Profile: React.FC = () => {
   })
 
   const user: IUserById | null = data?.data.user
-  
+
   const isVisitingOwnProfile = user?.id === loggedUser?.id
 
   const userAvatar = "https://avatars.githubusercontent.com/u/91238215?v=4"
@@ -77,11 +77,21 @@ const Profile: React.FC = () => {
               Prompts
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink to="favorites">
-              Favoritos
-            </NavLink>
-          </NavItem>
+
+          {isVisitingOwnProfile && (
+            <>
+              <NavItem>
+                <NavLink to="favorites">
+                  Favoritos
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="privates">
+                  Privados
+                </NavLink>
+              </NavItem>
+            </>
+          )}
           <NavItem>
             <NavLink to="about">
               Sobre

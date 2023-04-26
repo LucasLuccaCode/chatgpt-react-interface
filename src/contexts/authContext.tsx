@@ -10,6 +10,7 @@ import {
 import { useToast } from "./toastContext";
 import Cookies from "js-cookie";
 import axios from "../services/axios"
+import { QueryCache, useQueryClient } from "@tanstack/react-query";
 
 interface IUserUpdate {
   name?: string;
@@ -180,11 +181,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [user])
 
+  const queryCache = new QueryCache()
+  const queryClient = useQueryClient()
+
   const signOut = useCallback(async () => {
     Cookies.remove(tokenStoredKey)
     Cookies.remove(userStoredKey)
 
     setUser(null)
+
+    // queryCache.clear()
+    queryClient.removeQueries()
 
     updateToast({
       title: 'Desconectado com sucesso.',

@@ -11,8 +11,10 @@ import { useParams } from "react-router-dom"
 import { PromptCard } from "./PromptCard"
 import { Loading } from "../Loading"
 
+export type PromptType = 'all' | 'userId' | 'favorites' | 'privates'
+
 interface IPromptsProps {
-  type: 'all' | 'userId' | 'favorites' | 'privates'
+  type: PromptType
 }
 
 export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
@@ -30,8 +32,9 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
           return axios.get(`users/${visitedUserId}/prompts`)
         } else if (type === "favorites") {
           return axios.get(`users/${visitedUserId}/favorites`)
+        } else if (type === "privates") {
+          return axios.get(`users/${visitedUserId}/prompts/privates`)
         }
-        return axios.get(`users/${visitedUserId}/privates`)
       }
       return axios.get("/prompts")
     },
@@ -46,7 +49,7 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
       });
     },
     retry: false,
-    staleTime: 1 * 60 * 1000, // 1 min em milissegundos
+    // staleTime: 1 * 60 * 1000, // 1 min em milissegundos
     refetchOnWindowFocus: false,
   })
 
@@ -62,6 +65,7 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
             key={prompt.id}
             loggedUserId={user?.id}
             visitedUserId={visitedUserId}
+            type={type}
             prompt={prompt}
             updateToast={updateToast}
           />

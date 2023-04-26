@@ -21,6 +21,7 @@ import {
 
 import { More } from "./More"
 import axios from "../../../services/axios"
+import { PromptType } from ".."
 
 interface IMutationProps {
   action: 'like' | 'favorite'
@@ -29,6 +30,7 @@ interface IMutationProps {
 interface IPromptCardProps {
   loggedUserId?: number;
   visitedUserId: number;
+  type: PromptType;
   prompt: IPromptWithReactions;
   updateToast(toast: IToast): void;
 }
@@ -36,6 +38,7 @@ interface IPromptCardProps {
 export const PromptCard: React.FC<IPromptCardProps> = ({
   loggedUserId,
   visitedUserId,
+  type,
   prompt,
   updateToast
 }) => {
@@ -50,9 +53,17 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
       return axios.put(`/users/${loggedUserId}/prompts/${prompt.id}/favorite-toggle`)
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['prompts', loggedUserId]);
-      queryClient.invalidateQueries(['prompts', visitedUserId]);
-      queryClient.invalidateQueries(['prompts', 0]);
+      switch (true) {
+        case type === "favorites" || type === "privates":
+          queryClient.invalidateQueries(['prompts', visitedUserId, type]);
+          break;
+        case type === "userId":
+          queryClient.invalidateQueries(['prompts', visitedUserId]);
+          break;
+        case type === "all":
+          queryClient.invalidateQueries(['prompts', 0])
+          break;
+      }
 
       updateToast({
         title: data.data.message,

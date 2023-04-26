@@ -66,6 +66,10 @@ export const router = createBrowserRouter([
                 element: <Prompts type='favorites' />
               },
               {
+                path: 'privates',
+                element: <Prompts type='privates' />
+              },
+              {
                 path: 'about',
                 element: <h1>Sobre</h1>
               },
