@@ -17,5 +17,7 @@ export interface IPromptWithAuthor extends IPromptModel {
 
 export interface IPromptWithReactions extends IPromptWithAuthor {
   likesCount: number;
-  userLiked: boolean;
+  likedByUser: boolean;
+  fansCount: number;
+  favoritedByUser: boolean;
 }

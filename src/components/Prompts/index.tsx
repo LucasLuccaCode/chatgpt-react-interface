@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "../../services/axios"
 
-import { IPromptWithAuthor } from "../../types/Prompts"
+import { IPromptWithReactions } from "../../types/Prompts"
 import { PromptsStyled } from "./styles"
 
 import { useAuth } from "../../contexts/authContext"
@@ -31,7 +31,7 @@ export const Prompts: React.FC = () => {
     refetchOnWindowFocus: false,
   })
 
-  const prompts: IPromptWithAuthor[] = data?.data || [];
+  const prompts: IPromptWithReactions[] = data?.data || [];
 
   return (
     <PromptsStyled>
@@ -42,6 +42,7 @@ export const Prompts: React.FC = () => {
           <PromptCard
             key={prompt.id}
             loggedUserId={user?.id}
+            visitedUserId={visitedUserId}
             prompt={prompt}
             updateToast={updateToast}
           />

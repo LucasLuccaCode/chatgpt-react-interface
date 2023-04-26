@@ -97,12 +97,14 @@ export const Reactions = styled.section`
       color: ${props => props.theme.colors.text.placeholder};
     }
 
-    i.bi-heart-fill {
-      color: rgba(249, 24, 128);
+    i.bi-heart-fill,
+    i.bi-heart-fill ~ span {
+      color: rgba(249, 24, 128, .5);
     }
 
-    i.bi-star-fill {
-      color: rgba(255, 255, 0);
+    i.bi-star-fill,
+    i.bi-star-fill ~ span  {
+      color: rgba(255, 255, 0, .5);
     }
 
     &.like {

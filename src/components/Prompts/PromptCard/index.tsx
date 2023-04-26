@@ -28,12 +28,14 @@ interface IMutationProps {
 
 interface IPromptCardProps {
   loggedUserId?: number;
+  visitedUserId: number;
   prompt: IPromptWithReactions;
   updateToast(toast: IToast): void;
 }
 
 export const PromptCard: React.FC<IPromptCardProps> = ({
   loggedUserId,
+  visitedUserId,
   prompt,
   updateToast
 }) => {
@@ -45,10 +47,11 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
         return axios.put(`/users/${loggedUserId}/prompts/${prompt.id}/like-toggle`)
       }
 
-      return axios.put(`/users/${loggedUserId}/prompts/${prompt.id}/favorite`)
+      return axios.put(`/users/${loggedUserId}/prompts/${prompt.id}/favorite-toggle`)
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(['prompts', loggedUserId]);
+      queryClient.invalidateQueries(['prompts', visitedUserId]);
       queryClient.invalidateQueries(['prompts', 0]);
 
       updateToast({
@@ -85,13 +88,19 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
         </Title>
         <Description>{prompt.content}</Description>
         <Reactions>
-          <button className="like" onClick={() => mutation.mutate({ action: "like" })}>
-            <i className={`bi bi-heart${prompt.userLiked ? '-fill' : ''}`} />
+          <button
+            className="like"
+            onClick={() => mutation.mutate({ action: "like" })}
+          >
+            <i className={`bi bi-heart${prompt.likedByUser ? '-fill' : ''}`} />
             <span>{prompt.likesCount}</span>
           </button>
-          <button className="favorite">
-            <i className="bi bi-star" />
-            <span>0</span>
+          <button
+            className="favorite"
+            onClick={() => mutation.mutate({ action: "favorite" })}
+          >
+            <i className={`bi bi-star${prompt.favoritedByUser ? '-fill' : ''}`} />
+            <span>{prompt.fansCount}</span>
           </button>
           <button className="share">
             <i className="bi bi-share-fill" />
