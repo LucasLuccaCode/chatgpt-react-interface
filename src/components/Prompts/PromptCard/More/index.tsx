@@ -82,11 +82,20 @@ export const More: React.FC<MoreProps> = ({
       <PopoverPortal>
         <PopoverContent>
           <Actions>
-            <Action onClick={() => mutation.mutate({ action: "save" })}>Salvar</Action>
+            <Action onClick={() => mutation.mutate({ action: "save" })}>
+              <i className="bi bi-save-fill" />
+              <span>Salvar</span>
+            </Action>
             {loggedUserId === prompt.user_id && (
               <>
-                <Action onClick={() => activateDialog({ prompt })}>Editar</Action>
-                <Action onClick={() => mutation.mutate({ action: "delete" })}> Excluir</Action>
+                <Action onClick={() => activateDialog({ prompt })}>
+                  <i className="bi bi-pencil-fill" />
+                  <span>Editar</span>
+                </Action>
+                <Action onClick={() => mutation.mutate({ action: "delete" })}>
+                  <i className="bi bi-trash3-fill" />
+                  <span>Excluir</span>
+                </Action>
               </>
             )}
           </Actions>

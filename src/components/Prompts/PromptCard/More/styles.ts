@@ -36,7 +36,7 @@ export const PopoverPortal = styled(Popover.Portal)`
 `;
 
 export const PopoverContent = styled(Popover.Content)`
-  padding: .6rem;
+  padding: .6rem 0;
   border-radius: ${props => props.theme.borderRadius.large};
   display: flex;
   flex-direction: column;
@@ -52,19 +52,30 @@ export const Actions = styled.div`
 
 export const Action = styled(Popover.Close)`
   cursor: pointer;
-  padding: .3rem .8rem;
-  font-size: .8rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: .3rem 1rem;
+  font-size: .75rem;
   color: ${props => props.theme.colors.text.title};
   background-color: inherit;
   transition: all .3s ease;
 
-  &:not(:last-child){
-    border-bottom: 1px solid ${props => props.theme.colors.opaque};
+  &:active {
+    transform: none;
   }
 
+  &:not(:last-child){
+    /* border-bottom: 1px solid ${props => props.theme.colors.opaque}; */
+  }
+  
   &:hover {
     background-color: ${props => props.theme.colors.opaque};
     border-bottom-color: transparent;
+  }
+
+  i {
+    font-size: .6rem;
   }
 `
 
