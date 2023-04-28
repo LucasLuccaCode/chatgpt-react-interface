@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { IPromptWithReactions } from "../../../types/Prompts"
 
 import { calculateDiferenceData } from "../../../utils/calculateDiferenceDate"
+import { getNameInitials } from "../../../utils/getNameInitials"
 
 import { IToast } from "../../../contexts/toastContext"
 
@@ -88,7 +89,7 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
   return (
     <PromptCardStyled>
       <Avatar isAuthor={loggedUserId === prompt.user_id}>
-        <span>{prompt.author.name.charAt(0)}</span>
+        <span>{getNameInitials(prompt.author.name)}</span>
       </Avatar>
 
       <Content>

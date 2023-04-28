@@ -83,7 +83,7 @@ export const More: React.FC<MoreProps> = ({
         <PopoverContent>
           <Actions>
             <Action onClick={() => mutation.mutate({ action: "save" })}>
-              <i className="bi bi-save-fill" />
+              <i className="bi bi-bookmark-fill" />
               <span>Salvar</span>
             </Action>
             {loggedUserId === prompt.user_id && (

@@ -47,10 +47,7 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
         title: message,
         type: "error"
       });
-    },
-    retry: false,
-    // staleTime: 1 * 60 * 1000, // 1 min em milissegundos
-    refetchOnWindowFocus: false,
+    }
   })
 
   const prompts: IPromptWithReactions[] = data?.data || [];

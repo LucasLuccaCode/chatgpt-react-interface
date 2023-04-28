@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { css } from "styled-components";
 
 export const Container = styled.section`
   display: flex;
@@ -32,15 +33,15 @@ export const Cover = styled.div`
 
 export const Details = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0.8rem ${props => props.theme.spacing.top};
 `
 
 export const Avatar = styled.div`
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   border: 3px solid ${props => props.theme.colors.text.title};
   border-radius: 50%;
   background-size: cover;
@@ -66,6 +67,20 @@ export const Title = styled.div`
   p {
     font-size: 0.8rem;
     color: #aaaab0;
+  }
+`
+
+export const Followers = styled.div`
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+
+  div {
+    display: flex;
+    align-items: baseline;
+    gap: .2rem;
+    font-size: .7rem;
+    color: ${props => props.theme.colors.text.title};
   }
 `
 
@@ -112,7 +127,7 @@ export const NavItem = styled.li`
   }
 `
 
-export const EditButton = styled(Link)`
+const CssButton = css`
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -133,4 +148,12 @@ export const EditButton = styled(Link)`
   &:focus {
     outline-color: ${props => props.theme.colors.bg.details};
   }
+`
+
+export const ActionButton = styled.button`
+  ${() => CssButton}
+`
+
+export const ActionLink = styled(Link)`
+  ${() => CssButton}
 `

@@ -24,6 +24,9 @@ export interface IUserWithPrompts extends IUserModel {
 export interface IProfileData {
   id: number;
   name: string;
-  email: string;
-  prompts: IPromptModel[]
+  email?: string;
+  followers: number;
+  following: number;
+  visitorIsFollowing?: boolean;
+  create_at: Date;
 }
