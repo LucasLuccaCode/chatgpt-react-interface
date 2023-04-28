@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "../../services/axios"
 
 import { IPromptWithReactions } from "../../types/Prompts"
-import { PromptsStyled } from "./styles"
+import { EmptyMessage, PromptsStyled } from "./styles"
 
 import { useAuth } from "../../contexts/authContext"
 import { useToast } from "../../contexts/toastContext"
@@ -24,7 +24,7 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
 
   const visitedUserId = Number(params?.userId || 0)
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: ['prompts', visitedUserId, type],
     queryFn() {
       if (visitedUserId !== 0) {
@@ -50,11 +50,33 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
     }
   })
 
+  const getMessageByEmptyPromptType = (type: PromptType) => {
+    let message: string;
+    switch (type) {
+      case 'all':
+      case 'userId':
+        message = "Nenhum prompt publicado ainda.."
+        break;
+      case 'favorites':
+        message = "Você não possui nenhum prompt favoritado ainda.."
+        break;
+      case 'privates':
+        message = "Voce não possui nenhum prompt privado ainda..."
+        break;
+    }
+
+    return message
+  }
+
   const prompts: IPromptWithReactions[] = data?.data || [];
 
   return (
     <PromptsStyled>
       {isLoading && <Loading size="1.4rem" position="RELATIVE" />}
+
+      {!!!prompts.length && !isFetching && (
+        <EmptyMessage>{getMessageByEmptyPromptType(type)}</EmptyMessage>
+      )}
 
       {prompts?.map(prompt => {
         return (
