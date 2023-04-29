@@ -6,9 +6,7 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* max-width: 500px; */
   height: 100%;
-  /* margin: 0 auto; */
   background: ${props => props.theme.colors.bg.secondary};
 `
 
@@ -33,26 +31,14 @@ export const Cover = styled.div`
 
 export const Details = styled.div`
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0.8rem ${props => props.theme.spacing.top};
 `
 
-export const Avatar = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border: 3px solid ${props => props.theme.colors.text.title};
-  border-radius: 50%;
-  background-size: cover;
-  backdrop-position: center;
-  /* background: rgba(0, 0, 0, 0.1); */
-`
-
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 100%; */
   flex: 1;
   margin-left: 1rem;
   margin-right: 0.5rem;
@@ -89,7 +75,6 @@ export const Actions = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* min-width: 6rem; */
   height: 100%;
   padding: 0 0.5rem;
 `
@@ -111,7 +96,6 @@ export const NavItem = styled.li`
     display: flex;
     padding: .6rem;
     font-size: .7rem;
-    /* font-weight: bold; */
     color: ${props => props.theme.colors.text.title};
     box-shadow: 0 2px 0 transparent;
     border-bottom: 2px solid transparent;

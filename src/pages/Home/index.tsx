@@ -1,23 +1,26 @@
-import { Feed, HomeContainer, Title } from "./styles"
+import { Feed, Header, HomeContainer, Main, Title } from "./styles"
 
 import { PromptForm } from "../../components/PromptForm"
 import { Prompts } from "../../components/Prompts"
-import { NewUsers } from "./NewUsers"
+import { RecentUsers } from "./RecentUsers"
 
 const Home: React.FC = () => {
   return (
     <HomeContainer>
       <Feed>
-        <Title>
-          Prompts
-        </Title>
+        <Header>
+          <Title>Prompts</Title>
+        </Header>
 
-        <PromptForm />
+        <Main>
+          <PromptForm />
 
-        <Prompts type="all" />
+          <Prompts type="all" />
+        </Main>
+
       </Feed>
 
-      <NewUsers />
+      <RecentUsers />
     </HomeContainer>
   )
 }

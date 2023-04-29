@@ -1,13 +1,15 @@
 import React, { useState, FormEvent } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { IPrompt } from "../../types/Prompts";
 import axios from "../../services/axios";
+
 import { useAuth } from "../../contexts/authContext";
 import { useToast } from "../../contexts/toastContext";
+import { useDialog } from "../../contexts/dialogContext";
 
 import {
   Actions,
-  Avatar,
   Button,
   PromptFormStyled,
   Select,
@@ -15,8 +17,8 @@ import {
   TextArea,
   Wrapper
 } from "./styles"
-import { useDialog } from "../../contexts/dialogContext";
-import { IPrompt } from "../../types/Prompts";
+
+import { Avatar } from "../Avatar";
 
 interface PromptFormProps {
   isUpdate?: boolean;
@@ -113,9 +115,8 @@ export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, pr
 
   return (
     <PromptFormStyled isUpdate={isUpdate} onSubmit={handleFormSubmit}>
-      <Avatar>
-        <span>{user?.name.charAt(0)}</span>
-      </Avatar>
+      <Avatar isAuthor={true} username={user?.name} sizeRem="2.2rem" />
+
       <Wrapper>
         <Select
           name="privacy"

@@ -3,7 +3,6 @@ import { NavLink, Outlet, useParams } from "react-router-dom"
 
 import {
   Actions,
-  Avatar,
   Container,
   ContentRoute,
   Details,
@@ -22,6 +21,7 @@ import { IProfileData } from "../../types/users"
 import { useAuth } from "../../contexts/authContext"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useToast } from "../../contexts/toastContext"
+import { Avatar } from "../../components/Avatar"
 
 const Profile: React.FC = () => {
   const { user: loggedUser } = useAuth()
@@ -76,7 +76,8 @@ const Profile: React.FC = () => {
   return (
     <Container>
       <Details>
-        <Avatar style={{ backgroundImage: `url(${userAvatar})` }} />
+        <Avatar avatar_url={userAvatar} sizeRem="5rem" />
+
         <Title>
           <h2>{user?.name}</h2>
           <Followers>

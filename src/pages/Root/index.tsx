@@ -44,12 +44,6 @@ const Root: React.FC = () => {
               </li>
             )}
 
-            <li>
-              <NavLink to="/search">
-                <i className="bi bi-search"></i>
-              </NavLink>
-            </li>
-
             {!user && (
               <li>
                 <NavLink to="/auth">
@@ -60,6 +54,11 @@ const Root: React.FC = () => {
 
             {user && (
               <>
+                <li>
+                  <button onClick={() => { }}>
+                    <i className="bi bi-bell-fill"></i>
+                  </button>
+                </li>
                 <li>
                   <NavLink to={`${user.id}/profile/prompts`}>
                     <i className="bi bi-person-fill"></i>

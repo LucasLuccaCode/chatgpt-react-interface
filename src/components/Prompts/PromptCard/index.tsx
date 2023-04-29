@@ -1,28 +1,28 @@
 import React, { useMemo } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
+import axios from "../../../services/axios"
+
 import { IPromptWithReactions } from "../../../types/Prompts"
+import { PromptType } from ".."
 
 import { calculateDiferenceData } from "../../../utils/calculateDiferenceDate"
-import { getNameInitials } from "../../../utils/getNameInitials"
 
 import { IToast } from "../../../contexts/toastContext"
 
 import {
   Reactions,
-  Avatar,
   Content,
   Description,
-  Name,
-  Privacy,
+  PrivacyIcon,
   PromptCardStyled,
   Title,
   PastTime,
 } from "./styles"
 
 import { More } from "./More"
-import axios from "../../../services/axios"
-import { PromptType } from ".."
+import { Avatar } from "../../Avatar"
+import { AuthorLink } from "../../AuthorLink"
 
 interface IMutationProps {
   action: 'like' | 'favorite'
@@ -88,15 +88,21 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
 
   return (
     <PromptCardStyled>
-      <Avatar isAuthor={loggedUserId === prompt.user_id}>
-        <span>{getNameInitials(prompt.author.name)}</span>
-      </Avatar>
+      <Avatar
+        isAuthor={loggedUserId === prompt.user_id}
+        username={prompt.author.name}
+        sizeRem="2rem"
+      />
 
       <Content>
         <Title>
-          <Name to={`/${prompt.user_id}/profile`}>{prompt.author.name}</Name>
+          <AuthorLink
+            author={prompt.author.name}
+            authorId={prompt.user_id}
+            sizeRem=".9rem"
+          />
           <PastTime>{pastTime}</PastTime>
-          <Privacy className={`bi bi-${privacyIcon}`} />
+          <PrivacyIcon className={`bi bi-${privacyIcon}`} />
         </Title>
         <Description>{prompt.content}</Description>
         <Reactions>

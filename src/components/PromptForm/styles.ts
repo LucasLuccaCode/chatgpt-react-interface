@@ -13,19 +13,6 @@ export const PromptFormStyled = styled.form<Props>`
   }
 `
 
-export const Avatar = styled.div`
-  display: grid;
-  place-items: center;
-  height: 2rem;
-  width: 2rem;
-  border-radius: 50%;
-  background-color: ${props => props.theme.colors.bg.details};
-
-  & span::first-letter {
-    text-transform: uppercase;
-  }
-`;
-
 export const Wrapper = styled.div`
   flex: 1;
   display: flex;

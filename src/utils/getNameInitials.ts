@@ -1,4 +1,6 @@
-export const getNameInitials = (fullName: string) => {
+export const getNameInitials = (fullName?: string) => {
+  if(!fullName) return ""
+
   const names = fullName.split(" ");
 
   if (names.length === 1) {

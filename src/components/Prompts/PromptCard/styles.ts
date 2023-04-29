@@ -1,5 +1,4 @@
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const PromptCardStyled = styled.li`
   display: flex;
@@ -7,52 +6,20 @@ export const PromptCardStyled = styled.li`
   padding: .5rem .8rem;
   border-bottom: 2px solid ${props => props.theme.colors.border};
 `
-interface AvatarProps {
-  isAuthor: boolean;
-}
-
-export const Avatar = styled.div<AvatarProps>`${({ theme, isAuthor }) => css`
-  display: grid;
-  place-items: center;
-  height: 2rem;
-  width: 2rem;
-  border-radius: 50%;
-  background-color: ${isAuthor ? theme.colors.bg.details : theme.colors.bg.button};
-
-  & span::first-letter {
-    text-transform: uppercase;
-  }
-  `
-}`;
 
 export const Content = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  flex: 1;
+  overflow: hidden;
 `
 
 export const Title = styled.div`
   display: flex;
-  /* align-items: center; */
   align-items: baseline;
   gap: .5rem;
   width: 100%;
-  /* background: red; */
-`
-
-export const Name = styled(Link)`
-  font-size: .9rem;
-  color: ${props => props.theme.colors.text.title};
-  font-weight: bold;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &::first-letter {
-    text-transform: uppercase;
-  }
 `
 
 export const PastTime = styled.span`
@@ -60,7 +27,7 @@ export const PastTime = styled.span`
   color: ${props => props.theme.colors.text.placeholder};
 `
 
-export const Privacy = styled.i`
+export const PrivacyIcon = styled.i`
   font-size: .7rem;
   color: ${props => props.theme.colors.text.placeholder};
 `
@@ -73,7 +40,6 @@ export const Description = styled.section`
     text-transform: uppercase;
   }
 `
-
 
 export const Reactions = styled.section`
   display: flex;
