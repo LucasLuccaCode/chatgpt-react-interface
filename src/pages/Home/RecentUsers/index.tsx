@@ -3,6 +3,7 @@ import axios from "../../../services/axios"
 
 import {
   Actions,
+  Content,
   Details,
   Info,
   RecentUsersStyled,
@@ -35,36 +36,33 @@ export const RecentUsers: React.FC = () => {
 
   const users: IRecentUsers[] = data?.data
 
-  console.log(users)
-
-  if (isLoading) {
-    return (
-      <Loading position="RELATIVE" size="1.5rem" />
-    )
-  }
-
   return (
     <RecentUsersStyled>
-      <Title>Usuários recentes</Title>
-      <UserList>
-        {users?.map(user => (
-          <UserCard key={user.id}>
-            <Details>
-              <Avatar isAuthor={false} username={user.name} sizeRem="2rem" />
-              
-              <Info>
-                <AuthorLink author={user.name} authorId={user.id}  sizeRem=".7rem" />
-                <RegisteredAt>
-                  se cadastrou há <span>{calculateDiferenceData(user.created_at)}</span>
-                </RegisteredAt>
-              </Info>
-            </Details>
-            <Actions>
-              <button>Seguir</button>
-            </Actions>
-          </UserCard>
-        ))}
-      </UserList>
+      <Content>
+        <Title>Usuários recentes</Title>
+
+        {isLoading && <Loading position="RELATIVE" size="1.5rem" />}
+
+        <UserList>
+          {users?.map(user => (
+            <UserCard key={user.id}>
+              <Details>
+                <Avatar isAuthor={false} username={user.name} sizeRem="2rem" />
+
+                <Info>
+                  <AuthorLink author={user.name} authorId={user.id} sizeRem=".7rem" />
+                  <RegisteredAt>
+                    se cadastrou há <span>{calculateDiferenceData(user.created_at)}</span>
+                  </RegisteredAt>
+                </Info>
+              </Details>
+              <Actions>
+                <button>Seguir</button>
+              </Actions>
+            </UserCard>
+          ))}
+        </UserList>
+      </Content>
     </RecentUsersStyled>
   )
 }

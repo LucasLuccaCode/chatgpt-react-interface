@@ -20,6 +20,7 @@ export default {
       secondary: '#1f1f1f',
       container: '#171717',
       details: '#5768ef',
+      toast: '#2f2f32',
       button: 'rgba(255, 255, 255, .1)',
       buttonHover: 'rgba(255, 255, 255, .2)',
       chat: '#3f54fa',
@@ -30,7 +31,7 @@ export default {
     opaque: 'rgba(255, 255, 255, 0.1)',
 
     border: 'rgba(255, 255, 255, .1)',
-    borderFocus: '#ce90f4',
+    borderFocus: '#5768ef',
     
     text: {
       title: '#efefff',

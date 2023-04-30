@@ -88,7 +88,7 @@ export const More: React.FC<MoreProps> = ({
             </Action>
             {loggedUserId === prompt.user_id && (
               <>
-                <Action onClick={() => activateDialog({ prompt })}>
+                <Action onClick={() => activateDialog({ prompt, isUpdate: true })}>
                   <i className="bi bi-pencil-fill" />
                   <span>Editar</span>
                 </Action>

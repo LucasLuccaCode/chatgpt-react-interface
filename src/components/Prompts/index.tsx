@@ -8,8 +8,8 @@ import { useAuth } from "../../contexts/authContext"
 import { useToast } from "../../contexts/toastContext"
 import { useParams } from "react-router-dom"
 
-import { PromptCard } from "./PromptCard"
 import { Loading } from "../Loading"
+import { PromptCard } from "./PromptCard"
 
 export type PromptType = 'all' | 'userId' | 'favorites' | 'privates'
 
@@ -28,12 +28,13 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
     queryKey: ['prompts', visitedUserId, type],
     queryFn() {
       if (visitedUserId !== 0) {
-        if (type === "userId") {
-          return axios.get(`users/${visitedUserId}/prompts`)
-        } else if (type === "favorites") {
-          return axios.get(`users/${visitedUserId}/favorites`)
-        } else if (type === "privates") {
-          return axios.get(`users/${visitedUserId}/prompts/privates`)
+        switch (type) {
+          case "userId":
+            return axios.get(`users/${visitedUserId}/prompts`)
+          case "favorites":
+            return axios.get(`users/${visitedUserId}/favorites`)
+          case "privates":
+            return axios.get(`users/${visitedUserId}/prompts/privates`)
         }
       }
       return axios.get("/prompts")

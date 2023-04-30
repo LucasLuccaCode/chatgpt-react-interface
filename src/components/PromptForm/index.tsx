@@ -21,7 +21,7 @@ import {
 import { Avatar } from "../Avatar";
 
 interface PromptFormProps {
-  isUpdate?: boolean;
+  isUpdate: boolean;
   prompt?: {
     content: string;
     privacy: "PUBLIC" | "PRIVATE";
@@ -33,7 +33,7 @@ interface UpdatePromptProps extends IPrompt {
   promptId: number;
 }
 
-export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, prompt } = {}) => {
+export const PromptForm: React.FC<PromptFormProps> = ({ isUpdate, prompt }) => {
   const [content, setPrompt] = useState(prompt?.content || "")
   const [privacy, setPrivacy] = useState<"PUBLIC" | "PRIVATE">(prompt?.privacy || "PUBLIC");
   const { user } = useAuth()
@@ -114,7 +114,7 @@ export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, pr
   const disableSubmitBtn = !Boolean(content.length) || mutation.isLoading
 
   return (
-    <PromptFormStyled isUpdate={isUpdate} onSubmit={handleFormSubmit}>
+    <PromptFormStyled onSubmit={handleFormSubmit}>
       <Avatar isAuthor={true} username={user?.name} sizeRem="2.2rem" />
 
       <Wrapper>
@@ -129,9 +129,10 @@ export const PromptForm: React.FC<PromptFormProps | undefined> = ({ isUpdate, pr
         <TextArea
           name="content"
           rows={3} onChange={e => setPrompt(e.target.value)}
-          placeholder="Digite aqui um prompt para publicar..."
+          placeholder={isUpdate ? "Digite o novo prompt para atualizar..." : "Digite aqui um prompt para publicar..."}
           maxLength={2000}
           value={content}
+          autoFocus
         />
         <Actions>
           <Status>{content.length} / 2000</Status>

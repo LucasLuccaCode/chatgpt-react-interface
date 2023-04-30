@@ -18,7 +18,7 @@ export const Toast = () => {
         <ToastRoot open={isOpen} onOpenChange={setIsOpen}>
           <ToastTitle className={toast?.type}>{toast?.title}</ToastTitle>
           <ToastAction asChild altText="Goto schedule to undo">
-            <Button className="small">Fechar</Button>
+            <Button >Fechar</Button>
           </ToastAction>
         </ToastRoot>
         <ToastViewport />

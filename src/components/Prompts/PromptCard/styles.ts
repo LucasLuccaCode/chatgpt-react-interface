@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const PromptCardStyled = styled.li`
   display: flex;
-  gap: .6rem;
-  padding: .5rem .8rem;
-  border-bottom: 2px solid ${props => props.theme.colors.border};
+  gap: ${props => props.theme.spacing.medium};
+  padding: .5rem;
+  border-radius: .8rem;
+  background-color: ${props => props.theme.colors.bg.secondary};
 `
 
 export const Content = styled.div`
@@ -18,22 +19,28 @@ export const Content = styled.div`
 export const Title = styled.div`
   display: flex;
   align-items: baseline;
-  gap: .5rem;
   width: 100%;
+`
+
+export const Dot = styled.span`
+  font-size: .8rem;
+  margin: 0 .1rem;
+  color: ${props => props.theme.colors.borderFocus};
 `
 
 export const PastTime = styled.span`
   font-size: .7rem;
+  margin-left: .4rem;
   color: ${props => props.theme.colors.text.placeholder};
-`
+  `
 
 export const PrivacyIcon = styled.i`
-  font-size: .7rem;
+  font-size: .6rem;
   color: ${props => props.theme.colors.text.placeholder};
 `
 
 export const Description = styled.section`
-  font-size: .8rem;
+  font-size: .7rem;
   color: ${props => props.theme.colors.text.title};
 
   &::first-letter {

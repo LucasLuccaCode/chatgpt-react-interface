@@ -39,9 +39,9 @@ export const PopoverContent = styled(Popover.Content)`
   border-radius: ${props => props.theme.borderRadius.large};
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.colors.bg.secondary};
-  /* box-shadow: 0 1px 1px 1px ${props => props.theme.colors.bg.primary}; */
   box-shadow: 0 2px 2px 3px rgba(0, 0, 0, .1);
+  background-color: ${props => props.theme.colors.opaque};
+  backdrop-filter: blur(5px);
   overflow: hidden;
 `;
 
@@ -70,7 +70,7 @@ export const Action = styled(Popover.Close)`
   }
   
   &:hover {
-    background-color: ${props => props.theme.colors.opaque};
+    background-color: ${props => props.theme.colors.bg.details};
     border-bottom-color: transparent;
   }
 

@@ -7,8 +7,7 @@ export const ToastContainer = styled.section`
   right: .6rem;
 `
 
-export const ToastProvider = styled(Toast.Provider)`
-`
+export const ToastProvider = styled(Toast.Provider)``
 
 export const ToastViewport = styled(Toast.Viewport)`
   display: flex;
@@ -37,6 +36,7 @@ const SlideIn = keyframes`
     transform: translateX(0);
   }
 `
+
 const SwipeOut = keyframes`
   from {
     transform: translateX(10px);
@@ -55,7 +55,8 @@ export const ToastRoot = styled(Toast.Root)`
   padding: .8rem;
   border-radius: ${props => props.theme.borderRadius.medium};
   box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-  background-color: ${props => props.theme.colors.bg.secondary};
+  background-color: ${props => props.theme.colors.bg.toast};
+  /* backdrop-filter: blur(5px); */
   
   &[data-state='open']{
     animation: ${SlideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -109,33 +110,18 @@ export const Button = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: .3rem;
   font-weight: 500;
   
-  &.small {
-    font-size: .6rem;
-    padding: .4rem .5rem;
-    line-height: .6rem;
-    background: ${props => props.theme.colors.bg.details};
-    border: 2px solid transparent;
-    transition: .2s ease;
-    
-    &:hover {
-      background: transparent;
-      color: ${props => props.theme.colors.bg.details};
-      border-color: ${props => props.theme.colors.bg.details};
-    }
-  }
+  font-size: .6rem;
+  padding: .4rem .5rem;
+  border: 2px solid transparent;
+  background: ${props => props.theme.colors.bg.details};
+  transition: .2s ease;
   
-  &.large {
-    font-size: 15px;
-    padding: 0 15px;
-    line-height: 35px;
-    height: 35px;
-  }
-
-  
-  &:focus {
-    box-shadow: 0 0 0 2px ${props => props.theme.colors.bg.details};
+  &:hover {
+    background: transparent;
+    color: ${props => props.theme.colors.bg.details};
+    border-color: ${props => props.theme.colors.bg.details};
   }
 `

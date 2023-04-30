@@ -12,7 +12,8 @@ import {
   NavList,
   Navbar,
   Title,
-  ActionLink
+  ActionLink,
+  Wrapper
 } from "./styles"
 
 import axios from "../../services/axios"
@@ -81,15 +82,15 @@ const Profile: React.FC = () => {
         <Title>
           <h2>{user?.name}</h2>
           <Followers>
-            <div>
-              <i className="bi bi-people" />
-              <span>{user?.followers} {Number(user?.followers) > 1 ? 'seguidores' : 'seguidor'}</span>
-            </div>
+            <Wrapper>
+              <i className="bi bi-people-fill" />
+              <span><strong>{user?.followers}</strong> {Number(user?.followers) > 1 ? 'seguidores' : 'seguidor'}</span>
+            </Wrapper>
             <i className="bi bi-dot" />
-            <div>
-              <i className="bi bi-person" />
-              <span>{user?.following} seguindo</span>
-            </div>
+            <Wrapper>
+              <i className="bi bi-person-fill" />
+              <span><strong>{user?.following}</strong> seguindo</span>
+            </Wrapper>
           </Followers>
         </Title>
         <Actions>

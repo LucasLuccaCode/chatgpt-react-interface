@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const PromptsStyled = styled.ul`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
   width: 100%;
 `
 

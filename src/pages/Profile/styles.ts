@@ -16,15 +16,15 @@ export const ContentRoute = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-top: 1rem;
+  padding: ${props => props.theme.spacing.medium};
   background: ${props => props.theme.colors.bg.primary};
 `
 
 export const Cover = styled.div`
   width: 100%;
   height: 50px;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: .5rem;
   background-image: linear-gradient(to bottom, ${props => props.theme.colors.opaque}, transparent);
   border-bottom: 1px solid ${props => props.theme.colors.opaque};
 `
@@ -61,12 +61,20 @@ export const Followers = styled.div`
   align-items: center;
   gap: .2rem;
 
-  div {
-    display: flex;
-    align-items: baseline;
-    gap: .2rem;
-    font-size: .7rem;
+  i {
     color: ${props => props.theme.colors.text.title};
+  }
+`
+
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: .2rem;
+  font-size: .7rem;
+  color: ${props => props.theme.colors.text.title};
+
+  i {
+    color: ${props => props.theme.colors.bg.details};
   }
 `
 

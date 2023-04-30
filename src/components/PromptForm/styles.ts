@@ -1,16 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-interface Props {
-  isUpdate?: boolean;
-}
-
-export const PromptFormStyled = styled.form<Props>`
-  ${({ theme, isUpdate }) => css`
-    display: flex;
-    gap: .8rem;
-    ${!isUpdate && `border-bottom: 2px solid ${theme.colors.border}`};
-    padding: .5rem ${theme.spacing.large};`
-  }
+export const PromptFormStyled = styled.form`
+  display: flex;
+  gap: .8rem;
 `
 
 export const Wrapper = styled.div`
@@ -28,7 +20,7 @@ export const Select = styled.select`
   outline: none;
   color: ${props => props.theme.colors.text.title};
   border: 1px solid ${props => props.theme.colors.border};
-  background: transparent;
+  background: ${props => props.theme.colors.opaque};
 
   option {
     background: ${props => props.theme.colors.bg.secondary};
@@ -42,6 +34,19 @@ export const TextArea = styled.textarea`
   padding: 0 .5rem;
   border-radius: ${props => props.theme.borderRadius.medium};
   background: transparent;
+
+  &::-webkit-scrollbar {
+    width: .25rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background: ${props => props.theme.colors.border};
+  }
 `;
 
 export const Actions = styled.div`

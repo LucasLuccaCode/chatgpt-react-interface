@@ -23,6 +23,7 @@ declare module 'styled-components' {
         secondary: string,
         container: string,
         details: string,
+        toast: string,
         button: string,
         buttonHover: string,
         chat: string,

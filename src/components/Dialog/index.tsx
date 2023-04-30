@@ -8,7 +8,7 @@ import {
   DialogRoot,
   DialogTitle,
   IconButton,
-  Title
+  Header
 } from './styles';
 
 import { useDialog } from '../../contexts/dialogContext';
@@ -23,15 +23,17 @@ export const Dialog: React.FC = () => {
       <DialogPortal>
         <DialogOverlay>
           <DialogContent>
-            <Title>
-              <DialogTitle>Editando prompt</DialogTitle>
+            <Header>
+              <DialogTitle>
+                {dialog?.isUpdate ? "Editando prompt" : "Publique seu prompt"}
+              </DialogTitle>
 
               <DialogClose asChild>
                 <IconButton className="bi bi-x" aria-label="Close" />
               </DialogClose>
-            </Title>
+            </Header>
 
-            <PromptForm isUpdate={true} prompt={dialog?.prompt} />
+            <PromptForm isUpdate={dialog?.isUpdate} prompt={dialog?.prompt} />
 
           </DialogContent>
         </DialogOverlay>

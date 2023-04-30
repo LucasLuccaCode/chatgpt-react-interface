@@ -1,10 +1,11 @@
 import { Feed, Header, HomeContainer, Main, Title } from "./styles"
 
-import { PromptForm } from "../../components/PromptForm"
+import { PlaceholderForm } from "../../components/PlaceholderForm"
 import { Prompts } from "../../components/Prompts"
 import { RecentUsers } from "./RecentUsers"
 
 const Home: React.FC = () => {
+
   return (
     <HomeContainer>
       <Feed>
@@ -13,11 +14,10 @@ const Home: React.FC = () => {
         </Header>
 
         <Main>
-          <PromptForm />
+          <PlaceholderForm />
 
           <Prompts type="all" />
         </Main>
-
       </Feed>
 
       <RecentUsers />

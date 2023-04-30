@@ -20,6 +20,7 @@ export default {
       secondary: '#fff',
       container: '#fff',
       details: '#5768ef',
+      toast: '#2f2f34',
       button: '#5768ef',
       buttonHover: '#5768ef',
       chat: '#5768ef',

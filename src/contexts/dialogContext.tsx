@@ -2,30 +2,33 @@ import { useContext, useCallback, useState, createContext, ReactNode } from "rea
 import { IPromptModel } from "../types/Prompts";
 
 export interface IDialog {
-  prompt: IPromptModel;
+  prompt?: IPromptModel;
+  isUpdate: boolean;
 }
 
 interface IDialogContext {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  dialog: IDialog | null;
+  dialog: IDialog;
   activateDialog({ prompt }: IDialog): void;
 }
 
 const DialogContext = createContext<IDialogContext>({
   isOpen: false,
   setIsOpen() { },
-  dialog: null,
+  dialog: {
+    isUpdate: false
+  },
   activateDialog() { },
 });
 
 export const DialogProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dialog, setDialog] = useState<IDialog | null>(null);
+  const [dialog, setDialog] = useState<IDialog>({ isUpdate: false });
 
   const activateDialog = useCallback(
-    ({ prompt }: IDialog) => {
-      setDialog({ prompt });
+    ({ prompt, isUpdate }: IDialog) => {
+      setDialog(isUpdate ? { prompt, isUpdate: true } : { isUpdate: false });
       setIsOpen(true);
     }, []
   );

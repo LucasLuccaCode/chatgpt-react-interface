@@ -12,6 +12,7 @@ const AuthorLinkStyled = styled(Link) <AuthorLinkStyledProps>`
     font-weight: bold;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-transform: capitalize;
     overflow: hidden;
 
     &:hover {
@@ -19,7 +20,6 @@ const AuthorLinkStyled = styled(Link) <AuthorLinkStyledProps>`
     }
 
     &::first-letter {
-      text-transform: uppercase;
     }
   `}
 `

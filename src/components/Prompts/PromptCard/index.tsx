@@ -18,6 +18,7 @@ import {
   PromptCardStyled,
   Title,
   PastTime,
+  Dot,
 } from "./styles"
 
 import { More } from "./More"
@@ -99,9 +100,10 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
           <AuthorLink
             author={prompt.author.name}
             authorId={prompt.user_id}
-            sizeRem=".9rem"
+            sizeRem=".8rem"
           />
           <PastTime>{pastTime}</PastTime>
+          <Dot className="bi bi-dot" />
           <PrivacyIcon className={`bi bi-${privacyIcon}`} />
         </Title>
         <Description>{prompt.content}</Description>

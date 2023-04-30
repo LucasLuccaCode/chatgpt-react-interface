@@ -19,6 +19,7 @@ export const DialogContent = styled(Dialog.Content)`
   position: relative;
   border-radius: ${props => props.theme.borderRadius.large};
   padding: 1rem;
+  margin-top: -10vh;
   max-width: 500px;
   width: 100%;
   background-color: ${props => props.theme.colors.bg.secondary};
@@ -31,12 +32,14 @@ export const DialogTitle = styled(Dialog.Title)`
   color: ${props => props.theme.colors.text.title};
 `;
 
-export const Title = styled.div`
+export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: .5rem;
+  padding-bottom: .5rem;
   margin-bottom: 1rem;
+  border-bottom: 1px solid ${props => props.theme.colors.border};
 `
 
 export const DialogClose = styled(Dialog.Close)`
