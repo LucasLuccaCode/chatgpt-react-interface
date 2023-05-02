@@ -144,26 +144,3 @@ export const Buttons = styled.div`
   gap: ${props => props.theme.spacing.medium};
   align-items: center;
 `
-
-export const Button = styled.button`
-  flex: 1;
-  font-size: .6rem;
-  font-weight: 600;
-  padding: .4rem .3rem;
-  margin-top: ${props => props.theme.spacing.top};
-  text-transform: capitalize;
-  border-radius: ${props => props.theme.borderRadius.medium};
-  color: ${props => props.theme.colors.text.details};
-  border: 2px solid ${props => props.theme.colors.bg.details};
-  background: ${props => props.theme.colors.bg.details};
-  transition: background .2s ease;
-  
-  &:hover {
-    color: ${props => props.theme.colors.bg.details};
-    background: transparent;
-  }
-
-  &:active {
-    transform: scale(.95)
-  }
-`

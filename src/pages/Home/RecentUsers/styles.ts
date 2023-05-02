@@ -7,10 +7,11 @@ export const Content = styled.div`
   top: .8rem;
   display: grid;
   grid-template-rows: max-content 1fr;
-  height: calc(100vh - .8rem);
+  height: calc(100vh - 1.5rem);
   padding-top: .8rem;
   margin-top: .8rem;
-  border-radius: .5rem .5rem 0 0;
+  /* border-radius: .5rem .5rem 0 0; */
+  border-radius: .5rem;
   background-color: ${props => props.theme.colors.bg.secondary};
 `
 
@@ -25,7 +26,7 @@ export const UserList = styled.ul`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  /* gap: 1rem; */
+  /* gap: .5rem; */
   padding-left: .8rem;
   padding-right: .8rem;
   padding-bottom: .6rem;
@@ -47,9 +48,14 @@ export const UserList = styled.ul`
 
 export const UserCard = styled.li`
   padding: .8rem .5rem;
-  border-top: 2px solid rgba(255, 255, 255, .05);
-  background: ${props => props.theme.colors.bg.secondary};
-  transition: transform .3s ease;
+  border-top: 1px solid rgba(255, 255, 255, .05);
+  /* border-radius: .5rem; */
+  /* background: ${props => props.theme.colors.bg.secondary}; */
+  transition: all .3s ease;
+  
+  &:hover {
+    /* background: ${props => props.theme.colors.opaque}; */
+  }
 `
 
 export const Details = styled.div`
@@ -82,22 +88,6 @@ export const Actions = styled.div`
   margin-top: .5rem;
   gap: .5rem;
   overflow: hidden;
-
-  button {
-    flex: 1;
-    font-size: .6rem;
-    /* font-weight: bold; */
-    color: ${props => props.theme.colors.text.title};
-    padding: .2rem;
-    border: 2px solid ${props => props.theme.colors.bg.details};
-    border-radius: ${props => props.theme.borderRadius.medium};
-    background: ${props => props.theme.colors.bg.details};
-
-    &:hover {
-      background-color: transparent;
-      color: ${props => props.theme.colors.bg.details};
-    }
-  }
 `
 
 

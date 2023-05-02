@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { css } from "styled-components";
+import { ButtonCss } from "../../components/Button";
 
 export const Container = styled.section`
   display: flex;
@@ -36,7 +36,7 @@ export const Details = styled.div`
   padding: 0.8rem ${props => props.theme.spacing.top};
 `
 
-export const Title = styled.div`
+export const Info = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -46,7 +46,7 @@ export const Title = styled.div`
 
   h2 {
     font-size: 1.3rem;
-    color: #efefff;
+    color: ${props => props.theme.colors.text.title};
     text-transform: capitalize;
   }
 
@@ -119,33 +119,10 @@ export const NavItem = styled.li`
   }
 `
 
-const CssButton = css`
+export const ActionLink = styled(Link)`
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: .5rem;
-  color: ${props => props.theme.colors.text.details};
-  font-size: .6rem;
-  padding: .3rem .5rem;
-  border: 2px solid ${props => props.theme.colors.bg.details};
-  border-radius: ${props => props.theme.borderRadius.small};
-  font-weight: bold;
-  background: ${props => props.theme.colors.bg.details};
-  transition: background .2s ease;
-
-  &:hover {
-    background: transparent;
-    color: ${props => props.theme.colors.bg.details};
-  }
-  
-  &:focus {
-    outline-color: ${props => props.theme.colors.bg.details};
-  }
-`
-
-export const ActionButton = styled.button`
-  ${() => CssButton}
-`
-
-export const ActionLink = styled(Link)`
-  ${() => CssButton}
+  ${() => ButtonCss}
 `

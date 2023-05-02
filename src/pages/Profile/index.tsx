@@ -6,12 +6,11 @@ import {
   Container,
   ContentRoute,
   Details,
-  ActionButton,
   Followers,
   NavItem,
   NavList,
   Navbar,
-  Title,
+  Info,
   ActionLink,
   Wrapper
 } from "./styles"
@@ -23,6 +22,7 @@ import { useAuth } from "../../contexts/authContext"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useToast } from "../../contexts/toastContext"
 import { Avatar } from "../../components/Avatar"
+import { FollowerButton } from "../../components/FollowerButton"
 
 const Profile: React.FC = () => {
   const { user: loggedUser } = useAuth()
@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
       <Details>
         <Avatar avatar_url={userAvatar} sizeRem="5rem" />
 
-        <Title>
+        <Info>
           <h2>{user?.name}</h2>
           <Followers>
             <Wrapper>
@@ -92,7 +92,7 @@ const Profile: React.FC = () => {
               <span><strong>{user?.following}</strong> seguindo</span>
             </Wrapper>
           </Followers>
-        </Title>
+        </Info>
         <Actions>
           {isVisitingOwnProfile ? (
             <ActionLink to="edit">
@@ -100,9 +100,10 @@ const Profile: React.FC = () => {
               <p>Editar perfil</p>
             </ActionLink>
           ) : (
-            <ActionButton
-              disabled={mutation.isLoading}
-              onClick={() => mutation.mutate()}
+            <FollowerButton
+              // disabled={mutation.isLoading}
+              size="normal"
+              handleOnClick={() => mutation.mutate()}
             >
               {mutation.isLoading ? (
                 <i className="bi bi-three-dots" />
@@ -112,7 +113,7 @@ const Profile: React.FC = () => {
                   <p>{user?.visitorIsFollowing ? "Deixar de seguir" : "Seguir"}</p>
                 </>
               )}
-            </ActionButton>
+            </FollowerButton>
           )}
         </Actions>
       </Details>

@@ -8,11 +8,11 @@ import {
   Wrapper,
   Control,
   Buttons,
-  Button,
   Label,
   InputRange,
   InputToggle,
 } from "./styles"
+import { Button } from "../../../components/Button"
 
 export const Settings: React.FC = () => {
   const { settings, updateSettings, restoreSettings } = useSettings()
@@ -131,9 +131,7 @@ export const Settings: React.FC = () => {
       </Division>
 
       <Buttons>
-        <Button onClick={restoreSettings}>
-          Restaurar
-        </Button>
+        <Button text="Restaurar" size="full" handleClick={restoreSettings} />
       </Buttons>
     </SettingsContainer >
   )

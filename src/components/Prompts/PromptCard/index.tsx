@@ -100,7 +100,7 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
           <AuthorLink
             author={prompt.author.name}
             authorId={prompt.user_id}
-            sizeRem=".8rem"
+            sizerem=".8rem"
           />
           <PastTime>{pastTime}</PastTime>
           <Dot className="bi bi-dot" />
