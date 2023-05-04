@@ -75,8 +75,8 @@ export const RegisteredAt = styled.p`
   font-size: .6rem;
   color: ${props => props.theme.colors.text.title};
 
-  span {
-    margin-left: .2rem;
+  strong {
+    margin-left: .1rem;
     color: ${props => props.theme.colors.bg.details};
   }
 `

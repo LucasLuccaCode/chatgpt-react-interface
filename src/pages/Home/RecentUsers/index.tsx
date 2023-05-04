@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "../../../services/axios"
 
@@ -22,6 +23,7 @@ import { useAuth } from "../../../contexts/authContext";
 import { useToast } from "../../../contexts/toastContext";
 import { FollowerButton } from "../../../components/FollowerButton";
 import { Button } from "../../../components/Button";
+import { LinkButton } from "../../../components/LinkButton";
 
 interface IRecentUsers {
   id: number;
@@ -30,34 +32,48 @@ interface IRecentUsers {
   created_at: Date;
 }
 
+interface IMutationProps {
+  isFollowing: boolean,
+  userId: number
+}
+
+const perPage = 6
+
 export const RecentUsers: React.FC = () => {
+  const [page, setPage] = useState(0)
   const { user: loggedUser } = useAuth()
   const { updateToast } = useToast()
 
 
   const { data, isLoading } = useQuery({
-    queryKey: ['recent-users'],
+    queryKey: ['recent-users', page],
+    staleTime: Infinity,
     queryFn() {
-      return axios.get('/users/recent')
+      if (loggedUser) {
+        return axios.get(`/users/recent?page=${page}&per_page=${perPage}`)
+      }
     }
   })
 
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn({ isFollowing, userId }: { isFollowing: boolean, userId: number }) {
+    mutationFn({ isFollowing, userId }: IMutationProps) {
       if (isFollowing) {
         return axios.post(`/users/${loggedUser?.id}/unfollow/${userId}`)
+      } else {
+        return axios.post(`/users/${loggedUser?.id}/follow/${userId}`)
       }
-      return axios.post(`/users/${loggedUser?.id}/follow/${userId}`)
     },
     onSuccess(data) {
-      queryClient.invalidateQueries({ queryKey: ['recent-users'] })
+      if (data.data.message) {
+        queryClient.invalidateQueries({ queryKey: ['recent-users'] })
 
-      updateToast({
-        title: data.data.message,
-        type: 'success'
-      })
+        updateToast({
+          title: data.data.message,
+          type: 'success'
+        })
+      }
     },
     onError(error: any) {
       const errorMessage = error.response
@@ -72,6 +88,10 @@ export const RecentUsers: React.FC = () => {
   })
 
   const users: IRecentUsers[] = data?.data
+
+  const handleMoreUserClick = () => {
+    setPage(prevPage => prevPage + 1)
+  }
 
   return (
     <RecentUsersStyled>
@@ -89,7 +109,7 @@ export const RecentUsers: React.FC = () => {
                 <Info>
                   <AuthorLink author={user.name} authorId={user.id} sizerem=".7rem" />
                   <RegisteredAt>
-                    se cadastrou há <span>{calculateDiferenceData(user.created_at)}</span>
+                    se cadastrou há <strong>{calculateDiferenceData(user.created_at)}</strong>
                   </RegisteredAt>
                 </Info>
               </Details>
@@ -105,11 +125,23 @@ export const RecentUsers: React.FC = () => {
             </UserCard>
           ))}
 
-          <UserCard>
-            <Actions>
-              <Button size="full" text="Mostrar mais" />
-            </Actions>
-          </UserCard>
+          {users?.length == perPage && (
+            <UserCard>
+              <Actions>
+                {loggedUser ? (
+                  <Button
+                    size="full"
+                    text="Mostrar mais"
+                    handleClick={handleMoreUserClick}
+                  />
+                ) : (
+                  <LinkButton to="/auth">
+                    Faça login
+                  </LinkButton>
+                )}
+              </Actions>
+            </UserCard>
+          )}
         </UserList>
       </Content>
     </RecentUsersStyled>

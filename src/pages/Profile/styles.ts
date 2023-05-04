@@ -83,7 +83,6 @@ export const Actions = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
   padding: 0 0.5rem;
 `
 
@@ -117,12 +116,4 @@ export const NavItem = styled.li`
       border-bottom: 2px solid ${props => props.theme.colors.bg.details};
     }
   }
-`
-
-export const ActionLink = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: .5rem;
-  ${() => ButtonCss}
 `

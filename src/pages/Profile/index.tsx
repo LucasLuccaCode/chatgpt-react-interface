@@ -11,7 +11,6 @@ import {
   NavList,
   Navbar,
   Info,
-  ActionLink,
   Wrapper
 } from "./styles"
 
@@ -23,6 +22,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useToast } from "../../contexts/toastContext"
 import { Avatar } from "../../components/Avatar"
 import { FollowerButton } from "../../components/FollowerButton"
+import { LinkButton } from "../../components/LinkButton"
 
 const Profile: React.FC = () => {
   const { user: loggedUser } = useAuth()
@@ -95,24 +95,18 @@ const Profile: React.FC = () => {
         </Info>
         <Actions>
           {isVisitingOwnProfile ? (
-            <ActionLink to="edit">
+            <LinkButton to="edit">
               <i className="bi bi-pencil-fill" />
               <p>Editar perfil</p>
-            </ActionLink>
+            </LinkButton>
           ) : (
             <FollowerButton
               // disabled={mutation.isLoading}
               size="normal"
               handleOnClick={() => mutation.mutate()}
             >
-              {mutation.isLoading ? (
-                <i className="bi bi-three-dots" />
-              ) : (
-                <>
-                  <i className={`bi bi-${user?.visitorIsFollowing ? 'dash-lg' : 'plus'}`} />
-                  <p>{user?.visitorIsFollowing ? "Deixar de seguir" : "Seguir"}</p>
-                </>
-              )}
+              <i className={`bi bi-${user?.visitorIsFollowing ? 'dash-lg' : 'plus'}`} />
+              <p>{user?.visitorIsFollowing ? "Deixar de seguir" : "Seguir"}</p>
             </FollowerButton>
           )}
         </Actions>
