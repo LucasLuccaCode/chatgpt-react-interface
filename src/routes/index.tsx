@@ -11,6 +11,7 @@ import EditUser from '../pages/Profile/EditUser'
 import ChatContent from '../components/ChatContent'
 
 import { Prompts } from '../components/Prompts';
+import { ShowFollowers } from '../pages/Profile/ShowFollowers';
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 element: <Navigate to="prompts" />
+              },
+              {
+                path: 'followers',
+                element: <ShowFollowers />
+              },
+              {
+                path: 'following',
+                element: <ShowFollowers />
               },
               {
                 path: 'prompts',

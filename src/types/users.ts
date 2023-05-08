@@ -27,6 +27,7 @@ export interface IProfileData {
   email?: string;
   followers: number;
   following: number;
+  promptCount: number;
   visitorIsFollowing?: boolean;
   create_at: Date;
 }

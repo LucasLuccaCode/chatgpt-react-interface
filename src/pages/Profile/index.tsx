@@ -1,5 +1,5 @@
 import React from "react"
-import { NavLink, Outlet, useParams } from "react-router-dom"
+import { Link, NavLink, Outlet, useParams } from "react-router-dom"
 
 import {
   Actions,
@@ -83,13 +83,20 @@ const Profile: React.FC = () => {
           <h2>{user?.name}</h2>
           <Followers>
             <Wrapper>
+              <i className="bi bi-card-list" />
+              <Link to="prompts">
+                <strong>{user?.promptCount}</strong> {(user?.promptCount || 0) > 1 ? 'Publicações' : 'Publicação'}
+              </Link>
+            </Wrapper>
+            <i className="bi bi-dot" />
+            <Wrapper>
               <i className="bi bi-people-fill" />
-              <span><strong>{user?.followers}</strong> {Number(user?.followers) > 1 ? 'seguidores' : 'seguidor'}</span>
+              <Link to="followers"><strong>{user?.followers}</strong> {Number(user?.followers) > 1 ? 'seguidores' : 'seguidor'}</Link>
             </Wrapper>
             <i className="bi bi-dot" />
             <Wrapper>
               <i className="bi bi-person-fill" />
-              <span><strong>{user?.following}</strong> seguindo</span>
+              <Link to="following"><strong>{user?.following}</strong> seguindo</Link>
             </Wrapper>
           </Followers>
         </Info>

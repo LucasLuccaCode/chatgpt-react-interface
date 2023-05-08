@@ -70,11 +70,18 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: baseline;
   gap: .2rem;
-  font-size: .7rem;
-  color: ${props => props.theme.colors.text.title};
+  font-size: .75rem;
 
   i {
     color: ${props => props.theme.colors.bg.details};
+  }
+
+  a {
+    color: ${props => props.theme.colors.text.title};
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 `
 

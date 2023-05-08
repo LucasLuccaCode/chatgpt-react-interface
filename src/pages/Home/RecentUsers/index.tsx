@@ -67,7 +67,7 @@ export const RecentUsers: React.FC = () => {
     },
     onSuccess(data) {
       if (data.data.message) {
-        queryClient.invalidateQueries({ queryKey: ['recent-users'] })
+        queryClient.invalidateQueries({ queryKey: ['recent-users', page] })
 
         updateToast({
           title: data.data.message,
@@ -125,23 +125,25 @@ export const RecentUsers: React.FC = () => {
             </UserCard>
           ))}
 
-          {users?.length == perPage && (
-            <UserCard>
-              <Actions>
-                {loggedUser ? (
-                  <Button
-                    size="full"
-                    text="Mostrar mais"
-                    handleClick={handleMoreUserClick}
-                  />
-                ) : (
-                  <LinkButton to="/auth">
-                    Faça login
-                  </LinkButton>
-                )}
-              </Actions>
-            </UserCard>
-          )}
+          <UserCard>
+            <Actions>
+
+              {!loggedUser && (
+                <LinkButton to="/auth">
+                  Faça login
+                </LinkButton>
+              )}
+
+              {loggedUser && users?.length == perPage && (
+                <Button
+                  size="full"
+                  text="Mostrar mais"
+                  handleClick={handleMoreUserClick}
+                />
+              )}
+
+            </Actions>
+          </UserCard>
         </UserList>
       </Content>
     </RecentUsersStyled>

@@ -11,6 +11,7 @@ const LinkButtonStyled = styled(Link)`
   gap: .5rem;
   width: 100%;
   height: max-content;
+  white-space: nowrap;
   ${() => ButtonCss}
 `
 
