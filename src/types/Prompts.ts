@@ -20,4 +20,5 @@ export interface IPromptWithReactions extends IPromptWithAuthor {
   likedByUser: boolean;
   fansCount: number;
   favoritedByUser: boolean;
+  savedByUser: boolean;
 }

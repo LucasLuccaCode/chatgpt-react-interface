@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom"
 import { Loading } from "../Loading"
 import { PromptCard } from "./PromptCard"
 
-export type PromptType = 'all' | 'userId' | 'favorites' | 'privates'
+export type PromptType = 'ALL' | 'USER_ID' | 'FAVORITES' | 'PRIVATES' | 'SAVED'
 
 interface IPromptsProps {
   type: PromptType
@@ -29,12 +29,14 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
     queryFn() {
       if (visitedUserId !== 0) {
         switch (type) {
-          case "userId":
+          case "USER_ID":
             return axios.get(`users/${visitedUserId}/prompts`)
-          case "favorites":
+          case "FAVORITES":
             return axios.get(`users/${visitedUserId}/favorites`)
-          case "privates":
+          case "PRIVATES":
             return axios.get(`users/${visitedUserId}/prompts/privates`)
+          case "SAVED":
+            return axios.get(`users/${visitedUserId}/prompts/saved`)
         }
       }
       return axios.get("/prompts")
@@ -54,15 +56,18 @@ export const Prompts: React.FC<IPromptsProps> = ({ type }) => {
   const getMessageByEmptyPromptType = (type: PromptType) => {
     let message: string;
     switch (type) {
-      case 'all':
-      case 'userId':
+      case 'ALL':
+      case 'USER_ID':
         message = "Nenhum prompt publicado ainda.."
         break;
-      case 'favorites':
+      case 'FAVORITES':
         message = "Você não possui nenhum prompt favoritado ainda.."
         break;
-      case 'privates':
+      case 'PRIVATES':
         message = "Voce não possui nenhum prompt privado ainda..."
+        break;
+      case 'SAVED':
+        message = "Voce não possui nenhum prompt salvo ainda..."
         break;
     }
 

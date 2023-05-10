@@ -2,7 +2,7 @@ import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Popover from "@radix-ui/react-popover";
 
-import { IPromptWithAuthor } from "../../../../types/Prompts";
+import { IPromptWithReactions } from "../../../../types/Prompts";
 
 import axios from "../../../../services/axios";
 
@@ -20,10 +20,13 @@ import { useDialog } from "../../../../contexts/dialogContext";
 
 interface MoreProps {
   loggedUserId?: number;
-  prompt: IPromptWithAuthor;
+  prompt: IPromptWithReactions;
   updateToast(toast: IToast): void;
 }
 
+interface IMutation {
+  action: "SAVE" | "DELETE"
+}
 
 export const More: React.FC<MoreProps> = ({
   loggedUserId,
@@ -32,24 +35,16 @@ export const More: React.FC<MoreProps> = ({
 }) => {
   const { activateDialog } = useDialog()
 
-  const deletePrompt = () => {
-    return axios.delete(`users/${loggedUserId}/prompts/${prompt.id}`);
-  };
-
-  const savePrompt = () => {
-    console.log("Salvando prompts...")
-    return axios.post("/save")
-  };
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn({ action }: { action: string }) {
-      if (action === "delete") {
-        return deletePrompt()
+    mutationFn({ action }: IMutation) {
+      switch (action) {
+        case "SAVE":
+          return axios.put(`/users/${loggedUserId}/prompts/${prompt.id}/saved-toggle`)
+        case "DELETE":
+          return axios.delete(`users/${loggedUserId}/prompts/${prompt.id}`);
       }
-
-      return savePrompt();
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(['prompts', loggedUserId]);
@@ -82,17 +77,19 @@ export const More: React.FC<MoreProps> = ({
       <PopoverPortal>
         <PopoverContent>
           <Actions>
-            <Action onClick={() => mutation.mutate({ action: "save" })}>
-              <i className="bi bi-bookmark-fill" />
-              <span>Salvar</span>
-            </Action>
+            {loggedUserId !== prompt.user_id && (
+              <Action onClick={() => mutation.mutate({ action: "SAVE" })}>
+                <i className="bi bi-bookmark-fill" />
+                <span>{prompt.savedByUser ? "Não salvar" : "Salvar"}</span>
+              </Action>
+            )}
             {loggedUserId === prompt.user_id && (
               <>
                 <Action onClick={() => activateDialog({ prompt, isUpdate: true })}>
                   <i className="bi bi-pencil-fill" />
                   <span>Editar</span>
                 </Action>
-                <Action onClick={() => mutation.mutate({ action: "delete" })}>
+                <Action onClick={() => mutation.mutate({ action: "DELETE" })}>
                   <i className="bi bi-trash3-fill" />
                   <span>Excluir</span>
                 </Action>

@@ -47,16 +47,16 @@ export const router = createBrowserRouter([
         element: <h1>Search</h1>
       },
       {
-        path: '/:userId/profile',
+        path: '/:userId/profile/',
         element: <PrivateRoute />,
         children: [
           {
-            path: '/:userId/profile',
+            path: '/:userId/profile/',
             element: <Profile />,
             children: [
               {
                 index: true,
-                element: <Navigate to="prompts" />
+                element: <Prompts type='USER_ID' />
               },
               {
                 path: 'followers',
@@ -67,16 +67,16 @@ export const router = createBrowserRouter([
                 element: <ShowFollowers />
               },
               {
-                path: 'prompts',
-                element: <Prompts type='userId' />
-              },
-              {
                 path: 'favorites',
-                element: <Prompts type='favorites' />
+                element: <Prompts type='FAVORITES' />
               },
               {
                 path: 'privates',
-                element: <Prompts type='privates' />
+                element: <Prompts type='PRIVATES' />
+              },
+              {
+                path: 'saved',
+                element: <Prompts type='SAVED' />
               },
               {
                 path: 'about',

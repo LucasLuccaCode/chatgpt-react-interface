@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { ButtonCss } from "../../components/Button";
 
 export const Container = styled.section`
   display: flex;
@@ -31,6 +29,7 @@ export const Cover = styled.div`
 
 export const Details = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0.8rem ${props => props.theme.spacing.top};
@@ -39,6 +38,7 @@ export const Details = styled.div`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   flex: 1;
   margin-left: 1rem;
   margin-right: 0.5rem;
@@ -58,6 +58,7 @@ export const Info = styled.div`
 
 export const Followers = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: .2rem;
 

@@ -84,7 +84,7 @@ const Profile: React.FC = () => {
           <Followers>
             <Wrapper>
               <i className="bi bi-card-list" />
-              <Link to="prompts">
+              <Link to="./">
                 <strong>{user?.promptCount}</strong> {(user?.promptCount || 0) > 1 ? 'Publicações' : 'Publicação'}
               </Link>
             </Wrapper>
@@ -122,7 +122,7 @@ const Profile: React.FC = () => {
       <Navbar>
         <NavList>
           <NavItem>
-            <NavLink to="prompts">
+            <NavLink to="./">
               Prompts
             </NavLink>
           </NavItem>
@@ -137,6 +137,11 @@ const Profile: React.FC = () => {
               <NavItem>
                 <NavLink to="privates">
                   Privados
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="saved">
+                  Salvos
                 </NavLink>
               </NavItem>
             </>

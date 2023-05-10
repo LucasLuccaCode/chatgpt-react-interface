@@ -60,7 +60,7 @@ const Root: React.FC = () => {
                   </button>
                 </li>
                 <li>
-                  <NavLink to={`${user.id}/profile/prompts`}>
+                  <NavLink to={`${user.id}/profile/.`}>
                     <i className="bi bi-person-fill"></i>
                   </NavLink>
                 </li>

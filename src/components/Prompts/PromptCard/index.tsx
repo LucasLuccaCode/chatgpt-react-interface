@@ -56,13 +56,13 @@ export const PromptCard: React.FC<IPromptCardProps> = ({
     },
     onSuccess: (data) => {
       switch (true) {
-        case type === "favorites" || type === "privates":
+        case type === "FAVORITES" || type === "PRIVATES" || type === "SAVED":
           queryClient.invalidateQueries(['prompts', visitedUserId, type]);
           break;
-        case type === "userId":
+        case type === "USER_ID":
           queryClient.invalidateQueries(['prompts', visitedUserId]);
           break;
-        case type === "all":
+        case type === "ALL":
           queryClient.invalidateQueries(['prompts', 0])
           break;
       }
