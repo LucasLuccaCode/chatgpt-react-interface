@@ -1,8 +1,10 @@
 import React, { ChangeEvent, FormEvent, useRef } from "react"
-import { useApi } from "../../contexts/apiContext"
-import { useChats } from "../../contexts/chatsContext"
 
 import { AskFormContainer, QuestionEntry, SendButton } from './styles'
+
+import { useApi } from "../../contexts/apiContext"
+import { useChats } from "../../contexts/chatsContext"
+import { SelectPrompt } from "../SelectPrompt"
 
 export const AskForm: React.FC = () => {
   const questionEntryRef = useRef<HTMLTextAreaElement>(null)
@@ -68,7 +70,7 @@ export const AskForm: React.FC = () => {
         rows={3}
         value={prompt}
         onChange={handlePromptChange}
-        placeholder="Faça sua pergunta aqui..."
+        placeholder={`Faça sua pergunta aqui ou digite "/" para acessar seus prompts salvos...`}
         className={isFetching ? 'disabled' : ''}
         autoFocus
         data-question-entry
@@ -80,6 +82,8 @@ export const AskForm: React.FC = () => {
           <i className="bi bi-send-fill"></i>
         )}
       </SendButton>
+
+      <SelectPrompt />
     </AskFormContainer>
   )
 }
