@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { useQueries } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 import {
   CloseButton,
@@ -20,6 +20,11 @@ import { useAuth } from "../../contexts/authContext"
 import { Prompts } from "./Prompts"
 import { useApi } from "../../contexts/apiContext"
 
+export interface IPrompt {
+  id: number;
+  content: string;
+}
+
 export const SelectPrompt: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [filter, setFilter] = useState("")
@@ -39,23 +44,14 @@ export const SelectPrompt: React.FC = () => {
   }, [isOpen])
 
 
-  const results = useQueries({
-    queries: [
-      {
-        queryKey: ['chatbot', 'prompts'],
-        queryFn: () => axios.get(`/users/${loggedUser?.id}/prompts`),
-        staleTime: Infinity
-      },
-      {
-        queryKey: ['chatbot', 'favorites'],
-        queryFn: () => axios.get(`/users/${loggedUser?.id}/favorites`),
-        staleTime: Infinity
-      }
-    ]
+  const { data, isLoading } = useQuery({
+    queryKey: ['chatbot', 'prompts'],
+    queryFn: () => axios.get(`/users/${loggedUser?.id}/prompts/commands`),
+    staleTime: Infinity
   })
 
-  const prompts = results[0].data?.data || []
-  const favorites = results[1].data?.data || []
+  const prompts: IPrompt[] = data?.data.prompts || []
+  const favorites: IPrompt[] = data?.data.savedPrompts || []
 
   const promptAll = useMemo(() => [...prompts, ...favorites], [prompts, favorites])
 
@@ -68,7 +64,7 @@ export const SelectPrompt: React.FC = () => {
     })
   }, [promptAll, filter])
 
-  console.log({ filteredPrompts })
+  // console.log({ filteredPrompts })
 
   return (
     <DialogRoot open={isOpen} onOpenChange={setIsOpen}>
@@ -87,16 +83,16 @@ export const SelectPrompt: React.FC = () => {
               </Title>
               <Search>
                 <i className="bi bi-search" />
-                <input 
-                  type="search" 
-                  name="search" 
-                  onChange={(e) => setFilter(e.target.value)} 
+                <input
+                  type="search"
+                  name="search"
+                  onChange={(e) => setFilter(e.target.value)}
                   autoFocus
                 />
               </Search>
             </Header>
 
-            {!results[0].isLoading && !!!promptAll?.length && (
+            {isLoading && !!!promptAll?.length && (
               <EmptyMessage>Nenhum prompt encontrado...</EmptyMessage>
             )}
 

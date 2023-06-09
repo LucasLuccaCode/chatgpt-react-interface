@@ -2,11 +2,10 @@ import React from "react";
 import { PromptCard, PromptsStyled } from "./styles";
 import { useApi } from "../../../contexts/apiContext";
 
+import { IPrompt } from "../index"
+
 interface PromptsProps {
-  prompts: {
-    id: number;
-    content: string;
-  }[]
+  prompts: IPrompt[]
 }
 
 export const Prompts: React.FC<PromptsProps> = ({ prompts }) => {

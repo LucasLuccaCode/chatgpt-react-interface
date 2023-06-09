@@ -33,7 +33,7 @@ export const Header = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: .5rem 1rem;
-  border-bottom: 1px solid ${props => props.theme.colors.border};
+  /* border-bottom: 1px solid ${props => props.theme.colors.border}; */
   margin-bottom: 1rem;
 `
 
